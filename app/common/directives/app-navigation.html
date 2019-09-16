@@ -28,6 +28,10 @@
           <a href="#/server-health/inventory-overview" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Hardware status</a>
         </li>
+        <li ng-class="{'active': (path == '/server-health/fans-overview' || path == '/server-health/fans')}">
+          <a href="#/server-health/fans-overview" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Fans</a>
+        </li>
         <li ng-class="{'active': (path == '/server-health/sensors-overview' || path == '/server-health/sensors')}">
           <a href="#/server-health/sensors-overview" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Sensors</a>
