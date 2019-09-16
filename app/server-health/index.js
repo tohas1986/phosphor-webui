@@ -36,6 +36,12 @@ window.angular && (function(angular) {
                 'controller': 'inventoryOverviewController',
                 authenticated: true
               })
+              .when('/server-health/fans-overview', {
+                'template':
+                    require('./controllers/fans-overview-controller.html'),
+                'controller': 'fansOverviewController',
+                authenticated: true
+              })
               .when('/server-health/sensors-overview', {
                 'template':
                     require('./controllers/sensors-overview-controller.html'),
