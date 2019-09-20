@@ -125,8 +125,7 @@ window.angular && (function(angular) {
         });
       };
 
-      window.open("http://palmetto","Rikor Fan Utilite v2","resizable=yes,scrollbars=yes");
-      $scope.loadFanData();
+      window.open("http://palmetto","Rikor Fan Utilite v2","resizable=yes,scrollbars=yes,width=100%,height=100%");
     }
   ]);
 })(angular);
