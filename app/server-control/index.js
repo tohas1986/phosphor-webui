@@ -25,7 +25,7 @@ window.angular && (function(angular) {
                 'controller': 'serverLEDController',
                 authenticated: true
               })
-              .when('/server-control/power-operations', {
+              /*.when('/server-control/power-operations', {
                 'template':
                     require('./controllers/power-operations-controller.html'),
                 'controller': 'powerOperationsController',
@@ -36,7 +36,7 @@ window.angular && (function(angular) {
                     require('./controllers/power-usage-controller.html'),
                 'controller': 'powerUsageController',
                 authenticated: true
-              })
+              })*/
               .when('/server-control/remote-console', {
                 'template':
                     require('./controllers/remote-console-controller.html'),
