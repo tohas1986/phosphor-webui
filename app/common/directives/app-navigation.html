@@ -52,14 +52,14 @@
       <ul class="nav__second-level btn-control"
         ng-style="navStyle"
         ng-class="{opened: (showSubMenu && firstLevel == 'server-control')}">
-        <li ng-class="{'active': (path == '/server-control' || path == '/server-control/power-operations')}">
+        <!-- <li ng-class="{'active': (path == '/server-control' || path == '/server-control/power-operations')}">
           <a href="#/server-control/power-operations" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Server power operations</a>
         </li>
         <li ng-class="{'active': (path == '/server-control/power-usage')}">
           <a href="#/server-control/power-usage" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Manage power usage</a>
-        </li>
+        </li> /-->
         <li ng-class="{'active': (path == '/server-control/server-led')}">
           <a href="#/server-control/server-led" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Server LED</a>
