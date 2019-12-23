@@ -30,12 +30,12 @@ window.angular && (function(angular) {
                 'controller': 'logController',
                 authenticated: true
               })
-              .when('/server-health/inventory-overview', {
+              /*.when('/server-health/inventory-overview', {
                 'template':
                     require('./controllers/inventory-overview-controller.html'),
                 'controller': 'inventoryOverviewController',
                 authenticated: true
-              })
+              })*/
               .when('/server-health/fans-overview', {
                 'template':
                     require('./controllers/fans-overview-controller.html'),
