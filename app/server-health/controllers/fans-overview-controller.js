@@ -125,7 +125,7 @@ window.angular && (function(angular) {
         });
       };
 
-      window.open("http://"+window.location.hostname,"Rikor Fan Utilite v2","resizable=yes,scrollbars=yes,width=100%,height=100%");
+      window.open("http://"+window.location.hostname,"Rikor Fan Utilite","resizable=yes,scrollbars=yes,width=100%,height=100%");
     }
   ]);
 })(angular);
