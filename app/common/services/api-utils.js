@@ -1624,7 +1624,19 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
-      };
+        setFanMode: function(fanmode) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/config/attr/FanMode',
+                   withCredentials: true,
+                   data: JSON.stringify({'fanmode': fanmode})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+     };
       return SERVICE;
     }
   ]);

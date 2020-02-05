@@ -9,8 +9,8 @@
 window.angular && (function(angular) {
   'use strict';
   angular.module('app.overview').controller('fansOverviewController', [
-    '$scope', '$log', '$window', 'APIUtils', 'dataService', 'Constants',
-    function($scope, $log, $window, APIUtils, dataService, Constants) {
+      '$scope', '$log', '$window', 'APIUtils', 'dataService', 'Constants', '$q',
+      function($scope, $log, $window, APIUtils, dataService, Constants, $q) {
       $scope.dataService = dataService;
 
       $scope.dropdown_selected = false;
@@ -29,6 +29,18 @@ window.angular && (function(angular) {
           dt[item.original_data.key] = item.original_data.value;
         });
         return JSON.stringify(dt);
+      };
+
+      $scope.setFanMode = function(){
+	    $scope.fanmode=document.getElementById("fanmode").value;
+	    //alert($scope.fanmode);
+	    return APIUtils.setFanMode($scope.fanmode)
+            .then(
+                function(data) {},
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  return $q.reject();
+                });
       };
 
       $scope.clear = function() {
@@ -124,8 +136,9 @@ window.angular && (function(angular) {
           $scope.loading = false;
         });
       };
-
+/*
       window.open("http://"+window.location.hostname,"Rikor Fan Utilite","resizable=yes,scrollbars=yes,width=100%,height=100%");
+*/
     }
   ]);
 })(angular);
