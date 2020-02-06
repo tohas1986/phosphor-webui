@@ -104,8 +104,8 @@ window.angular && (function(angular) {
             // Basic resources
             'app.common.services', 'app.common.directives',
             'app.common.filters',
-            // Model resources 'app.login'
-            'app.overview', 'app.serverControl',
+            // Model resources
+            'app.login', 'app.overview', 'app.serverControl',
             'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish'
           ])
       // Route configuration
@@ -183,7 +183,7 @@ window.angular && (function(angular) {
                 path.indexOf('/login') == -1) {
               dataService.showNavigation = true;
             } else {
-		dataService.showNavigation = false;
+              dataService.showNavigation = false;
             }
           });
 
