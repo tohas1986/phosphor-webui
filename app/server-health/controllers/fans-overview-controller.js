@@ -31,18 +31,6 @@ window.angular && (function(angular) {
         return JSON.stringify(dt);
       };
 
-      $scope.setFanMode = function(){
-	    $scope.fanmode=document.getElementById("fanmode").value;
-	    //alert($scope.fanmode);
-	    return APIUtils.setFanMode($scope.fanmode)
-            .then(
-                function(data) {},
-                function(error) {
-                  console.log(JSON.stringify(error));
-                  return $q.reject();
-                });
-      };
-
       $scope.clear = function() {
         $scope.customSearch = '';
         $scope.searchTerms = [];
@@ -127,6 +115,18 @@ window.angular && (function(angular) {
         return true;
       };
 
+      $scope.setFanMode = function(){
+	    $scope.fanmode=document.getElementById("fanmode").value;
+	    //alert($scope.fanmode);
+	    return APIUtils.setFanMode($scope.fanmode)
+            .then(
+                function(data) {},
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  return $q.reject();
+                });
+      };
+
       $scope.loadFanData = function() {
         $scope.loading = true;
         APIUtils.getAllFanStatus(function(data, originalData) {
@@ -135,6 +135,7 @@ window.angular && (function(angular) {
           $scope.export_data = JSON.stringify(originalData);
           $scope.loading = false;
         });
+        document.getElementById("fanmode").value=$scope.data;
       };
     }
   ]);

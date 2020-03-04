@@ -1625,16 +1625,27 @@ window.angular && (function(angular) {
               });
         },
         setFanMode: function(fanmode) {
-          return $http({
-                   method: 'PUT',
-                   url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/config/attr/FanMode',
-                   withCredentials: true,
-                   data: JSON.stringify({'fanmode': fanmode})
-                 })
-              .then(function(response) {
-                return response.data;
-              });
+           return $http({
+                    method: 'POST',
+                    url: DataService.getHost() +
+                        '/xyz/openbmc_project/ares/rikfan/action/ApplyMode',
+                    withCredentials: true,
+                    data: JSON.stringify({'data':[fanmode]})
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
+        },
+        getAllFanStatus: function() {
+           return $http({
+                    method: 'GET',
+                    url: DataService.getHost() +
+                        '/xyz/openbmc_project/ares/rikfan/attr/FanMode',
+                    withCredentials: true
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
         },
      };
       return SERVICE;
