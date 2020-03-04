@@ -55,8 +55,6 @@ window.angular && (function(angular) {
                   console.log(JSON.stringify(error));
                   return $q.reject();
                 });
-
-        	);
       };
 
       $scope.clear = function() {
