@@ -1636,6 +1636,7 @@ window.angular && (function(angular) {
                  return response.data;
                });
         },
+        /*
         getAllFanStatus: function() {
            return $http({
                     method: 'GET',
@@ -1647,6 +1648,7 @@ window.angular && (function(angular) {
                  return response.data;
                });
         },
+        */
      };
       return SERVICE;
     }
