@@ -49,8 +49,14 @@ window.angular && (function(angular) {
           $scope.originalData = originalData;
           $scope.export_data = JSON.stringify(originalData);
           $scope.loading = false;
-        });
-        document.querySelector('#fanmode [value="' + $scope.data + '"]').setAttribute('selected', 'selected');
+        }).then(
+                function(data) { document.querySelector('#fanmode [value="' + data.data + '"]').setAttribute('selected', 'selected'); },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                  return $q.reject();
+                });
+
+        	);
       };
 
       $scope.clear = function() {
