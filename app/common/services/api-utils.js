@@ -1633,7 +1633,6 @@ window.angular && (function(angular) {
                     data: JSON.stringify({'data':[fanmode]})
                   })
                .then(function(response) {
-                 alert(response.data);
                  return response.data;
                });
         },
