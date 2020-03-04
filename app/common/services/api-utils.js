@@ -1645,7 +1645,6 @@ window.angular && (function(angular) {
                     withCredentials: true
                   })
                .then(function(response) {
-                 alert(response.data);
                  return response.data;
                });
         },

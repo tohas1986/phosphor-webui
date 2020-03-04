@@ -43,19 +43,8 @@ window.angular && (function(angular) {
       };
 
       function loadFanData() {
-        //$scope.loading = true;
-        return APIUtils.getAllFanStatus(
-        /*
-        function(data, originalData) {
-          $scope.data = data;
-          $scope.originalData = originalData;
-          $scope.export_data = JSON.stringify(originalData);
-          $scope.loading = false;
-        }
-        */).then(
+        return APIUtils.getAllFanStatus().then(
                 function(data) {
-                 alert("внутри function(data)"+" data="+data);
-                 alert("внутри function(data)"+" data.data="+data.data);
                  document.querySelector('#fanmode [value="' + data.data + '"]').setAttribute('selected', 'selected'); },
                 function(error) {
                   console.log(JSON.stringify(error));
