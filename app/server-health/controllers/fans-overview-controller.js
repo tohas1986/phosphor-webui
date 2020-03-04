@@ -42,9 +42,7 @@ window.angular && (function(angular) {
                 });
       };
 
-      //$scope.loadFanData =
       function loadFanData() {
-      /*
         $scope.loading = true;
         APIUtils.getAllFanStatus(function(data, originalData) {
           $scope.data = data;
@@ -52,9 +50,7 @@ window.angular && (function(angular) {
           $scope.export_data = JSON.stringify(originalData);
           $scope.loading = false;
         });
-       */
-        //$scope.data;
-        document.querySelector('#fanmode [value="' + "2" + '"]').setAttribute('selected', 'selected');
+        document.querySelector('#fanmode [value="' + $scope.data + '"]').setAttribute('selected', 'selected');
       };
 
       $scope.clear = function() {
