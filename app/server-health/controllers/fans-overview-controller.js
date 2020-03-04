@@ -128,6 +128,7 @@ window.angular && (function(angular) {
       };
 
       $scope.loadFanData = function() {
+      /*
         $scope.loading = true;
         APIUtils.getAllFanStatus(function(data, originalData) {
           $scope.data = data;
@@ -135,7 +136,8 @@ window.angular && (function(angular) {
           $scope.export_data = JSON.stringify(originalData);
           $scope.loading = false;
         });
-        document.getElementById("fanmode").value=$scope.data;
+       */
+        document.getElementById("fanmode").value=2; //$scope.data;
       };
     }
   ]);
