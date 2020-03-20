@@ -46,12 +46,6 @@ window.angular && (function(angular) {
                 'template': require('./controllers/kvm-controller.html'),
                 'controller': 'kvmController',
                 authenticated: true
-              })
-              .when('/server-control', {
-                'template':
-                    require('./controllers/power-operations-controller.html'),
-                'controller': 'powerOperationsController',
-                authenticated: true
               });
         }
       ]);
