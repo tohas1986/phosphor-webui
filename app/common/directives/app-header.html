@@ -17,9 +17,9 @@
         <span ng-class="{'status-light__error': dataService.server_health == 'Critical', 'status-light__warn': dataService.server_health == 'Warning', 'status-light__good': dataService.server_health == 'Good'}">{{dataService.server_health}}</span>
       </a>
       <!--<a href="#/server-control/power-operations" class="header__server-power" role="button">-->
-      <a href="#" class="header__server-power" role="button" onclick="alert('test operations')">Rikor Server power
+      <a href="#" class="header__server-power" role="button" ng-click="setServerStatus()">Server power
         <i class="icon icon-angle" aria-hidden="true"></i>
-	<span id="ServerPowerStatus">On/Off</span>
+	<span ng-class="status-light__disabled" id="ServerPowerState">Unreachable</span>
         <!--<span ng-class="{'status-light__off': dataService.server_state == 'Off', 'status-light__disabled': dataService.server_state == 'Unreachable', 'status-light__good': dataService.server_state == 'Running', 'status-light__error': dataService.server_state == 'Quiesced'}">{{dataService.server_state | quiescedToError}}</span>-->
       </a>
       <p class="header__refresh">Data last refreshed<span>{{dataService.last_updated | localeDate}}</span>

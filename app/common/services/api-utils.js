@@ -1647,6 +1647,31 @@ window.angular && (function(angular) {
                  return response.data;
                });
         },
+        setServerStatus: function(server_status) {
+           /* New  */
+           return $http({
+                    method: 'POST',
+                    url: DataService.getHost() +
+                        '/xyz/openbmc_project/ares/rikpower/action/SetServerStatus',
+                    withCredentials: true,
+                    data: JSON.stringify({'data':[server_status]})
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
+        },
+        getServerStatus: function() {
+	   /* New */
+           return $http({
+                    method: 'GET',
+                    url: DataService.getHost() +
+                        '/xyz/openbmc_project/ares/rikpower/attr/ServerStatus',
+                    withCredentials: true
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
+        },
      };
       return SERVICE;
     }
