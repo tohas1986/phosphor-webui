@@ -25,12 +25,6 @@ window.angular && (function(angular) {
                 'controller': 'serverLEDController',
                 authenticated: true
               })
-              .when('/server-control/power-operations', {
-                'template':
-                    require('./controllers/power-operations-controller.html'),
-                'controller': 'powerOperationsController',
-                authenticated: true
-              })
               .when('/server-control/power-usage', {
                 'template':
                     require('./controllers/power-usage-controller.html'),
