@@ -66,7 +66,7 @@ window.angular && (function(angular) {
 
 	    /* New */
     	    $scope.setServerStatus = function() {
-        	dataService.server_state=document.getElementById("ServerPowerStatus").innerHTML;
+        	dataService.server_state=document.getElementById("ServerPowerState").innerHTML;
 		return APIUtils.setServerStatus((dataService.server_state == "Running")? "Off":"Running").then(
             	    function(data) {
     			dataService.server_state=data.data;
