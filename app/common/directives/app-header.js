@@ -65,14 +65,14 @@ window.angular && (function(angular) {
             };
 
 	    /* New */
-    	    $scope.setServerStatus = function(){
+    	    $scope.setServerStatus = function() {
         	dataService.server_state=document.getElementById("ServerPowerStatus").innerHTML;
 		return APIUtils.setServerStatus((dataService.server_state == "Running")? "Off":"Running").then(
             	    function(data) {
     			dataService.server_state=data.data;
 			var element=document.getElementById("ServerPowerState");
 			element.innerHTML=dataService.server_state;
-			element.setAttribute("ng-class",(dataService.server_state == "Running")? "status-light__good":"status-light__off"));
+			element.setAttribute("ng-class",(dataService.server_state == "Running")? "status-light__good":"status-light__off");
 		    },
             	    function(error) {
                 	console.log(JSON.stringify(error));
@@ -81,13 +81,13 @@ window.angular && (function(angular) {
     	    };
 
 	    /* New */
-    	    $scope.loadServerStatus = function {
+    	    $scope.loadServerStatus = function() {
     		return APIUtils.getServerStatus().then(
             	    function(data) {
     			dataService.server_state=data.data;
 			var element=document.getElementById("ServerPowerState");
 			element.innerHTML=dataService.server_state;
-			element.setAttribute("ng-class",(dataService.server_state == "Running")? "status-light__good":"status-light__off"));
+			element.setAttribute("ng-class",(dataService.server_state == "Running")? "status-light__good":"status-light__off");
 		    },
             	    function(error) {
             		console.log(JSON.stringify(error));

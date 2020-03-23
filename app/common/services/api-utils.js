@@ -1652,7 +1652,7 @@ window.angular && (function(angular) {
            return $http({
                     method: 'POST',
                     url: DataService.getHost() +
-                        '/xyz/openbmc_project/ares/rikpower/action/SetServerStatus',
+                        '/xyz/openbmc_project/ares/rikbtnd/action/HostPower',
                     withCredentials: true,
                     data: JSON.stringify({'data':[server_status]})
                   })
@@ -1665,7 +1665,7 @@ window.angular && (function(angular) {
            return $http({
                     method: 'GET',
                     url: DataService.getHost() +
-                        '/xyz/openbmc_project/ares/rikpower/attr/ServerStatus',
+                        '/xyz/openbmc_project/ares/rikbtnd/attr/HostPowerMode',
                     withCredentials: true
                   })
                .then(function(response) {
