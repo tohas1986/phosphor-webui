@@ -114,7 +114,7 @@ $logoMaxWidth: 125px;
       color: $black;
       font-size: 1em;
     }
-    a, p {
+    a, p, .header__server-power {
       display: block;
       float: left;
       text-decoration: none;
@@ -148,6 +148,10 @@ $logoMaxWidth: 125px;
     &:hover {
       background: rgba(255, 255, 255, 1);
     }
+  }
+
+  .header__page-refresh {
+    float: right;
   }
 
   .header__multi-server {
