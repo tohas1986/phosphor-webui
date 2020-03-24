@@ -82,7 +82,9 @@ window.angular && (function(angular) {
     	    };
 
 	    /* New */
+	    dataService.server_state="Unreachable";
     	    $scope.loadServerStatus = function() {
+		dataService.server_state="Unreachable";
     		return APIUtils.getServerStatus().then(
             	    function(data) {
     			dataService.server_state=data.data;

@@ -20,10 +20,12 @@
       <ul class="nav__second-level btn-health"
         ng-style="navStyle"
         ng-class="{opened: (showSubMenu && firstLevel == 'server-health')}">
+<!--
         <li ng-class="{'active': (path == '/server-health/event-log')}">
           <a href="#/server-health/event-log" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Event log</a>
         </li>
+-->
         <li ng-class="{'active': (path == '/server-health/inventory-overview' || path == '/server-health/inventory')}">
           <a href="#/server-health/inventory-overview" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">Hardware status</a>
