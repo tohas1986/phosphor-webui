@@ -254,6 +254,10 @@ window.angular && (function(angular) {
       }
 
       function updateIPV4(index) {
+	if(""+$scope.interface.ipv4.values[index].Gateway+"" == ""); then {
+	    alert("ОШИБКА! Не указан обязательный параметр - GATEWAY.");
+	}
+	else {
         // The correct way to edit an IPV4 interface is to remove it and then
         // add a new one
         return APIUtils
@@ -279,6 +283,7 @@ window.angular && (function(angular) {
                   console.log(JSON.stringify(error));
                   return $q.reject();
                 });
+	};
       }
 
       $scope.refresh = function() {

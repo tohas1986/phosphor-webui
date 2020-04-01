@@ -63,8 +63,7 @@
             </div>
             <div class="column small-12 large-3">
               <label for="ipv4-gateway-{{$index+1}}">Gateway</label>
-              <input id="ipv4-gateway-{{$index+1}}" ng-change="ipv4.updateGateway = true" type="text"
-                ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway" />
+              <input id="ipv4-gateway-{{$index+1}}" ng-change="ipv4.updateGateway = true" type="text" ng-disabled="interface.DHCPEnabled" value="" ng-model="ipv4.Gateway" placeholder="xxx.xxx.xxx.xxx" pattern="^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" />
             </div>
             <!-- This netmask prefix length max only works with IPV4 -->
             <div class="column small-12 large-6">
