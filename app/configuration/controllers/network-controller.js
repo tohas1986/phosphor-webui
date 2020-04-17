@@ -254,7 +254,7 @@ window.angular && (function(angular) {
       }
 
       function updateIPV4(index) {
-	if(""+$scope.interface.ipv4.values[index].Gateway+"" == ""); then {
+	if($scope.interface.ipv4.values[index].Gateway.trim() == ''){
 	    alert("ОШИБКА! Не указан обязательный параметр - GATEWAY.");
 	}
 	else {
