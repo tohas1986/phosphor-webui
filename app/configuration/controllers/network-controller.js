@@ -93,9 +93,7 @@ window.angular && (function(angular) {
 
         // Set IPV4 IP Addresses, Netmask Prefix Lengths, and Gateways
         if (!$scope.interface.DHCPEnabled) {
-          // Delete existing IPV4 addresses that were removed
-          promises.push(removeIPV4s());
-          // Update any changed IPV4 addresses and add new
+
           for (var i in $scope.interface.ipv4.values) {
             if (!APIUtils.validIPV4IP(
                     $scope.interface.ipv4.values[i].Address)) {
@@ -121,6 +119,39 @@ window.angular && (function(angular) {
               $scope.loading = false;
               return;
             }
+	  }
+
+          // Delete existing IPV4 addresses that were removed
+          promises.push(removeIPV4s());
+
+          // Update any changed IPV4 addresses and add new
+          for (var i in $scope.interface.ipv4.values) {
+/*
+            if (!APIUtils.validIPV4IP(
+                    $scope.interface.ipv4.values[i].Address)) {
+              toastService.error(
+                  $scope.interface.ipv4.values[i].Address +
+                  ' invalid IP parameter');
+              $scope.loading = false;
+              return;
+            }
+            if (!APIUtils.validIPV4IP(
+                    $scope.interface.ipv4.values[i].Gateway)) {
+              toastService.error(
+                  $scope.interface.ipv4.values[i].Address +
+                  ' invalid gateway parameter');
+              $scope.loading = false;
+              return;
+            }
+            // The netmask prefix length will be undefined if outside range
+            if (!$scope.interface.ipv4.values[i].PrefixLength) {
+              toastService.error(
+                  $scope.interface.ipv4.values[i].Address +
+                  ' invalid Prefix Length parameter');
+              $scope.loading = false;
+              return;
+            }
+*/
             if ($scope.interface.ipv4.values[i].updateAddress ||
                 $scope.interface.ipv4.values[i].updateGateway ||
                 $scope.interface.ipv4.values[i].updatePrefix) {
@@ -254,10 +285,12 @@ window.angular && (function(angular) {
       }
 
       function updateIPV4(index) {
-	if($scope.interface.ipv4.values[index].Gateway.trim() == ''){
-	    alert("ОШИБКА! Не указан обязательный параметр - GATEWAY.");
-	}
-	else {
+	//if($scope.interface.ipv4.values[index].Gateway.trim() == ''){
+	//    alert("ОШИБКА! Не указан обязательный параметр - GATEWAY.");
+	//}
+	//else {
+	//};
+
         // The correct way to edit an IPV4 interface is to remove it and then
         // add a new one
         return APIUtils
@@ -283,7 +316,6 @@ window.angular && (function(angular) {
                   console.log(JSON.stringify(error));
                   return $q.reject();
                 });
-	};
       }
 
       $scope.refresh = function() {
