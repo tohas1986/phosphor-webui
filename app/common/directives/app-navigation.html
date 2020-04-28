@@ -58,6 +58,7 @@
           <a href="#/server-control/power-operations" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Server power operations</a>
         </li>-->
+        <li ng-class="{'active': (path == '/server-control')}"></li>
         <li ng-class="{'active': (path == '/server-control/power-usage')}">
           <a href="#/server-control/power-usage" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Manage power usage</a>
