@@ -1,4 +1,152 @@
-// Drop downs
+//Use to pass in color of error format in below mixin
+@mixin input-highlight-format($color-status){
+  border: 2px solid $color-status;
+}
+
+@mixin bg-icon {
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  text-align:left;
+  padding-left: 35px;
+  @include mediaQuery(small) {
+    background-size: 1.8em;
+    background-position: 8px center;
+  }
+}
+
+/* FORM STYLE */
+input[type='email'], input[type='number'], input[type='password'], input[type='search'], input[type='tel'], input[type='url'], input[type='text'], input[type='date'], input[type='time'], textarea {
+  @include form-inputs("");
+  margin:0;
+  color: $color--grey-100;
+  &:focus{
+    @include form-inputs("");
+    @include input-highlight-format($color--blue-50);
+  }
+  &.input-secondary{
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.18);
+    border-radius:0;
+    padding: 0 10px;
+    border: 1px solid $btn-tertiary__border;
+    font-size:13px;
+    width: fit-content;
+    min-height:12px;
+  }
+}
+
+.select-box{
+  margin: .5em 0;
+}
+
+select[disabled]{
+  border: 1px solid $color--grey-30;
+  border-color: $color--grey-30;
+  box-shadow: 0 0 0 0;
+  color: #88898a;
+  border-radius: 4px;
+}
+
+/* DATE */
+input[type="date"] {
+  display: inline-block !important;
+  visibility: visible !important;
+  color: $color--grey-100;
+  &:focus {
+    color: $color--grey-100;
+  }
+}
+
+//Inline Editing effect
+input[type='text'],input[type='number']{
+  &.hideborders{
+    border: 0;
+    background-color: #f8fbfe !important;
+    outline: 0;
+    box-shadow: none;
+    text-overflow: ellipsis;
+    text-align: center;
+    overflow: auto;
+    padding-top: 9px 18px 15px 21px;
+  }
+  &.showborders{
+    text-align: center;
+  }
+}
+
+//Hides autofill background for inline editing fields
+input:-webkit-autofill,input[type='text']:-webkit-autofill, input[type='number']:-webkit-autofill {
+  &.hideborders{
+  -webkit-box-shadow:0 0 0 50px #f8fbfe inset;
+  }
+}
+
+/* SELECT DROPDOWN */
+select {
+  /* styling */
+  background-color: white;
+  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+  color: #5b5b5b;
+
+  /* reset */
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+  /* Removes the clear button from date inputs */
+  input[type="date"]::-webkit-clear-button {
+    display: none;
+  }
+
+  /* Removes the spin button */
+  input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  /* Always display the drop down caret */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #2c3e50;
+  }
+
+.helper-text{
+  color: $text-02;
+  display:block;
+}
+
+label {
+  margin: 0;
+  font-size: 14px;
+  padding: 13px 0;
+  font-weight: normal;
+  line-height: 1.8;
+  color: $text-02;
+  &.small-label{
+    font-size:12px;
+    padding:0;
+  }
+}
+
+.small-label, .inline label{
+  font-size:12px;
+  padding:0;
+}
+
+label.dropdown-label {
+  line-height: 3.2;
+}
+
+/* DROPDOWNS */
+//TODO: Remove the dropdowns once all have been removed page-by-page (using select instead)
+
 .dropdown__button {
   position: relative;
   padding-top: .5em;
@@ -75,24 +223,15 @@
   }
 }
 
-
-
-// Checkbox
-
+/* CHECKBOX */
 .control-check,
 .control-radio {
   position: relative;
   display: inline-block;
   margin-bottom: 15px;
-  padding-top: 7px;
+  padding-top: 10px;
   cursor: pointer;
   line-height: initial;
-}
-
-.control-check input {
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
 }
 
 .control__indicator {
@@ -109,8 +248,8 @@
 /* Hover and focus states */
 .control-check:hover input ~ .control__indicator,
 .control-check input:focus ~ .control__indicator {
-  border: 1px solid $primary-accent;
-  background-color: $primary-accent;
+ // border: 1px solid $primary-accent;
+ // background-color: $primary-accent;
 }
 
 /* Checked state */
@@ -138,8 +277,6 @@
 /* Check mark */
 .control__indicator:after,
 .control-check input:not(:checked){
-  position: absolute;
-  display: none;
   content: '';
 }
 
@@ -164,11 +301,17 @@
   border-color: $primary-light;
   color: $primary-light;
 }
-
 // Radio Buttons
 .control-radio {
-  padding-left: 3em;
+  padding-left: 2.4em;
+  &:hover, &:focus{
+    outline: 0;
+    border:0;
+  }
 }
+
+
+
 .control-radio.disabled:hover {
   cursor: default;
 }
@@ -194,7 +337,7 @@
 /* Hover and focus states */
 .control-radio input:focus ~ .control__indicator {
   background: $primary-accent;
-  outline: 1px solid $primary-accent;
+  outline: 0px solid $primary-accent;
   outline-offset: 3px;
 }
 
@@ -206,7 +349,6 @@
 /* Disabled state */
 .control-radio input:disabled ~ .control__indicator{
   pointer-events: none;
-  opacity: .6;
   background: $base-02--04;
   border: 1px solid $border-color-01;
 }
@@ -256,4 +398,199 @@
   background: $base-02--03;
   width: 20px;
   height: 20px;
+}
+
+/* PLACEHOLDERS */
+::placeholder { // Chrome, Firefox, Opera, Safari 10.1+
+  color: $color--grey-60;
+  opacity: 1; // Firefox
+}
+:-ms-input-placeholder { // Internet Explorer 10-11
+  color: $color--grey-60;
+}
+::-ms-input-placeholder { // Microsoft Edge
+  color: $color--grey-60;
+}
+
+/* FORM VALIATION */
+.ng-invalid.ng-touched {
+  @include input-highlight-format($color-status-error);
+  &:focus {
+    @include input-highlight-format($color-status-error);
+  }
+}
+.submitted .ng-invalid {
+  @include input-highlight-format($color-status-error);
+  &:focus {
+    @include input-highlight-format($color-status-error);
+  }
+}
+
+.form-row
+{
+  display: block;
+  margin: auto;
+  width: 100%;
+  padding:4px 10px 2px 15px;
+  &.center{
+    text-align:center;
+  }
+}
+
+.form-intro{
+  font-size:1.7em;
+  padding: 5px;
+  color: $color--grey-90;
+}
+
+.form-message{
+  margin-bottom: .7em;
+  font-size: 0.8rem;
+  height: 1rem;
+  display: block;
+  visibility: hidden;
+  .visible {
+    visibility: visible;
+  }
+}
+
+.form-error {
+  margin-bottom: .7em;
+  font-size: 0.8rem;
+  color: $color-status-error;
+  height:1rem;
+  display: block;
+  visibility: hidden;
+  .visible {
+    visibility: visible;
+  }
+}
+
+//Foundation overwrite
+
+button,
+.btn,
+[type='button'] {
+  box-shadow: none;
+}
+
+[type=color], [type=date], [type=datetime-local], [type=datetime], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=time], [type=url], [type=week], textarea {
+  border-color: $input-border;
+}
+
+input[readonly],
+input[readonly]:focus{
+  box-shadow: 0 0 0;
+  background: $field__disabled;
+  border: 1px solid $lightbg__grey;
+}
+
+textarea { padding: .2em;
+  height: auto;}
+input[type="submit"], .submit {
+  margin: 1em 0;
+  width: 100%;
+}
+
+//Custom select
+select{
+  border-radius: 0px;
+  height: auto;
+  padding-right: 0.5rem; //override inherited Foundation style
+  border-color: $input-border;
+  margin: .5em 1em;
+  @include fastTransition-all;
+  @include bgImage__arrowDown-primary;
+  &:focus {
+    box-shadow: 0 0 0;
+  }
+  &[disabled] {
+    @include bgImage__arrowDown-disabled;
+  }
+}
+
+.form__validation-message {
+  color: $error-color;
+  font-size: 0.9em;
+}
+
+.filter-box span{
+  font-weight:800;
+}
+
+.filter-box{
+  float:left;
+  box-sizing: border-box;
+  margin-right:1%;
+}
+
+.filter-btn{
+  min-width: 85px;
+}
+
+.search-box{
+  width: 100%;
+  float:left;
+  box-sizing: border-box;
+}
+
+select {
+  background-color: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 17px) calc(.5em + 2px),
+    calc(100% - 12px) calc(.5em + 2px),
+    calc(100% - 2.5em) .1em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding-right: 5px;
+  padding-top: 10px;
+  height: 3.2em;
+  max-height: none;
+  position: relative;
+  color:  #5b5b5b;
+  box-sizing: border-box;
+  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
+  &:focus,&:active {
+      background-image:
+        linear-gradient(45deg, #0f8dc3 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%, #0f8dc3 50%),
+        linear-gradient(to right, #ccc, #ccc);
+      background-position:
+        calc(100% - 11px) calc(.5em + 2px),
+        calc(100% - 16px) calc(.5em + 2px),
+        calc(100% - 2.5em) .1em;
+      background-size:
+        5px 5px,
+        5px 5px,
+        1px 1.5em;
+      background-repeat: no-repeat;
+      border-color: #0f8dc3;
+      outline: 0;
+  }
+}
+
+input:disabled, input[readonly],
+textarea:disabled,
+textarea[readonly],input[type='number']:disabled {
+  border: 1px solid $color--grey-30;
+  border-color: $color--grey-30;
+  box-shadow: 0 0 0 0;
+  color: #88898a;
+  &.hideborders{
+    border: 0;
+    color: #000000;
+  }
 }

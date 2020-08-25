@@ -8,10 +8,42 @@ window.angular && (function(angular) {
           'template': require('./app-navigation.html'),
           'scope': {'path': '=', 'showNavigation': '='},
           'controller': [
-            '$scope', '$location', 'dataService',
-            function($scope, $location, dataService) {
+            '$scope', '$rootScope', '$location', 'dataService',
+            function($scope, $rootScope, $location, dataService) {
               $scope.dataService = dataService;
-              $scope.showSubMenu = false;
+              var configJSON = require('../../../config.json');
+              if (configJSON.VirtualMediaEnabled == true) {
+                $scope.VMEnabled = true;
+              } else {
+                $scope.VMEnabled = false;
+              }
+
+              $scope.checkPrivilege = function(requiredPriv) {
+                const userValue =
+                    JSON.parse(sessionStorage.getItem('USER_PERMISSION'));
+                if (userValue && userValue.RoleId) {
+                  if (requiredPriv == 'Administrator') {
+                    return userValue.RoleId === 'Administrator';
+                  } else if (requiredPriv == 'Operator') {
+                    return (
+                        (userValue.RoleId === 'Administrator') ||
+                        (userValue.RoleId === 'Operator'));
+                  } else if (requiredPriv == 'ReadOnly') {
+                    return (
+                        (userValue.RoleId === 'Administrator') ||
+                        (userValue.RoleId === 'Operator') ||
+                        (userValue.RoleId === 'ReadOnly'));
+                  }
+                  return false;
+                } else {
+                  return false;
+                }
+              };
+
+              $scope.$watch('toggleNav', function() {
+                $rootScope.toggleNavState = $scope.toggleNav;
+              });
+
               $scope.change = function(firstLevel) {
                 if (firstLevel != $scope.firstLevel) {
                   $scope.firstLevel = firstLevel;
@@ -20,9 +52,11 @@ window.angular && (function(angular) {
                   $scope.showSubMenu = !$scope.showSubMenu;
                 }
               };
-              $scope.closeSubnav = function() {
-                $scope.showSubMenu = false;
+
+              $scope.RedirectToURL = function(destinationURL) {
+                $location.url(destinationURL);
               };
+
               $scope.$watch('path', function() {
                 var urlRoot = $location.path().split('/')[1];
                 if (urlRoot != '') {
@@ -30,22 +64,16 @@ window.angular && (function(angular) {
                 } else {
                   $scope.firstLevel = 'overview';
                 }
-                $scope.showSubMenu = false;
+                $scope.showSubMenu = true;
               });
+
               $scope.$watch('showNavigation', function() {
-                var paddingTop = 0;
                 var urlRoot = $location.path().split('/')[1];
                 if (urlRoot != '') {
                   $scope.firstLevel = urlRoot;
                 } else {
                   $scope.firstLevel = 'overview';
                 }
-
-                if ($scope.showNavigation) {
-                  paddingTop = document.getElementById('header').offsetHeight;
-                }
-                dataService.bodyStyle = {'padding-top': paddingTop + 'px'};
-                $scope.navStyle = {'top': paddingTop + 'px'};
               });
             }
           ],
@@ -56,7 +84,7 @@ window.angular && (function(angular) {
 
               if (scope.showSubMenu) {
                 scope.$apply(function() {
-                  scope.showSubMenu = false;
+                  scope.showSubMenu = true;
                 });
               }
             });

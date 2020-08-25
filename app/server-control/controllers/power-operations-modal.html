@@ -1,11 +1,6 @@
 <!-- Shutdown and Reboot modal -->
 <div class="uib-modal__content">
-  <button
-    aria-label="Close"
-    type="button"
-    class="btn  btn--close  float-right"
-    ng-click="$dismiss()"
-  >
+  <button aria-label="Close" type="button" class="btn btn--close float-right" ng-click="$dismiss()">
     <icon file="icon-close.svg"></icon>
   </button>
   <div class="modal-header" id="modal-operation">
@@ -31,18 +26,14 @@
     </p>
   </div>
   <div class="modal-footer">
-    <!-- Power operation confirm buttons -->
-    <button
-      type="submit"
-      class="btn btn-primary"
-      ng-click="$close(activeModal)"
-    >
-      <span ng-if="activeModal === 0 || activeModal === 1">Reboot</span>
-      <span ng-if="activeModal === 2 || activeModal === 3">Shutdown</span>
-    </button>
     <!-- Cancel modal power confirmation -->
     <button type="button" class="btn btn-secondary" ng-click="$dismiss()">
       Cancel
+    </button>
+    <!-- Power operation confirm buttons -->
+    <button type="submit" class="btn btn-primary" ng-click="$close(activeModal)">
+      <span ng-if="activeModal === 0 || activeModal === 1">Reboot</span>
+      <span ng-if="activeModal === 2 || activeModal === 3">Shutdown</span>
     </button>
   </div>
 </div>

@@ -58,9 +58,9 @@ window.angular && (function(angular) {
     };
 
     /**
-     * onInit Component lifecycle hook
+     * onChanges Component lifecycle hook
      */
-    this.$onInit = () => {
+    this.$onChanges = () => {
       this.actions = setActions(this.actions);
     };
   };
@@ -70,10 +70,10 @@ window.angular && (function(angular) {
    */
   const template = `
     <button
-      class="btn  btn-tertiary"
+      class="btn btn-primary btn-small"
       type="button"
       aria-label="{{action.type}}"
-      ng-repeat="action in $ctrl.actions"
+      ng-repeat="action in $ctrl.actions track by $index"
       ng-disabled="!action.enabled"
       ng-click="$ctrl.onClick(action.type)">
       <icon ng-if="action.file !== null" ng-file="{{action.file}}"></icon>

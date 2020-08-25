@@ -39,16 +39,18 @@ window.angular && (function(angular) {
         }
       ],
       HOST_STATE_TEXT: {
-        on: 'Running',
+        on: 'On',
         on_code: 'xyz.openbmc_project.State.Host.HostState.Running',
         off: 'Off',
         off_code: 'xyz.openbmc_project.State.Host.HostState.Off',
         error: 'Quiesced',
         error_code: 'xyz.openbmc_project.State.Host.HostState.Quiesced',
+        poweringon: 'Loading',
+        poweringoff: 'Loading',
         unreachable: 'Unreachable'
       },
       LED_STATE: {on: true, off: false},
-      LED_STATE_TEXT: {on: 'on', off: 'off'},
+      LED_STATE_TEXT: {on: 'Lit', off: 'Off'},
       SEVERITY_TO_PRIORITY_MAP: {
         Emergency: 'High',
         Alert: 'High',
@@ -92,6 +94,7 @@ window.angular && (function(angular) {
         'xyz.openbmc_project.Sensor.Value.Unit.Meters'
       ],
       SENSOR_SORT_ORDER_DEFAULT: 8,
+      RESTRICTED_USER_ACCESS_ROLE: 'NoAccess',
       FIRMWARE: {
         ACTIVATE_FIRMWARE:
             'xyz.openbmc_project.Software.Activation.RequestedActivations.Active',
@@ -103,11 +106,12 @@ window.angular && (function(angular) {
         POWER_OP: 5000,
       },
       TIMEOUT: {
-        ACTIVATION: 1000 * 60 * 10,        // 10 mins
-        DOWNLOAD_IMAGE: 1000 * 60 * 2,     // 2 mins
-        HOST_ON: 1000 * 60 * 5,            // 5 mins
-        HOST_OFF: 1000 * 60 * 5,           // 5 mins
-        HOST_OFF_IMMEDIATE: 1000 * 60 * 2  // 2 mins
+        ACTIVATION: 1000 * 60 * 10,         // 10 mins
+        DOWNLOAD_IMAGE: 1000 * 60 * 2,      // 2 mins
+        HOST_ON: 1000 * 60 * 5,             // 5 mins
+        HOST_OFF: 1000 * 60 * 5,            // 5 mins
+        HOST_OFF_IMMEDIATE: 1000 * 60 * 2,  // 2 mins
+        HOST_FAST: 1000 * 60                // 1 mins
       },
       CERTIFICATE: {
         KEY_BIT_LENGTH: [2048],
@@ -377,18 +381,31 @@ window.angular && (function(angular) {
         },
         POWER_OP: {
           POWER_ON_FAILED: 'Power on failed.',
+          POWER_ON_PASS: 'Power on successful.',
           WARM_REBOOT_FAILED: 'Warm reboot failed.',
           COLD_REBOOT_FAILED: 'Cold reboot failed.',
           ORDERLY_SHUTDOWN_FAILED: 'Orderly shutdown failed.',
           IMMEDIATE_SHUTDOWN_FAILED: 'Immediate shutdown failed.',
         },
+        FIRMWARE: {
+          SUCCESS: 'Successfully modified the firmware update options.',
+          FAILED: 'Failed to update the firmware update options.',
+          MESSAGE_IMMEDIATE:
+              'Programming has begun, and will take several minutes to complete. Do not remove power from the server. The BMC will reboot and run the new firmware.',
+          MESSAGE_ONRESET:
+              'Programming has begun, and will take several minutes to complete. Do not remove power from the server. The BMC will continue to run its current firmware. The new firmware takes effect the next time the BMC reboots.',
+          MESSAGE_FAILED:
+              'Firmware image upload failed. Check the firmware image file before upload again.'
+        },
         SENSOR: {
           NO_SENSOR_DATA: 'There are no sensors found.',
-          CRITICAL_NO_SENSOR_DATA: 'There are no sensors in Critical state.',
-          WARNING_NO_SENSOR_DATA: 'There are no sensors in Warning state.',
-          NORMAL_NO_SENSOR_DATA: 'There are no sensors in Normal state.'
+          CRITICAL_NO_SENSOR_DATA: 'There are no sensors in critical state.',
+          WARNING_NO_SENSOR_DATA: 'There are no sensors in warning state.',
+          NORMAL_NO_SENSOR_DATA: 'There are no sensors in normal state.'
         },
         ERROR_MESSAGE_DESC_TEMPLATE: '{{status}} - {{description}}',
+        EVENTLOG_CLEAR_SUCCESS: 'Event logs cleared successfully.',
+        EVENTLOG_CLEAR_FALIED: 'Event logs failed.'
       },
       POWER_CAP_TEXT: {unit: 'W', disabled: 'Not Enabled'},
       POWER_CONSUMPTION_TEXT: {

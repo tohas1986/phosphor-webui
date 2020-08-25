@@ -8,65 +8,31 @@ window.angular && (function(angular) {
         'restrict': 'E',
         'template': require('./app-header.html'),
         'scope': {'path': '='},
+        'title': 'No title',
         'controller': [
-          '$rootScope', '$scope', 'dataService', 'userModel', '$location',
-          '$route',
+          '$rootScope', '$scope', 'dataService', 'Constants', 'userModel',
+          '$location', '$route',
           function(
-              $rootScope, $scope, dataService, userModel, $location, $route) {
+              $rootScope, $scope, dataService, Constants, userModel, $location,
+              $route) {
             $scope.dataService = dataService;
 
-            try {
-              // Create a secure websocket with URL as /subscribe
-              // TODO: Need to put in a generic APIUtils to avoid duplicate
-              // controller
-              var ws = new WebSocket(
-                  'wss://' + dataService.server_id + '/subscribe');
-            } catch (error) {
-              console.log('WebSocket', error);
-            }
+            $scope.page_title = $rootScope.page_title;
+            $scope.$on('$routeChangeSuccess', function(event, data) {
+              $scope.page_title = data.title;
+            });
 
-            if (ws !== undefined) {
-              // Specify the required event details as JSON dictionary
-              var data = JSON.stringify({
-                'paths': ['/xyz/openbmc_project/state/host0'],
-                'interfaces': ['xyz.openbmc_project.State.Host']
-              });
+            $scope.page_title = $rootScope.page_title;
 
-              // Send the JSON dictionary data to host
-              ws.onopen = function() {
-                ws.send(data);
-                console.log('host0 ws opened');
-              };
-
-              // Close the web socket
-              ws.onclose = function() {
-                console.log('host0 ws closed');
-              };
-
-              // Websocket event handling function which catches the
-              // current host state
-              ws.onmessage = function(evt) {
-                // Parse the response (JSON dictionary data)
-                var content = JSON.parse(evt.data);
-
-                // Fetch the current server power state
-                if (content.hasOwnProperty('properties') &&
-                    content['properties'].hasOwnProperty('CurrentHostState')) {
-                  // Refresh the host state and status
-                  // TODO: As of now not using the current host state
-                  // value for updating the data Service state rather
-                  // using it to detect the command line state change.
-                  // Tried different methods like creating a separate
-                  // function, adding ws under $scope etc.. but auto
-                  // refresh is not happening.
-                  $scope.loadServerStatus();
-                }
-              };
-            }
+            $scope.$on('$routeChangeSuccess', function(event, data) {
+              $scope.page_title = data.title;
+            });
 
             $scope.loadServerHealth = function() {
-              APIUtils.getLogs().then(function(result) {
-                dataService.updateServerHealth(result.data);
+              APIUtils.getServerStatus().then(function(result) {
+                if (result && result.Status) {
+                  dataService.updateServerHealth(result.Status.Health);
+                }
               });
             };
 
@@ -74,18 +40,28 @@ window.angular && (function(angular) {
               if (!userModel.isLoggedIn()) {
                 return;
               }
-              APIUtils.getHostState().then(
-                  function(status) {
-                    if (status ==
-                        'xyz.openbmc_project.State.Host.HostState.Off') {
+              APIUtils.getServerStatus().then(
+                  function(result) {
+                    if (result &&
+                        result.PowerState == Constants.HOST_STATE_TEXT.off) {
                       dataService.setPowerOffState();
                     } else if (
-                        status ==
-                        'xyz.openbmc_project.State.Host.HostState.Running') {
+                        result &&
+                        result.PowerState == Constants.HOST_STATE_TEXT.on) {
+                      dataService.setPowerOnState();
+                    } else if (
+                        result &&
+                        result.PowerState ==
+                            Constants.HOST_STATE_TEXT.poweringoff) {
+                      dataService.setPowerOnState();
+                    } else if (
+                        result &&
+                        result.PowerState ==
+                            Constants.HOST_STATE_TEXT.poweringon) {
                       dataService.setPowerOnState();
                     } else {
                       dataService.setErrorState();
-                    }
+                    };
                   },
                   function(error) {
                     console.log(error);
@@ -96,6 +72,7 @@ window.angular && (function(angular) {
               if (!userModel.isLoggedIn()) {
                 return;
               }
+              // TODO: change to Redfish then can uncomment
               APIUtils.getNetworkInfo().then(function(data) {
                 dataService.setNetworkInfo(data);
               });
@@ -121,6 +98,8 @@ window.angular && (function(angular) {
             }
 
             loadData();
+
+            var myUsername = sessionStorage.getItem('LOGIN_ID');
 
             $scope.logout = function() {
               userModel.logout(function(status, error) {
@@ -149,7 +128,6 @@ window.angular && (function(angular) {
                 $rootScope.$on('user-logged-in', function(event, arg) {
                   loadData();
                 });
-
             $scope.$on('$destroy', function() {
               loginListener();
             });

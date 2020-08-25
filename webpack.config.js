@@ -5,7 +5,6 @@ var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackInlineSourcePlugin =
     require('html-webpack-inline-source-plugin');
-var CSPWebpackPlugin = require('csp-html-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CompressionPlugin = require('compression-webpack-plugin');
@@ -94,16 +93,8 @@ module.exports = (env, options) => {
         // to your output
         // Excludes .svg files in icons directory
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|ico)$/,
-        exclude: /icons\/.*\.svg$/,
         loader: 'file-loader',
         options: {name: '[path][name].[ext]'}
-      },
-      {
-        // INLINE SVG LOADER
-        // Inlines .svg assets in icons directory
-        // needed specifically for icon-provider.js directive
-        test: /icons\/.*\.svg$/,
-        loader: 'svg-inline-loader'
       },
       {
         // HTML LOADER
@@ -130,17 +121,6 @@ module.exports = (env, options) => {
       favicon: './app/assets/images/favicon.ico',
       minify: {removeComments: true, collapseWhitespace: true},
 
-    }),
-    new CSPWebpackPlugin({
-      'base-uri': '\'self\'',
-      'object-src': '\'none\'',
-      'script-src': ['\'self\''],
-      'style-src': ['\'self\''],
-      'connect-src': ['\'self\''],
-      // KVM requires image buffers from data: payloads, so allow that in
-      // img-src
-      // https://stackoverflow.com/questions/18447970/content-security-policy-data-not-working-for-base64-images-in-chrome-28
-      'img-src': ['\'self\'', 'data:'],
     }),
     new MiniCssExtractPlugin(),
 

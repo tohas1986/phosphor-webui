@@ -10,21 +10,33 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('powerOperationsController', [
-    '$scope', 'APIUtils', 'dataService', 'Constants', '$interval', '$q',
-    'toastService', '$uibModal',
+    '$scope', '$location', 'APIUtils', 'dataService', 'Constants', '$interval',
+    '$q', 'toastService', '$uibModal',
     function(
-        $scope, APIUtils, dataService, Constants, $interval, $q, toastService,
-        $uibModal) {
+        $scope, $location, APIUtils, dataService, Constants, $interval, $q,
+        toastService, $uibModal) {
       $scope.dataService = dataService;
-      $scope.loading = true;
+
+      // Is a || of the other 4 "confirm" variables to ensure only
+      // one confirm is shown at a time.
+      $scope.dataService = dataService;
+
+      $scope.loading = false;
       $scope.oneTimeBootEnabled = false;
       $scope.bootOverrideError = false;
       $scope.bootSources = [];
       $scope.boot = {};
       $scope.defaultRebootSetting = 'warm-reboot';
       $scope.defaultShutdownSetting = 'warm-shutdown';
-
+      $scope.status = '';
       $scope.activeModal;
+      $scope.flag = true;
+
+      const userValue = JSON.parse(sessionStorage.getItem('USER_PERMISSION'));
+      if (userValue && userValue.RoleId && userValue.RoleId != 'Operator' &&
+          userValue.RoleId != 'Administrator') {
+        $location.url('/unauthorized');
+      }
 
       // When a power operation is in progress, set to true,
       // when a power operation completes (success/fail) set to false.
@@ -41,29 +53,72 @@ window.angular && (function(angular) {
        * Checks the host status provided by the dataService using an
        * interval timer
        * @param {string} statusType : host status type to check for
-       * @param {number} timeout : timeout limit, defaults to 5 minutes
+       * @param {number} timeout : timeout limit, defaults to 1 minutes
        * @param {string} error : error message, defaults to 'Time out'
        * @returns {Promise} : returns a deferred promise that will be fulfilled
        * if the status is met or be rejected if the timeout is reached
        */
       const checkHostStatus =
-          (statusType, timeout = 300000, error = 'Time out.') => {
+          (serverOperation, statusType, timeout = 60000,
+           error = 'Time out.') => {
             const deferred = $q.defer();
             const start = new Date();
-            const checkHostStatusInverval = $interval(() => {
+            const checkHostStatusInterval = $interval(() => {
               let now = new Date();
               let timePassed = now.getTime() - start.getTime();
               if (timePassed > timeout) {
+                setPowerState();
+                toastService.error(error);
                 deferred.reject(error);
-                $interval.cancel(checkHostStatusInverval);
+                $interval.cancel(checkHostStatusInterval);
               }
-              if (dataService.server_state === statusType) {
-                deferred.resolve();
-                $interval.cancel(checkHostStatusInverval);
-              }
+              // we need to call API to get server_state information
+              // and check condition, if true then resolve
+              APIUtils.getServerStatus().then(
+                  function(result) {
+                    if (result) {
+                      $scope.status = result.PowerState;
+                      console.log(
+                          'PowerState :', result.PowerState,
+                          '& status :', statusType);
+                      if (serverOperation === 'reboot' &&
+                          result.PowerState === Constants.HOST_STATE_TEXT.on) {
+                        setPowerState();
+                        deferred.resolve();
+                        $interval.cancel(checkHostStatusInterval);
+                        if ($scope.flag) {
+                          toastService.success(
+                              'Power ' + result.PowerState + ' successful');
+                          $scope.flag = false;
+                        }
+                      } else if (result.PowerState === statusType) {
+                        setPowerState();
+                        deferred.resolve();
+                        $interval.cancel(checkHostStatusInterval);
+                        if ($scope.flag) {
+                          toastService.success(
+                              'Power ' + result.PowerState + ' successful');
+                        }
+                      };
+                    };
+                  },
+                  function(error) {
+                    console.log(error);
+                  });
             }, Constants.POLL_INTERVALS.POWER_OP);
             return deferred.promise;
           };
+
+      /**
+       * Set server state (On/Off)
+       */
+      const setPowerState = () => {
+        if (Constants.HOST_STATE_TEXT.on === $scope.status) {
+          dataService.setPowerOnState();
+        } else if (Constants.HOST_STATE_TEXT.off === $scope.status) {
+          dataService.setPowerOffState();
+        }
+      };
 
       /**
        * Initiate Orderly reboot
@@ -71,18 +126,25 @@ window.angular && (function(angular) {
        */
       const warmReboot = () => {
         $scope.operationPending = true;
+        $scope.loading = true;
         dataService.setUnreachableState();
-        APIUtils.hostReboot()
+        APIUtils.gracefulRestart()
             .then(() => {
               // Check for off state
+              $scope.loading = false;
               return checkHostStatus(
-                  Constants.HOST_STATE_TEXT.off, Constants.TIMEOUT.HOST_OFF,
+                  'reboot', Constants.HOST_STATE_TEXT.off,
+                  Constants.TIMEOUT.HOST_FAST,
                   Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT);
             })
             .then(() => {
               // Check for on state
+              if ($scope.status === Constants.HOST_STATE_TEXT.on) {
+                dataService.setUnreachableState();
+              }
               return checkHostStatus(
-                  Constants.HOST_STATE_TEXT.on, Constants.TIMEOUT.HOST_ON,
+                  'reboot', Constants.HOST_STATE_TEXT.on,
+                  Constants.TIMEOUT.HOST_FAST,
                   Constants.MESSAGES.POLL.HOST_ON_TIMEOUT);
             })
             .catch(error => {
@@ -92,6 +154,7 @@ window.angular && (function(angular) {
             })
             .finally(() => {
               $scope.operationPending = false;
+              $scope.loading = false;
             });
       };
 
@@ -101,22 +164,28 @@ window.angular && (function(angular) {
        */
       const coldReboot = () => {
         $scope.operationPending = true;
+        $scope.loading = true;
         dataService.setUnreachableState();
-        APIUtils.chassisPowerOff()
+        APIUtils.forceOff()
             .then(() => {
               // Check for off state
+              $scope.loading = false;
               return checkHostStatus(
-                  Constants.HOST_STATE_TEXT.off,
-                  Constants.TIMEOUT.HOST_OFF_IMMEDIATE,
+                  'reboot', Constants.HOST_STATE_TEXT.off,
+                  Constants.TIMEOUT.HOST_FAST,
                   Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT);
             })
             .then(() => {
+              $scope.loading = false;
+              if ($scope.status === Constants.HOST_STATE_TEXT.on) {
+                dataService.setUnreachableState();
+              }
               return APIUtils.hostPowerOn();
             })
             .then(() => {
               // Check for on state
               return checkHostStatus(
-                  Constants.HOST_STATE_TEXT.on, Constants.TIMEOUT.HOST_ON,
+                  '', Constants.HOST_STATE_TEXT.on, Constants.TIMEOUT.HOST_FAST,
                   Constants.MESSAGES.POLL.HOST_ON_TIMEOUT);
             })
             .catch(error => {
@@ -126,21 +195,25 @@ window.angular && (function(angular) {
             })
             .finally(() => {
               $scope.operationPending = false;
+              $scope.loading = false;
             });
       };
 
       /**
-       * Initiate Orderly shutdown
+       * Initiate any shutdown
        * Attempts to stop all software
        */
       const orderlyShutdown = () => {
         $scope.operationPending = true;
+        $scope.loading = true;
         dataService.setUnreachableState();
-        APIUtils.hostPowerOff()
+        APIUtils.gracefulShutdown()
             .then(() => {
               // Check for off state
+              $scope.loading = false;
               return checkHostStatus(
-                  Constants.HOST_STATE_TEXT.off, Constants.TIMEOUT.HOST_OFF,
+                  '', Constants.HOST_STATE_TEXT.off,
+                  Constants.TIMEOUT.HOST_OFF_IMMEDIATE,
                   Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT);
             })
             .catch(error => {
@@ -150,6 +223,7 @@ window.angular && (function(angular) {
             })
             .finally(() => {
               $scope.operationPending = false;
+              $scope.loading = false;
             });
       };
 
@@ -158,17 +232,20 @@ window.angular && (function(angular) {
        * Does not attempt to stop all software
        */
       const immediateShutdown = () => {
+        $scope.loading = true;
         $scope.operationPending = true;
         dataService.setUnreachableState();
-        APIUtils.chassisPowerOff()
+        APIUtils.forceOff()
             .then(() => {
               // Check for off state
+              $scope.loading = false;
               return checkHostStatus(
-                  Constants.HOST_STATE_TEXT.off,
-                  Constants.TIMEOUT.HOST_OFF_IMMEDIATE,
+                  '', Constants.HOST_STATE_TEXT.off,
+                  Constants.TIMEOUT.HOST_FAST,
                   Constants.MESSAGES.POLL.HOST_OFF_TIMEOUT);
             })
             .then(() => {
+              $scope.loading = false;
               dataService.setPowerOffState();
             })
             .catch(error => {
@@ -178,6 +255,7 @@ window.angular && (function(angular) {
             })
             .finally(() => {
               $scope.operationPending = false;
+              $scope.loading = false;
             });
       };
 
@@ -185,13 +263,15 @@ window.angular && (function(angular) {
        * Initiate Power on
        */
       $scope.powerOn = () => {
+        $scope.loading = true;
         $scope.operationPending = true;
         dataService.setUnreachableState();
         APIUtils.hostPowerOn()
             .then(() => {
               // Check for on state
+              $scope.loading = false;
               return checkHostStatus(
-                  Constants.HOST_STATE_TEXT.on, Constants.TIMEOUT.HOST_ON,
+                  '', Constants.HOST_STATE_TEXT.on, Constants.TIMEOUT.HOST_FAST,
                   Constants.MESSAGES.POLL.HOST_ON_TIMEOUT);
             })
             .catch(error => {
@@ -200,9 +280,38 @@ window.angular && (function(angular) {
             })
             .finally(() => {
               $scope.operationPending = false;
+              $scope.loading = false;
             });
       };
 
+      /**
+       * Callback when 'Boot settings' button clicked
+       */
+      $scope.onClickBootSettings = () => {
+        initBootSettingsModal();
+      };
+
+      /**
+       * Initiate account settings modal
+       */
+      function initBootSettingsModal() {
+        const template = require('./power-operations-settings-modal.html');
+        $uibModal
+            .open({
+              template,
+              windowTopClass: 'uib-modal',
+              scope: $scope,
+              ariaLabelledBy: 'modal-operation',
+            })
+            .result
+            .then((form) => {
+              saveBootSettings();
+            })
+            .catch(
+                () => {
+                    // do nothing
+                })
+      }
       /*
        *  Power operations modal
        */
@@ -226,6 +335,7 @@ window.angular && (function(angular) {
       };
 
       const powerOperationModal = function() {
+        $scope.flag = true;
         $uibModal
             .open({
               template: modalTemplate,
@@ -264,12 +374,14 @@ window.angular && (function(angular) {
       $scope.resetForm = function() {
         $scope.boot = angular.copy($scope.originalBoot);
         $scope.TPMToggle = angular.copy($scope.originalTPMToggle);
+        $scope.TPMVersion = angular.copy($scope.originalTPMVersion);
       };
 
       /*
        *   Get boot settings
        */
       const loadBootSettings = function() {
+        $scope.loading = true;
         APIUtils.getBootOptions()
             .then(function(response) {
               const boot = response.Boot;
@@ -297,110 +409,121 @@ window.angular && (function(angular) {
               toastService.error('Unable to get boot override values.');
               console.log(
                   'Error loading boot settings:', JSON.stringify(error));
+            })
+            .finally(function() {
+              $scope.loading = false;
             });
-        $scope.loading = false;
       };
 
       /*
        *   Get TPM status
        */
       const loadTPMStatus = function() {
+        // TO DO: Redfish currently does not include TPM policy; function below
+        // to be updated once it's completed
+        $scope.loading = true;
         APIUtils.getTPMStatus()
             .then(function(response) {
-              $scope.TPMToggle = response.data;
+              $scope.TPMVersion = response.data(TrustedModules.InterfaceType);
+              if ($scope.TPMVersion) {
+                $scope.TPMToggle = true;
+              }
               $scope.originalTPMToggle = angular.copy($scope.TPMToggle);
+              $scope.originalTPMVersion = angular.copy($scope.TPMVersion);
             })
             .catch(function(error) {
-              toastService.error('Unable to get TPM policy status.');
+              //  toastService.error('Unable to get TPM policy status.');
               console.log('Error loading TPM status', JSON.stringify(error));
+            })
+            .finally(function() {
+              $scope.loading = false;
             });
-        $scope.loading = false;
+      };
+
+      /*
+       *   Prettify boot Target
+       */
+      $scope.prettifyBootTarget = function(bootTarget) {
+        if (bootTarget != 'None' && bootTarget != null) {
+          return bootTarget.replace('Cd', 'CD')
+              .replace('Pxe', 'PXE')
+              .replace('Hdd', 'Hard Drive')
+              .replace('Diags', 'Diagnostics')
+              .replace('BiosSetup', 'BIOS Setup')
+              .replace('Usb', 'USB')
+        } else {
+          return 'No override';
+        }
       };
 
       /*
        *   Save boot settings
        */
-      $scope.saveBootSettings = function() {
-        if ($scope.hostBootSettings.bootSelected.$dirty ||
-            $scope.hostBootSettings.oneTime.$dirty) {
+      $scope.saveBootSettings = function(bootSelectedDirty, oneTimeDirty) {
+        if (bootSelectedDirty || oneTimeDirty) {
           const data = {};
           data.Boot = {};
 
           let isOneTimeBoot = $scope.boot.oneTimeBootEnabled;
           let overrideTarget = $scope.boot.BootSourceOverrideTarget || 'None';
           let overrideEnabled = 'Disabled';
-
           if (isOneTimeBoot) {
             overrideEnabled = 'Once';
           } else if (overrideTarget !== 'None') {
             overrideEnabled = 'Continuous';
           }
-
           data.Boot.BootSourceOverrideEnabled = overrideEnabled;
           data.Boot.BootSourceOverrideTarget = overrideTarget;
-
+          $scope.loading = true;
           APIUtils.saveBootSettings(data).then(
               function(response) {
                 $scope.originalBoot = angular.copy($scope.boot);
                 toastService.success('Successfully updated boot settings.');
+                $scope.loading = false;
               },
               function(error) {
                 toastService.error('Unable to save boot settings.');
                 console.log(JSON.stringify(error));
-              });
+                $scope.loading = false;
+              })
         }
       };
 
       /*
        *   Save TPM required policy
        */
-      $scope.saveTPMPolicy = function() {
-        if ($scope.hostBootSettings.toggle.$dirty) {
+      $scope.saveTPMPolicy = function(toggleDirty) {
+        // TO DO: Redfish currently does not include TPM policy; function below
+        // to be updated once it's completed
+        if (toggleDirty) {
           const tpmEnabled = $scope.TPMToggle.TPMEnable;
+          const tpmVersion = $scope.TPMToggle.TPMversion;
 
           if (tpmEnabled === undefined) {
             return;
           }
-
-          APIUtils.saveTPMEnable(tpmEnabled)
+          $scope.loading = true;
+          APIUtils.saveTPMEnable(tpmVersion)
               .then(
                   function(response) {
                     $scope.originalTPMToggle = angular.copy($scope.TPMToggle);
+                    $scope.originalTPMVersion = angular.copy($scope.TPMVersion);
                     toastService.success(
                         'Sucessfully updated TPM required policy.');
                   },
                   function(error) {
                     toastService.error('Unable to update TPM required policy.');
                     console.log(JSON.stringify(error));
-                  });
+                  })
+              .finally(() => {
+                $scope.loading = false;
+              });
         }
       };
 
-      /*
-       *   Emitted every time the view is reloaded
-       */
-      $scope.$on('$viewContentLoaded', function() {
-        APIUtils.getLastPowerTime()
-            .then(
-                function(data) {
-                  if (data.data == 0) {
-                    $scope.powerTime = 'not available';
-                  } else {
-                    $scope.powerTime = data.data;
-                  }
-                },
-                function(error) {
-                  toastService.error(
-                      'Unable to get last power operation time.');
-                  console.log(JSON.stringify(error));
-                })
-            .finally(function() {
-              $scope.loading = false;
-            });
-
-        loadBootSettings();
-        loadTPMStatus();
-      });
+      loadBootSettings();
+      loadTPMStatus();
     }
+
   ]);
 })(angular);

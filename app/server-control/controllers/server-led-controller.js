@@ -11,7 +11,10 @@ window.angular && (function(angular) {
 
   angular.module('app.serverControl').controller('serverLEDController', [
     '$scope', '$window', '$route', 'APIUtils', 'dataService', 'toastService',
-    function($scope, $window, $route, APIUtils, dataService, toastService) {
+    '$location',
+    function(
+        $scope, $window, $route, APIUtils, dataService, toastService,
+        $location) {
       $scope.dataService = dataService;
 
       APIUtils.getLEDState().then(function(state) {
@@ -19,22 +22,22 @@ window.angular && (function(angular) {
       });
 
       $scope.displayLEDState = function(state) {
-        if (state == APIUtils.LED_STATE.on) {
-          dataService.LED_state = APIUtils.LED_STATE_TEXT.on;
+        if (state == APIUtils.LED_STATE_TEXT.on) {
+          dataService.LED_state = APIUtils.LED_STATE.on;
         } else {
-          dataService.LED_state = APIUtils.LED_STATE_TEXT.off;
+          dataService.LED_state = APIUtils.LED_STATE.off;
         }
       };
 
       $scope.toggleLED = function() {
-        var toggleState =
-            (dataService.LED_state == APIUtils.LED_STATE_TEXT.on) ?
+        var toggleState = (dataService.LED_state == APIUtils.LED_STATE.on) ?
             APIUtils.LED_STATE.off :
             APIUtils.LED_STATE.on;
         dataService.LED_state =
-            (dataService.LED_state == APIUtils.LED_STATE_TEXT.on) ?
-            APIUtils.LED_STATE_TEXT.off :
-            APIUtils.LED_STATE_TEXT.on;
+            (dataService.LED_state == APIUtils.LED_STATE.on) ?
+            APIUtils.LED_STATE.off :
+            APIUtils.LED_STATE.on;
+
         APIUtils.setLEDState(toggleState)
             .then(
                 function(response) {},

@@ -69,11 +69,14 @@ window.angular && (function(angular) {
 
       this.host = this.getHost();
       this.server_id = this.getServerId();
+      this.user_id = this.getUser();
 
       this.setNetworkInfo = function(data) {
-        this.hostname = data.hostname;
-        this.defaultgateway = data.defaultgateway;
-        this.mac_address = data.mac_address;
+        this.hostname = data[0].HostName;
+        // TODO: this value only is for the first ethernet connection; removed
+        // since is not used
+        // this.defaultgateway = data[0].IPv6DefaultGateway;
+        // this.mac_address = data[0].MACAddress;
       };
 
       this.setPowerOnState = function() {
@@ -84,6 +87,14 @@ window.angular && (function(angular) {
         this.server_state = Constants.HOST_STATE_TEXT.off;
       };
 
+      this.setPoweringOffState = function() {
+        this.server_state = Constants.HOST_STATE_TEXT.poweringoff;
+      };
+
+      this.setPoweringOnState = function() {
+        this.server_state = Constants.HOST_STATE_TEXT.poweringon;
+      };
+
       this.setErrorState = function() {
         this.server_state = Constants.HOST_STATE_TEXT.error;
       };
@@ -92,19 +103,8 @@ window.angular && (function(angular) {
         this.server_state = Constants.HOST_STATE_TEXT.unreachable;
       };
 
-      this.updateServerHealth = function(logs) {
-        // If any unresolved severity high logs are present, set server health
-        // to critical. Else if any unresolved severity medium logs are present
-        // set server health to warning.
-        this.server_health = Constants.SERVER_HEALTH.good;
-        for (var log of logs) {
-          if (log.priority == 'High' && !log.Resolved) {
-            this.server_health = Constants.SERVER_HEALTH.critical;
-            return;
-          } else if (log.priority == 'Medium' && !log.Resolved) {
-            this.server_health = Constants.SERVER_HEALTH.warning;
-          }
-        }
+      this.updateServerHealth = function(healthStatus) {
+        this.server_health = healthStatus;
       };
 
       this.setSystemName = function(sysName) {

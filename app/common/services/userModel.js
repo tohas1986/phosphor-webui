@@ -11,8 +11,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.common.services').service('userModel', [
-    'APIUtils',
-    function(APIUtils) {
+    '$cookies', 'APIUtils',
+    function($cookies, APIUtils) {
       return {
         login: function(username, password, callback) {
           APIUtils.login(username, password, function(response, error) {
@@ -20,6 +20,10 @@ window.angular && (function(angular) {
                 (response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS ||
                  response.status === undefined)) {
               sessionStorage.setItem('LOGIN_ID', username);
+              APIUtils.getUserPrivilleage(username).then(function(response) {
+                sessionStorage.setItem(
+                    'USER_PERMISSION', JSON.stringify(response));
+              })
               callback(true);
             } else if (
                 response && response.data && response.data.data &&
@@ -35,7 +39,9 @@ window.angular && (function(angular) {
           });
         },
         isLoggedIn: function() {
-          if (sessionStorage.getItem('LOGIN_ID') === null) {
+          if ((sessionStorage.getItem('LOGIN_ID') === null) &&
+              (($cookies.get('IsAuthenticated') === undefined) ||
+               ($cookies.get('IsAuthenticated') == 'false'))) {
             return false;
           }
           return true;
@@ -46,6 +52,8 @@ window.angular && (function(angular) {
                 response.status == APIUtils.API_RESPONSE.SUCCESS_STATUS) {
               sessionStorage.removeItem('LOGIN_ID');
               sessionStorage.removeItem(APIUtils.HOST_SESSION_STORAGE_KEY);
+              $cookies.remove('IsAuthenticated');
+              sessionStorage.removeItem('USER_PERMISSION');
               callback(true);
             } else if (response.status == APIUtils.API_RESPONSE.ERROR_STATUS) {
               callback(false);

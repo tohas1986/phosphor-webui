@@ -40,6 +40,7 @@ import api_utils from './common/services/api-utils.js';
 import userModel from './common/services/userModel.js';
 import apiInterceptor from './common/services/apiInterceptor.js';
 import nbdServerService from './common/services/nbdServerService.js';
+import virtualMediaModel from './common/services/virtualMediaModel.js';
 
 import filters_index from './common/filters/index.js';
 
@@ -49,8 +50,8 @@ import app_navigation from './common/directives/app-navigation.js';
 import confirm from './common/directives/confirm.js';
 import log_event from './common/directives/log-event.js';
 import certificate from './common/directives/certificate.js';
-import log_filter from './common/directives/log-filter.js';
 import log_search_control from './common/directives/log-search-control.js';
+import ldap_user_roles from './common/directives/ldap-user-roles.js';
 import toggle_flag from './common/directives/toggle-flag.js';
 import firmware_list from './common/directives/firmware-list.js';
 import file from './common/directives/file.js';
@@ -68,6 +69,9 @@ import password_visibility_toggle from './common/directives/password-visibility-
 import components_index from './common/components/index.js';
 import table_component from './common/components/table/table.js';
 import table_actions_component from './common/components/table/table-actions.js';
+import table_toolbar_component from './common/components/table/table-toolbar.js';
+import table_checkbox from './common/components/table/table-checkbox.js';
+import status_icon from './common/components/status-icon.js';
 
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
@@ -81,30 +85,32 @@ import power_operations_controller from './server-control/controllers/power-oper
 import power_usage_controller from './server-control/controllers/power-usage-controller.js';
 import remote_console_window_controller from './server-control/controllers/remote-console-window-controller.js';
 import server_led_controller from './server-control/controllers/server-led-controller.js';
+import vm_controller from './server-control/controllers/virtual-media-controller.js';
+import kvm_console from './server-control/directives/kvm-console.js';
 import kvm_controller from './server-control/controllers/kvm-controller.js';
+import kvm_window_controller from './server-control/controllers/kvm-window-controller.js';
 
 import server_health_index from './server-health/index.js';
 import inventory_overview_controller from './server-health/controllers/inventory-overview-controller.js';
-import log_controller from './server-health/controllers/log-controller.js';
 import sensors_overview_controller from './server-health/controllers/sensors-overview-controller.js';
 import syslog_controller from './server-health/controllers/syslog-controller.js';
-import syslog_filter from './common/directives/syslog-filter.js';
 import remote_logging_server from './server-health/directives/remote-logging-server.js';
 
 import redfish_index from './redfish/index.js';
 import redfish_controller from './redfish/controllers/redfish-controller.js';
 import configuration_index from './configuration/index.js';
 import date_time_controller from './configuration/controllers/date-time-controller.js';
-import certificate_controller from './configuration/controllers/certificate-controller.js';
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
-import vm_controller from './configuration/controllers/virtual-media-controller.js';
 
-import users_index from './users/index.js';
-import user_accounts_controller from './users/controllers/user-accounts-controller.js';
-import username_validator from './users/directives/username-validator.js';
-import role_table from './users/directives/role-table.js';
+import access_control from './access-control/index.js';
+import user_controller from './access-control/controllers/user-controller.js';
+import username_validator from './access-control/directives/username-validator.js';
+import role_table from './access-control/directives/role-table.js';
+import certificate_controller from './access-control/controllers/certificate-controller.js';
+import ldap_controller from './access-control/controllers/ldap-controller.js';
+
 
 window.angular && (function(angular) {
   'use strict';
@@ -116,13 +122,14 @@ window.angular && (function(angular) {
             // Dependencies
             'ngRoute', 'angular-clipboard', 'ngToast', 'ngAnimate',
             'ngMessages', 'app.common.directives.dirPagination', 'ngSanitize',
-            'ui.bootstrap',
+            'ui.bootstrap', 'ngCookies',
             // Basic resources
             'app.common.services', 'app.common.directives',
             'app.common.filters', 'app.common.components',
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
-            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish'
+            'app.serverHealth', 'app.configuration', 'app.accessControl',
+            'app.redfish'
           ])
       // Route configuration
       .config([
@@ -166,16 +173,24 @@ window.angular && (function(angular) {
             animation: 'fade',
             timeout: 10000,
             dismissButton: true,
+            dismissOnTimeout: false,
+            dismissOnClick: false,
             maxNumber: 6
           });
         }
       ])
       .run([
-        '$rootScope', '$location', 'dataService', 'userModel',
-        function($rootScope, $location, dataService, userModel) {
+        '$rootScope', '$location', 'dataService', 'userModel', '$cookies',
+        function($rootScope, $location, dataService, userModel, $cookies) {
           $rootScope.dataService = dataService;
           dataService.path = $location.path();
+
+
+
           $rootScope.$on('$routeChangeStart', function(event, next, current) {
+            // set page title
+            $rootScope.page_title = next.title;
+
             if (next.$$route == null || next.$$route == undefined) return;
             if (next.$$route.authenticated) {
               if (!userModel.isLoggedIn()) {
@@ -186,8 +201,22 @@ window.angular && (function(angular) {
             if (next.$$route.originalPath == '/' ||
                 next.$$route.originalPath == '/login') {
               if (userModel.isLoggedIn()) {
+                const uri = (next && next.params && next.params.next) ?
+                    next.params.next :
+                    null;
                 if (current && current.$$route) {
                   $location.path(current.$$route.originalPath);
+                } else if (uri) {
+                  const invalidChar =
+                      (uri.indexOf('(') >= 0 || uri.indexOf(')') >= 0 ||
+                       uri.indexOf('.') >= 0 || uri.indexOf(':') >= 0 ||
+                       uri.indexOf('//') >= 0)
+                  if (invalidChar) {
+                    $location.path('/overview/server');
+                  }
+                  else {
+                    $window.location.href = uri;
+                  }
                 } else {
                   $location.path('/overview/server');
                 }
@@ -206,7 +235,10 @@ window.angular && (function(angular) {
           });
 
           $rootScope.$on('timedout-user', function() {
+            console.log('timedout-user event triggered');
             sessionStorage.removeItem('LOGIN_ID');
+            $cookies.remove('IsAuthenticated');
+
             $location.path('/login');
           });
         }

@@ -1,0 +1,23 @@
+#configuration-cert{
+
+  #addCsrForm{
+    .alternate-name-table .table__cell:nth-child(2){
+      flex-grow: .2;
+    }
+    .alternate-name-table .table__row{
+      border-bottom: 0px;
+      &:hover{
+        background: #ffffff;
+      }
+    }
+    .alternate-name-table .table__cell{
+      padding: 15px 10px 5px 0px;
+      overflow: inherit;
+    }
+  }
+
+  .certificate-list .table__cell:last-child{
+    min-width: 140px;
+  }
+
+}

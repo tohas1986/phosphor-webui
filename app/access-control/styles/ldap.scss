@@ -1,0 +1,59 @@
+// LDAP SCSS
+#configuration-ldap{
+
+  .control__indicator {
+    margin-top: 5px;
+  }
+  .control-radio{
+    padding-top: 14px;
+  }
+  fieldset{
+    label, .control__label {
+      color:#333333;
+    }
+    &.disabled{
+      label, .control__label {
+        color: $color--grey-70;
+      }
+    }
+  }
+  label.first{
+    padding-left: 0;
+    padding-right: 5px;
+  }
+
+  .ldap__control-check {
+    text-transform: none;
+    font-weight: 400;
+    font-size: 16px;
+    color: $primary-dark;
+    .control__indicator {
+      top: 11px;
+    }
+  }
+
+  .password-toggle{
+    cursor: pointer;
+  }
+
+  button.form-message{
+    text-transform: capitalize;
+    margin: 0;
+    padding: .4em;
+    cursor: pointer !important;
+    color: #5b5b5b;
+  }
+
+  .control-check{
+    margin-bottom: 0;
+  }
+
+  .empty__logs {
+    width: 100%;
+  }
+
+  .control__indicator{
+    opacity: 1;
+  }
+
+}

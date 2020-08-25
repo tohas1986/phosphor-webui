@@ -9,8 +9,8 @@ window.angular && (function(angular) {
         'template': require('./certificate.html'),
         'scope': {'cert': '=', 'reload': '&'},
         'controller': [
-          '$scope', 'APIUtils', 'toastService', 'Constants',
-          function($scope, APIUtils, toastService, Constants) {
+          '$scope', 'APIUtils', 'toastService', 'Constants', '$uibModal',
+          function($scope, APIUtils, toastService, Constants, $uibModal) {
             var certificateType = 'PEM';
             var availableCertificateTypes = Constants.CERTIFICATE_TYPES;
 
@@ -35,6 +35,85 @@ window.angular && (function(angular) {
               }
             };
 
+            $scope.isDeletable = function(certificate) {
+              return certificate.Description == 'TrustStore Certificate';
+            };
+
+            $scope.confirmDeleteCert = function(certificate) {
+              initRemoveModal(certificate);
+            };
+
+            /**
+             * Intiate remove certificate modal
+             * @param {*} certificate
+             */
+            function initRemoveModal(certificate) {
+              const template = require('./certificate-modal-remove.html');
+              $uibModal
+                  .open({
+                    template,
+                    windowTopClass: 'uib-modal',
+                    ariaLabelledBy: 'dialog_label',
+                    controllerAs: 'modalCtrl',
+                    controller: function() {
+                      this.certificate = certificate;
+                    }
+                  })
+                  .result
+                  .then(() => {
+                    deleteCert(certificate);
+                  })
+                  .catch(
+                      () => {
+                          // do nothing
+                      })
+            };
+
+            /**
+             * Removes certificate
+             * @param {*} certificate
+             */
+            function deleteCert(certificate) {
+              $scope.confirm_delete = false;
+              APIUtils.deleteRedfishObject(certificate['@odata.id'])
+                  .then(
+                      function(data) {
+                        $scope.loading = false;
+                        toastService.success(
+                            $scope.getCertificateName(certificate.Description) +
+                            ' was deleted.');
+                        $scope.reload();
+                      },
+                      function(error) {
+                        console.log(error);
+                        $scope.loading = false;
+                        toastService.error(
+                            'Unable to delete ' +
+                            $scope.getCertificateName(certificate.Description));
+                      });
+              return;
+            };
+
+            $scope.addCertModal = function(action) {
+              openAddCertModal(action);
+            };
+
+            function openAddCertModal(action) {
+              const modalTemplateAddCert = require(
+                  '../../access-control/controllers/certificate-modal-add-cert.html');
+              $scope.action = action;
+              $uibModal
+                  .open({
+                    template: modalTemplateAddCert,
+                    windowTopClass: 'uib-modal',
+                    scope: $scope,
+                    ariaLabelledBy: 'modal_label',
+                  })
+                  .result.catch(function() {
+                    // do nothing
+                  });
+            };
+
             $scope.replaceCertificate = function(certificate) {
               $scope.loading = true;
               if (certificate.file.name.split('.').pop() !==
@@ -43,11 +122,7 @@ window.angular && (function(angular) {
                     'Certificate must be replaced with a .pem file.');
                 return;
               }
-              var file =
-                  document
-                      .getElementById(
-                          'upload_' + certificate.Description + certificate.Id)
-                      .files[0];
+              var file = certificate.file;
               var reader = new FileReader();
               reader.onloadend = function(e) {
                 var data = {};

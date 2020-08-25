@@ -19,7 +19,7 @@ window.angular && (function(angular) {
       $scope.dataService = dataService;
       $scope.serverUnreachable = false;
       $scope.invalidCredentials = false;
-      $scope.host = $scope.dataService.host.replace(/^https?\:\/\//ig, '');
+      $scope.host = $scope.dataService.host;
 
       $scope.tryLogin = function(host, username, password, event) {
         // keyCode 13 is the 'Enter' button. If the user hits 'Enter' while in
@@ -40,10 +40,20 @@ window.angular && (function(angular) {
             if (status) {
               $scope.$emit('user-logged-in', {});
               var next = $location.search().next;
+              // don't allow forwarding to non-local urls
               if (next === undefined || next == null) {
                 $window.location.hash = '#/overview/server';
-              } else {
-                $window.location.href = next;
+              } else if (next) {
+                const invalidChar =
+                    (next.indexOf('(') >= 0 || next.indexOf(')') >= 0 ||
+                     next.indexOf('.') >= 0 || next.indexOf(':') >= 0 ||
+                     next.indexOf('//') >= 0)
+                if (invalidChar) {
+                  $window.location.hash = '#/overview/server';
+                }
+                else {
+                  $window.location.href = next;
+                }
               }
             } else {
               if (description === 'Unauthorized') {

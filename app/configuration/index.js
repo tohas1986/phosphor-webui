@@ -16,38 +16,31 @@ window.angular && (function(angular) {
         function($routeProvider) {
           $routeProvider
               .when('/configuration/network', {
+                title: 'Network',
                 'template': require('./controllers/network-controller.html'),
                 'controller': 'networkController',
                 authenticated: true
               })
               .when('/configuration/date-time', {
+                title: 'Date Settings',
                 'template': require('./controllers/date-time-controller.html'),
                 'controller': 'dateTimeController',
                 authenticated: true
               })
               .when('/configuration', {
+                title: 'Network',
                 'template': require('./controllers/network-controller.html'),
                 'controller': 'networkController',
                 authenticated: true
               })
               .when('/configuration/snmp', {
+                title: 'SNMP',
                 'template': require('./controllers/snmp-controller.html'),
                 'controller': 'snmpController',
                 authenticated: true
               })
-              .when('/configuration/virtual-media', {
-                'template':
-                    require('./controllers/virtual-media-controller.html'),
-                'controller': 'virtualMediaController',
-                authenticated: true
-              })
-              .when('/configuration/certificate', {
-                'template':
-                    require('./controllers/certificate-controller.html'),
-                'controller': 'certificateController',
-                authenticated: true
-              })
               .when('/configuration/firmware', {
+                title: 'Firmware',
                 'template': require('./controllers/firmware-controller.html'),
                 'controller': 'firmwareController',
                 authenticated: true

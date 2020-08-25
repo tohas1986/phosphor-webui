@@ -1,14 +1,26 @@
-// Content layout styles
-$nav__toplvlWidth: 120px;
-$nav__seclvlWidth: 240px;
+// Page header
+.page-header {
+  width: 100%;
+  position: relative;
+  margin: 0;
+  padding-left: 0;
+}
 
 // Main element class
 .content__container {
-  margin-left: $nav__toplvlWidth;
+  @include header-height(page-container);
+  @include nav-width(page-container,false);
+  &.collapsed{
+    @include nav-width(page-container,true);
+  }
+
   padding: 1em 0.1em;
 
   @include mediaQuery(x-small) {
-    padding: 1rem 2rem;
+    padding: 1rem .5rem;
+  }
+  @include mediaQuery(small) {
+    padding: 1rem 1rem;
   }
 
   section.row,
@@ -26,30 +38,132 @@ $nav__seclvlWidth: 240px;
   }
 }
 
+.small-text{
+  font-size:12px;
+}
+
+.content__container{
+  background-image: url('../assets/images/logo-OpenBmc-builton.svg');
+  background-position: bottom 8px right 50px;
+  background-size: 150px 55px;
+  background-repeat: no-repeat;
+  padding-bottom:64px;
+  min-height:400px;
+}
+
 .content-header {
   font-weight: 700;
   margin-bottom: 0;
   margin-top: 2em;
 }
 
-// TODO: Determine if label and content-label are the same - remove generic element selector
-.content-label,
-label {
-  @include label;
+.more-info{
+  a{
+    font-weight: normal;
+    color: $color--grey-90;
+    text-decoration: none;
+  }
+  .icon, img{
+    width: 8px;
+    @include greyFilter;
+    display: none;
+  }
+  &:hover{
+    cursor: pointer;
+    .icon, img{
+      display: inline;
+    }
+    td, td:nth-child(2){
+      background-color: $color--grey-20;
+    }
+  }
 }
 
-// TODO: Remove and replace with section and section-title pattern
 // Page header
 .page-header {
   width: 100%;
   position: relative;
-  border-bottom: 1px solid $border-color-01;
   margin: 0.5em 0 2.2em;
   padding-left: 0;
 }
-// TODO: Remove and replace with the .section and .section-title pattern
 .subhead {
   width: 100%;
   border-bottom: 1px solid $border-color-01;
   padding-bottom: 0.5em;
+}
+
+.more-info a {
+  font-weight: normal;
+  color: #5b5b5b;
+  text-decoration: none; }
+
+.more-info .icon, .more-info img {
+  width: 12px;
+  filter: brightness(0) saturate(100%) invert(59%) sepia(0%) saturate(298%) hue-rotate(252deg) brightness(92%) contrast(88%);
+  fill: #979a9d;
+  display: none;
+  padding-left: 3px;
+  margin-top: -1px;
+ }
+
+.more-info:hover {
+  cursor: pointer; }
+  .more-info:hover .icon, .more-info:hover img {
+    display: inline; }
+  .more-info:hover td, .more-info:hover td:nth-child(2) {
+    background-color: #f0f2f5;
+ }
+
+.trim-text{
+  @include mediaQuery(x-small) {
+    display:none;
+  }
+  @include mediaQuery(small) {
+    display:inherit;
+  }
+}
+
+.trim-text-medium{
+  @include mediaQuery(x-small) {
+    display:none;
+  }
+  @include mediaQuery(medium) {
+    display:block;
+  }
+}
+.trim-text-small{
+  @include mediaQuery(x-small) {
+    display:none;
+  }
+  @include mediaQuery(small) {
+    display:block;
+  }
+}
+
+.status-wrapper {
+  margin: 8px 0 0 5px;
+  span{
+    color: $color--grey-70;
+  }
+  transition-delay: 1s;
+  .hide{
+    display:none;
+  }
+  .status-label{
+    background: $color--red-50;
+    color: white;
+    text-transform: uppercase;
+    font-size:12px;
+    border-radius: 2px;
+    margin:0;
+    padding:1px 5px 1px 5px;
+    box-sizing: content-box;
+    display:inline;
+    span{
+      color: white;
+    }
+    &.disabled{
+      background: $color--grey-60;
+    }
+  }
 }

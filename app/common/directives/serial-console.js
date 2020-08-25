@@ -35,6 +35,16 @@ function measureChar(term) {
   return rect;
 }
 
+/*
+TextEncoder/TextDecoder does not support IE.
+Use text-encoding instead in IE
+More detail at https://caniuse.com/#feat=textencoder
+*/
+import {TextDecoder} from 'text-encoding';
+if (!window['TextDecoder']) {
+  window['TextDecoder'] = TextDecoder;
+}
+
 window.angular && (function(angular) {
   'use strict';
 
@@ -45,8 +55,8 @@ window.angular && (function(angular) {
         'template': require('./serial-console.html'),
         'scope': {'path': '=', 'showTabBtn': '=?'},
         'controller': [
-          '$scope', '$window', 'dataService',
-          function($scope, $window, dataService) {
+          '$scope', '$cookies', '$window', 'dataService', '$element',
+          function($scope, $cookies, $window, dataService, $element) {
             $scope.dataService = dataService;
 
             // See https://github.com/xtermjs/xterm.js/ for available xterm
@@ -57,7 +67,8 @@ window.angular && (function(angular) {
 
             var border = 10;
             var term = new Terminal();
-            var terminal = document.getElementById('terminal');
+            // Should be a reference to <div id="terminal"></div>
+            var terminal = $element[0].firstElementChild.firstElementChild;
             var customConsole;
             var charSize;
             var termContainer;
@@ -91,16 +102,21 @@ window.angular && (function(angular) {
             term.setOption('theme', SOL_THEME);
             var hostname = dataService.getHost().replace('https://', '');
             var host = 'wss://' + hostname + '/console0';
-            var ws = new WebSocket(host);
-            term.attach(ws);
-            ws.onopen = function() {
-              console.log('websocket opened');
-            };
-            ws.onclose = function(event) {
-              console.log(
-                  'websocket closed. code: ' + event.code +
-                  ' reason: ' + event.reason);
-            };
+            var token = $cookies.get('XSRF-TOKEN');
+            try {
+              var ws = new WebSocket(host, [token]);
+              term.attach(ws);
+              ws.onopen = function() {
+                console.log('websocket opened');
+              };
+              ws.onclose = function(event) {
+                console.log(
+                    'websocket closed. code: ' + event.code +
+                    ' reason: ' + event.reason);
+              };
+            } catch (error) {
+              console.log(JSON.stringify(error));
+            }
             $scope.openTerminalWindow = function() {
               $window.open(
                   '#/server-control/remote-console-window',

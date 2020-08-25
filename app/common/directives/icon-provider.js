@@ -21,7 +21,7 @@ window.angular && ((angular) => {
           return;
         }
         const svg = require(`../../assets/icons/${file}`);
-        element.html(svg);
+        element.html('<img src="' + svg + '">');
         element.addClass('icon');
       }
     };

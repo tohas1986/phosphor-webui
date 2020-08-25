@@ -1,0 +1,62 @@
+<loader loading="loading"></loader>
+<div id="configuration-cert" class="page">
+  <div class="row">
+    <div class="columns col-md-12 col-sm-12">
+      <div class="page-content-box">
+        <legend>SSL Certificates</legend>
+        <div class="row">
+          <div class="message-box" ng-show="certificates.length == 0">
+            No SSL Certificates currently loaded.
+          </div>
+          <div class="table row column certificate-list" ng-show="certificates.length > 0">
+            <div class="table__head fixed-table-header">
+              <div class="table__row">
+                <div class="table__cell">Certificate</div>
+                <div class="table__cell">Issued by</div>
+                <div class="table__cell">Issued to</div>
+                <div class="table__cell">Valid from</div>
+                <div class="table__cell">Valid until</div>
+                <div class="table__cell action-wrapper"></div>
+              </div>
+            </div>
+            <div class="table__body">
+              <div ng-repeat="certificate in certificates">
+                <certificate cert="certificate" reload="loadCertificates()"></certificate>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button ng-disabled="availableCertificateTypes.length === 0" ng-click="addCertModal('Add')"
+              class="btn-icon">
+              <icon file="add--alt.svg" aria-hidden="true"></icon>
+              Add SSL certificate
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section class="section">
+  <div class="section-content">
+    <div ng-repeat="certificate in certificates | filter:{isExpiring:true}">
+      <div class="alert alert-warning" role="alert">
+        <icon file="warning--filled.svg" aria-hidden="true"></icon>
+        The uploaded {{ certificate.name }} is expiring in
+        {{ getDays(certificate.ValidNotAfter) === 0
+            ? "less than one day."
+            : getDays(certificate.ValidNotAfter) + " days!" }}
+        Consider replacing it with a new certificate.
+      </div>
+    </div>
+    <div ng-repeat="certificate in certificates | filter:{isExpired:true}">
+      <div class="alert alert-danger" role="alert">
+        <icon file="icon-critical.svg" aria-hidden="true"></icon>
+        The uploaded {{ certificate.name }} has expired. Consider replacing it
+        with a new certificate.
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,3 +1,73 @@
+  #noVNC_container {
+    div:nth-child(2){
+      background: transparent !important;
+      display:block !important;
+    }
+    &.allowResize{
+      div:nth-child(2){
+        //calc height = header + 27px padding
+        height: calc(100vh - 80px - 27px) !important;
+        @include mediaQuery(medium) {
+          height: calc(100vh - 50px - 27px) !important;
+        }
+        overflow: hidden !important;
+      }
+      div:nth-child(2) canvas{
+        max-height: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+    &.enforceAdjustment{
+      div:nth-child(2) canvas{
+        height: auto !important;
+        width: auto !important;
+      }
+    }
+  }
+
+  .btn-xsmall{
+    height: 16px;
+    padding: 2px 10px 1px 10px;
+    border-radius: 9px;
+  }
+
+  .kvm_container{
+    height:100%;
+  }
+
+  .display-option{
+    display:inline-block;
+    margin-top:-10px;
+    padding: 0;
+    width: 100%;
+  }
+
+  .toggle-text{
+    font-size:12px;
+    padding: 0px 5px 0 0;
+  }
+
+  .switch {
+    min-width: 72px;
+  }
+
+  .slider:before {
+    height: 9px;
+    width: 9px;
+  }
+
+  .slider:after{
+    content:'Off';
+  }
+
+  input:checked + .slider:after
+  {
+    content:'On';
+  }
+  label{
+    padding:8px 0;
+  }
+
 
 .noNVC_shown {
   display: inline;
@@ -8,4 +78,11 @@
 
 #noVNC_left_dummy_elem {
   flex: 1;
+}
+
+.kvm-window {
+  padding: 0 2rem;
+  .kvm__actions {
+    padding-bottom: 1.2rem;
+  }
 }
