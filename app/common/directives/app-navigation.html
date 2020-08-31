@@ -39,6 +39,12 @@
               <span>Sensors</span>
             </a>
           </li>
+          <li ng-class="{'active': (path == '/server-health/fans-overview' || path == '/server-health/fans')}">
+            <a href="#/server-health/fans-overview"
+              tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">
+              <span>Fans</span>
+            </a>
+          </li>
         </ul>
       </li>
       <li class="nav-item" ng-class="{opened: firstLevel == 'server-control'}">
