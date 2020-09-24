@@ -1647,8 +1647,18 @@ window.angular && (function(angular) {
                  return response.data;
                });
         },
-        setServerStatus: function(server_status) {
-           /* New  */
+        getServerStatus: function() { /* New */
+           return $http({
+                    method: 'GET',
+                    url: DataService.getHost() +
+                        '/xyz/openbmc_project/ares/rikbtnd/attr/HostPowerMode',
+                    withCredentials: true
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
+        },
+        setServerStatus: function(server_status) { /* New  */
            return $http({
                     method: 'POST',
                     url: DataService.getHost() +
@@ -1660,17 +1670,28 @@ window.angular && (function(angular) {
                  return response.data;
                });
         },
-        getServerStatus: function() {
-	   /* New */
-           return $http({
-                    method: 'GET',
-                    url: DataService.getHost() +
-                        '/xyz/openbmc_project/ares/rikbtnd/attr/HostPowerMode',
-                    withCredentials: true
-                  })
-               .then(function(response) {
-                 return response.data;
-               });
+        getSMTPSettings: function() { /* New */
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/smtp/params',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setSMTPSettings: function(smtp_params_array) { /* New */
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/network/smtp/params',
+                   withCredentials: true,
+                   data: JSON.stringify({'data':smtp_params_array})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
         },
      };
       return SERVICE;
