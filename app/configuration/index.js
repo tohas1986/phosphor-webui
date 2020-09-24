@@ -30,6 +30,11 @@ window.angular && (function(angular) {
                 'controller': 'networkController',
                 authenticated: true
               })
+              .when('/configuration/smtp', {
+                'template': require('./controllers/smtp-controller.html'),
+                'controller': 'smtpController',
+                authenticated: true
+              })
               .when('/configuration/snmp', {
                 'template': require('./controllers/snmp-controller.html'),
                 'controller': 'snmpController',

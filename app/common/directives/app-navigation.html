@@ -58,6 +58,7 @@
           <a href="#/server-control/power-operations" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Server power operations</a>
         </li>-->
+        <li ng-class="{'active': (path == '/server-control')}"></li>
         <li ng-class="{'active': (path == '/server-control/power-usage')}">
           <a href="#/server-control/power-usage" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Manage power usage</a>
@@ -97,6 +98,10 @@
         <li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}">
           <a href="#/configuration/network" ng-click="closeSubnav()"
             tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">Network settings</a>
+        </li>
+        <li ng-class="{'active': (path == '/configuration' || path == '/configuration/smtp')}">
+          <a href="#/configuration/smtp" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">SMTP settings</a>
         </li>
         <li ng-class="{'active': (path == '/configuration' || path == '/configuration/snmp')}">
           <a href="#/configuration/snmp" ng-click="closeSubnav()"
