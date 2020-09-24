@@ -1,0 +1,52 @@
+<loader loading="loading"></loader>
+<div id="configuration-smtp">
+  <div class="row column">
+    <h1>SMTP settings</h1>
+  </div>
+  <form class="smtp-config__form" role="form" action="">
+    <fieldset class="smtp-config__fieldset row column">
+      <legend class="column small-12 page-header h2">
+        Main settings
+      </legend>
+      <div class="smtp-config__fieldset-content">
+        <div class="column small-12 large-3">
+          <label for="smtp-config__email">Recipient Email</label>
+          <input id="smtp-config__email" type="text" ng-model="email" />
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="smtp-config__fieldset row column">
+      <legend class="column small-12 page-header h2">
+        Events settings
+      </legend>
+      <div class="smtp-config__fieldset-content">
+        <div class="row column">
+          <label class="control-checkbox" for="dhcp-address">Select need events for notification
+            <input type="checkbox" name="event1" id="event1" ng-checked="false" ng-model="event1" ng-value="false">Event 1<br>
+            <input type="checkbox" name="event2" id="event2" ng-checked="false" ng-model="event2" ng-value="false">Event 2<br>
+            <input type="checkbox" name="event3" id="event3" ng-checked="false" ng-model="event3" ng-value="false">Event 3<br>
+            <input type="checkbox" name="event4" id="event4" ng-checked="false" ng-model="event4" ng-value="false">Event 4<br>
+            <input type="checkbox" name="event5" id="event5" ng-checked="false" ng-model="event5" ng-value="false">Event 5<br>
+            <input type="checkbox" name="event6" id="event6" ng-checked="false" ng-model="event6" ng-value="false">Event 6<br>
+            <input type="checkbox" name="event7" id="event7" ng-checked="false" ng-model="event7" ng-value="false">Event 7<br>
+            <input type="checkbox" name="event8" id="event8" ng-checked="false" ng-model="event8" ng-value="false">Event 8<br>
+          </label>
+        </div>
+      </div>
+    </fieldset>
+    <div class="smtp-config__submit-wrapper">
+      <button type="button" class="btn-primary inline" ng-click="confirmSettings=true;">Save settings</button>
+      <button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
+    </div>
+  </form>
+</div>
+<div class="modal-overlay" tabindex="-1" ng-class="{'active': confirmSettings}"></div>
+<section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog"
+  ng-class="{'active': confirmSettings}">
+  <div class="modal__tftp-unreachable" role="document">
+    <div class="modal__button-wrapper">
+      <button class="inline btn-secondary" ng-click="confirmSettings=false;">Cancel</button>
+      <button class="inline btn-primary" ng-click="setSMTPSettings()">Continue</button>
+    </div>
+  </div>
+</section>
