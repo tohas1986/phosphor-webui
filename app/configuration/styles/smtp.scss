@@ -1,0 +1,53 @@
+.smtp-config__form {
+  .dropdown__button {
+    margin-bottom: 1.2em;
+  }
+  .dropdown__list {
+    margin-top: -17px;
+  }
+  .dropdown__button {
+    width: 200px;
+    margin-top: 0;
+    text-align: left;
+  }
+  input {
+    margin-bottom: 1.2em;
+  }
+
+  .smtp-config__fieldset {
+    margin-bottom: 1.2rem;
+
+    legend {
+      padding-bottom: 0.5rem;
+    }
+
+    .smtp-config__fieldset-content {
+      padding-left: 1.8em;
+    }
+  }
+
+  .control-checkbox {
+    margin-top: 1em;
+    margin-left: .7em;
+    font-weight: 700;
+  }
+
+  .smtp-config__submit-wrapper {
+    width: 100%;
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid $medgrey;
+
+    &::after {
+      content: " ";
+      display: block;
+      clear: both;
+    }
+
+    button {
+      float: right;
+      margin: .5em;
+    }
+  }
+
+}

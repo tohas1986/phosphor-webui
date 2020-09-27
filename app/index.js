@@ -84,6 +84,7 @@ import redfish_controller from './redfish/controllers/redfish-controller.js';
 import configuration_index from './configuration/index.js';
 import date_time_controller from './configuration/controllers/date-time-controller.js';
 import network_controller from './configuration/controllers/network-controller.js';
+import smtp_controller from './configuration/controllers/smtp-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 import vm_controller from './configuration/controllers/virtual-media-controller.js';

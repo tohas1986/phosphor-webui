@@ -66,25 +66,34 @@ window.angular && (function(angular) {
 
 	    /* New */
     	    $scope.setServerStatus = function() {
-        	dataService.server_state=document.getElementById("ServerPowerState").innerHTML;
-		return APIUtils.setServerStatus((dataService.server_state == "Running")? "Off":"Running").then(
-            	    function(data) {
-    			dataService.server_state=data.data;
-			var element=document.getElementById("ServerPowerState");
-			element.innerHTML=dataService.server_state;
-			element.setAttribute("class",(dataService.server_state == "Running")? "ng-binding status-light__good":"ng-binding status-light__off");
-			element.className=(dataService.server_state == "Running")? "ng-binding status-light__good":"ng-binding status-light__off";
-		    },
-            	    function(error) {
-                	console.log(JSON.stringify(error));
-                	return $q.reject();
-            	    });
+		/* 21.09.2020 */
+		var current_state=document.getElementById("ServerPowerState").innerHTML;
+		if( current_state != "Unreachable" ){
+        	    dataService.server_state="Unreachable";
+		    var element=document.getElementById("ServerPowerState");
+		    element.innerHTML=dataService.server_state;
+		    element.setAttribute("class","ng-binding status-light__disabled");
+		    element.className="ng-binding status-light__disabled";
+		
+		    return APIUtils.setServerStatus((current_state == "Running")? "Off":"Running").then(
+            		function(data) {
+    			    dataService.server_state=data.data;
+			    var element=document.getElementById("ServerPowerState");
+			    element.innerHTML=dataService.server_state;
+			    element.setAttribute("class",(dataService.server_state == "Running")? "ng-binding status-light__good":"ng-binding status-light__off");
+			    element.className=(dataService.server_state == "Running")? "ng-binding status-light__good":"ng-binding status-light__off";
+			},
+            		function(error) {
+                	    console.log(JSON.stringify(error));
+                	    return $q.reject();
+            		});
+		}
     	    };
 
 	    /* New */
 	    dataService.server_state="Unreachable";
     	    $scope.loadServerStatus = function() {
-		dataService.server_state="Unreachable";
+        	dataService.server_state="Unreachable";
     		return APIUtils.getServerStatus().then(
             	    function(data) {
     			dataService.server_state=data.data;
@@ -94,8 +103,8 @@ window.angular && (function(angular) {
 			element.className=(dataService.server_state == "Running")? "ng-binding status-light__good":"ng-binding status-light__off";
 		    },
             	    function(error) {
-            		console.log(JSON.stringify(error));
-                	return $q.reject();
+            	        console.log(JSON.stringify(error));
+            	        return $q.reject();
             	    });
     	    };
 
