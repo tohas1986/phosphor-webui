@@ -65,8 +65,8 @@ window.angular && (function(angular) {
 
       // Присвоение полей через объект $scope
       function setFields(data){
-	for(let [key, value] of Object.entries(data))
-	    $scope[${key}]=${value};
+	for(const [key, value] of Object.entries(data))
+	    $scope[key]=value;
       }
 
 
