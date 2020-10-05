@@ -1672,11 +1672,10 @@ window.angular && (function(angular) {
         },
         getSMTPSettings: function() { /* New */
           return $http({
-                   method: 'POST',
+                   method: 'GET',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/ares/rikmail/action/SMTPParams',
-                   withCredentials: true,
-                   data: JSON.stringify({'data':["test in param"]})
+                   withCredentials: true
                  })
               .then(function(response) {
                 return response.data;
