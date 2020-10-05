@@ -1672,7 +1672,7 @@ window.angular && (function(angular) {
         },
         getSMTPSettings: function() { /* New */
           return $http({
-                   method: 'GET',
+                   method: 'POST',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/ares/rikmail/action/SMTPParams',
                    withCredentials: true
