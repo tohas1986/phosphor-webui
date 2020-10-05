@@ -48,7 +48,7 @@ window.angular && (function(angular) {
           dataService.setSMTPSettings(data);
           setFields(data); // Получить подтвержденные изменения и переписать поля
 	});
-      } 
+      };
 
       // В случае обновления страницы
       $scope.refresh = function() {
