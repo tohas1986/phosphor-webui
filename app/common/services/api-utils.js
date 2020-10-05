@@ -1672,10 +1672,11 @@ window.angular && (function(angular) {
         },
         getSMTPSettings: function() { /* New */
           return $http({
-                   method: 'GET',
+                   method: 'POST',
                    url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/smtp/params',
-                   withCredentials: true
+                       '/xyz/openbmc_project/ares/rikmail/action/SMTPParams',
+                   withCredentials: true,
+                   data: JSON.stringify({'data':["test in param"]})
                  })
               .then(function(response) {
                 return response.data;
@@ -1685,7 +1686,7 @@ window.angular && (function(angular) {
           return $http({
                    method: 'POST',
                    url: DataService.getHost() +
-                       '/xyz/openbmc_project/network/smtp/params',
+                       '/xyz/openbmc_project/ares/rikmail/action/SMTPParams',
                    withCredentials: true,
                    data: JSON.stringify({'data':smtp_params_array})
                  })
