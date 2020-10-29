@@ -19,7 +19,7 @@ window.angular && (function(angular) {
       $scope.dataService = dataService;
 
       // Начальные значения полей
-      setFields(['',false,false,false,false,false,false,false,false]);
+      setFields(['email@box.com',false,true,false,true,false,true,false,true]);
 
       // Получить SMTP-настройки с сервера
       getSMTPSettings();
@@ -36,7 +36,7 @@ window.angular && (function(angular) {
 	    $scope.event7,
 	    $scope.event8
 	]).then(function(data) {
-          //dataService.setSMTPSettings(data);
+          dataService.setSMTPSettings(data);
           setFields(data.data); // Получить подтвержденные изменения и переписать поля
 	});
       };
@@ -49,7 +49,7 @@ window.angular && (function(angular) {
       // Получение настроек с сервера
       function getSMTPSettings() {
         APIUtils.getSMTPSettings().then(function(data) {
-          //dataService.setSMTPSettings(data);
+          dataService.setSMTPSettings(data);
           setFields(data.data);
 	});
       }
@@ -57,8 +57,8 @@ window.angular && (function(angular) {
       // Присвоение полей через объект $scope
       function setFields(data){
 	$scope.email=data[0];
-	//for(const [key, value] of Object.entries(data))
-	//    $scope[key]=value;
+	for(const [key, value] of Object.entries(data))
+	    $scope[key]=value;
       }
 
 
