@@ -1675,7 +1675,8 @@ window.angular && (function(angular) {
                    method: 'POST',
                    url: DataService.getHost() +
                        '/xyz/openbmc_project/ares/rikmail/action/SMTPParams',
-                   withCredentials: true
+                   withCredentials: true,
+                   data: JSON.stringify({'data':['start',false,false]})
                  })
               .then(function(response) {
                 return response.data;

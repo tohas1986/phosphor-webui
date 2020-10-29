@@ -9,9 +9,9 @@
         Main settings
       </legend>
       <div class="smtp-config__fieldset-content">
-        <div class="column small-12 large-3">
+        <div class="row column">
           <label for="smtp-config__email">Recipient Email</label>
-          <input id="smtp-config__email" type="text" ng-model="email" />
+          <input id="smtp-config__email" type="text" ng-model="email" class="smtp-config__email" />
         </div>
       </div>
     </fieldset>
@@ -21,7 +21,7 @@
       </legend>
       <div class="smtp-config__fieldset-content">
         <div class="row column">
-          <label class="control-checkbox" for="dhcp-address">Select need events for notification
+          <label class="control-checkbox" for="dhcp-address">Select need events for notification<br>
             <input type="checkbox" name="event1" id="event1" ng-checked="false" ng-model="event1" ng-value="false">Event 1<br>
             <input type="checkbox" name="event2" id="event2" ng-checked="false" ng-model="event2" ng-value="false">Event 2<br>
             <input type="checkbox" name="event3" id="event3" ng-checked="false" ng-model="event3" ng-value="false">Event 3<br>
