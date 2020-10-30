@@ -36,7 +36,7 @@ window.angular && (function(angular) {
 	    $scope.event7,
 	    $scope.event8
 	]).then(function(data) {
-          dataService.setSMTPSettings(data);
+          //dataService.setSMTPSettings(data);
           setFields(data.data); // Получить подтвержденные изменения и переписать поля
 	});
       };
@@ -49,8 +49,8 @@ window.angular && (function(angular) {
       // Получение настроек с сервера
       function getSMTPSettings() {
         APIUtils.getSMTPSettings().then(function(data) {
-          dataService.setSMTPSettings(data);
-          setFields(data.data);
+          //dataService.setSMTPSettings(data);
+          setFields(data);
 	});
       }
 
