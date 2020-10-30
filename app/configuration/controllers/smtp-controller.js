@@ -57,8 +57,16 @@ window.angular && (function(angular) {
       // Присвоение полей через объект $scope
       function setFields(data){
 	$scope.email=data[0];
-	for(const [key, value] of Object.entries(data))
-	    $scope[key]=value;
+	$scope.event1=data[1];
+	$scope.event2=data[2];
+	$scope.event3=data[3];
+	$scope.event4=data[4];
+	$scope.event5=data[5];
+	$scope.event6=data[6];
+	$scope.event7=data[7];
+	$scope.event8=data[8];
+	//for(const [key, value] of Object.entries(data))
+	//    $scope[key]=value;
       }
 
 
