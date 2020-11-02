@@ -35,16 +35,18 @@
       </div>
     </fieldset>
     <div class="smtp-config__submit-wrapper">
-      <button type="button" class="btn-primary inline" ng-click="confirmSettings=true;">Save settings</button>
+     <!-- <button type="button" class="btn-primary inline" ng-click="confirmSettings=true;">Save settings</button>-->
+      <button type="button" class="btn-primary inline" ng-click="setSMTPSettings()">Save settings</button>
       <button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
     </div>
   </form>
 </div>
+
+<!--
 <div class="modal-overlay" tabindex="-1" ng-class="{'active': confirmSettings}"></div>
 <section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog" ng-class="{'active': confirmSettings}">
   <div class="modal__tftp-unreachable" role="document">
     <div class="screen-reader-offscreen modal-description">Change SMTP settings</div>
-    <!-- accessibility only; used for screen readers -->
     <div class="page-header">
       <h3 class="modal-title inline">Change SMTP settings</h3>
     </div>
@@ -54,3 +56,4 @@
     </div>
   </div>
 </section>
+-->

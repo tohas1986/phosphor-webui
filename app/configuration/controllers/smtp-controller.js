@@ -48,8 +48,8 @@ window.angular && (function(angular) {
 		dataService.smtp_event7,
 		dataService.smtp_event8
 	    ]).then(function(data) {
-		     dataService.setSMTPSettings(data.data);
-		     setFields(data.data); // Получить подтвержденные изменения и переписать поля
+		     dataService.setSMTPSettings(data);
+		     setFields(data); // Получить подтвержденные изменения и переписать поля
 	       });
       };
 
@@ -61,8 +61,8 @@ window.angular && (function(angular) {
       // Получение настроек с сервера
       function getSMTPSettings() {
         APIUtils.getSMTPSettings().then(function(data) {
-          dataService.setSMTPSettings(data.data);
-          setFields(data.data);
+          dataService.setSMTPSettings(data);
+          setFields(data);
 	});
       }
 
@@ -78,8 +78,6 @@ window.angular && (function(angular) {
 	$scope.smtp_event7=data[7];
 	$scope.smtp_event8=data[8];
       }
-
-
     }
   ]);
 })(angular);
