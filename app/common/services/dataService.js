@@ -33,6 +33,28 @@ window.angular && (function(angular) {
 
       this.configJson = require('../../../config.json');
 
+      this.email='email@company.com';
+      this.smtp_event1=false;
+      this.smtp_event2=false;
+      this.smtp_event3=false;
+      this.smtp_event4=false;
+      this.smtp_event5=false;
+      this.smtp_event6=false;
+      this.smtp_event7=false;
+      this.smtp_event8=false;
+
+      this.setSMTPSettings = function(data){
+        if(data[0] !== null) this.email=data[0];
+        if(data[1] !== null) this.smtp_event1=data[1];
+        if(data[2] !== null) this.smtp_event2=data[2];
+        if(data[3] !== null) this.smtp_event3=data[3];
+        if(data[4] !== null) this.smtp_event4=data[4];
+        if(data[5] !== null) this.smtp_event5=data[5];
+        if(data[6] !== null) this.smtp_event6=data[6];
+        if(data[7] !== null) this.smtp_event7=data[7];
+        if(data[8] !== null) this.smtp_event8=data[8];
+      }
+
       this.getServerId = function() {
         return this.host.replace(/^https?\:\/\//ig, '');
       };
