@@ -11,7 +11,7 @@
       <div class="smtp-config__fieldset-content">
         <div class="row column">
           <label for="smtp-config__email">Recipient Email</label>
-          <input id="smtp-config__email" type="text" ng-model="email" class="smtp-config__email" />
+          <input id="smtp-config__email" type="text" name="email" ng-model="email" class="smtp-config__email" ng-value="dataService.email" />
         </div>
       </div>
     </fieldset>
@@ -22,21 +22,21 @@
       <div class="smtp-config__fieldset-content">
         <div class="row column">
           <label class="control-checkbox">Select need events for notification<br>
-            <input type="checkbox" name="smtp_event1" id="smtp_event1" ng-model="all" ng-click="dataService.smtp_event1 = ! dataService.smtp_event1" ng-checked="dataService.smtp_event1" ng-value="dataService.smtp_event1" />Event 1<br>
-            <input type="checkbox" name="smtp_event2" id="smtp_event2" ng-model="all" ng-click="dataService.smtp_event2 = ! dataService.smtp_event2" ng-checked="dataService.smtp_event2" ng-value="dataService.smtp_event2" />Event 2<br>
-            <input type="checkbox" name="smtp_event3" id="smtp_event3" ng-model="all" ng-click="dataService.smtp_event3 = ! dataService.smtp_event3" ng-checked="dataService.smtp_event3" ng-value="dataService.smtp_event3" />Event 3<br>
-            <input type="checkbox" name="smtp_event4" id="smtp_event4" ng-model="all" ng-click="dataService.smtp_event4 = ! dataService.smtp_event4" ng-checked="dataService.smtp_event4" ng-value="dataService.smtp_event4" />Event 4<br>
-            <input type="checkbox" name="smtp_event5" id="smtp_event5" ng-model="all" ng-click="dataService.smtp_event5 = ! dataService.smtp_event5" ng-checked="dataService.smtp_event5" ng-value="dataService.smtp_event5" />Event 5<br>
-            <input type="checkbox" name="smtp_event6" id="smtp_event6" ng-model="all" ng-click="dataService.smtp_event6 = ! dataService.smtp_event6" ng-checked="dataService.smtp_event6" ng-value="dataService.smtp_event6" />Event 6<br>
-            <input type="checkbox" name="smtp_event7" id="smtp_event7" ng-model="all" ng-click="dataService.smtp_event7 = ! dataService.smtp_event7" ng-checked="dataService.smtp_event7" ng-value="dataService.smtp_event7" />Event 7<br>
-            <input type="checkbox" name="smtp_event8" id="smtp_event8" ng-model="all" ng-click="dataService.smtp_event8 = ! dataService.smtp_event8" ng-checked="dataService.smtp_event8" ng-value="dataService.smtp_event8" />Event 8<br>
+            <input type="checkbox" name="smtp_event1" id="smtp_event1" ng-model="smtp_event1" ng-click="dataService.smtp_event1 = ! dataService.smtp_event1" ng-checked="dataService.smtp_event1" ng-value="dataService.smtp_event1" />Event 1<br>
+            <input type="checkbox" name="smtp_event2" id="smtp_event2" ng-model="smtp_event2" ng-click="dataService.smtp_event2 = ! dataService.smtp_event2" ng-checked="dataService.smtp_event2" ng-value="dataService.smtp_event2" />Event 2<br>
+            <input type="checkbox" name="smtp_event3" id="smtp_event3" ng-model="smtp_event3" ng-click="dataService.smtp_event3 = ! dataService.smtp_event3" ng-checked="dataService.smtp_event3" ng-value="dataService.smtp_event3" />Event 3<br>
+            <input type="checkbox" name="smtp_event4" id="smtp_event4" ng-model="smtp_event4" ng-click="dataService.smtp_event4 = ! dataService.smtp_event4" ng-checked="dataService.smtp_event4" ng-value="dataService.smtp_event4" />Event 4<br>
+            <input type="checkbox" name="smtp_event5" id="smtp_event5" ng-model="smtp_event5" ng-click="dataService.smtp_event5 = ! dataService.smtp_event5" ng-checked="dataService.smtp_event5" ng-value="dataService.smtp_event5" />Event 5<br>
+            <input type="checkbox" name="smtp_event6" id="smtp_event6" ng-model="smtp_event6" ng-click="dataService.smtp_event6 = ! dataService.smtp_event6" ng-checked="dataService.smtp_event6" ng-value="dataService.smtp_event6" />Event 6<br>
+            <input type="checkbox" name="smtp_event7" id="smtp_event7" ng-model="smtp_event7" ng-click="dataService.smtp_event7 = ! dataService.smtp_event7" ng-checked="dataService.smtp_event7" ng-value="dataService.smtp_event7" />Event 7<br>
+            <input type="checkbox" name="smtp_event8" id="smtp_event8" ng-model="smtp_event8" ng-click="dataService.smtp_event8 = ! dataService.smtp_event8" ng-checked="dataService.smtp_event8" ng-value="dataService.smtp_event8" />Event 8<br>
           </label>
         </div>
       </div>
     </fieldset>
     <div class="smtp-config__submit-wrapper">
      <!-- <button type="button" class="btn-primary inline" ng-click="confirmSettings=true;">Save settings</button>-->
-      <button type="button" class="btn-primary inline" ng-click="setSMTPSettings()">Save settings</button>
+      <button type="button" class="btn-primary inline" ng-click="setSMTPSettings();confirmSettings=true">Save settings</button>
       <button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
     </div>
   </form>
