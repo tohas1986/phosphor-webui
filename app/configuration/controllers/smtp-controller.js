@@ -17,6 +17,7 @@ window.angular && (function(angular) {
         toastService) {
 
       $scope.dataService = dataService;
+      $scope.cofirmSettings = false;
 
       // Начальные значения полей
 	setFields([
