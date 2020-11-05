@@ -50,6 +50,11 @@ window.angular && (function(angular) {
                 'template': require('./controllers/firmware-controller.html'),
                 'controller': 'firmwareController',
                 authenticated: true
+              })
+              .when('/configuration/sensors', {
+                'template': require('./controllers/sensors-controller.html'),
+                'controller': 'sensorsController',
+                authenticated: true
               });
         }
       ]);
