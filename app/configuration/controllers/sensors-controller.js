@@ -8,7 +8,7 @@
 
 window.angular && (function(angular) {
   'use strict';
-  angular.module('app.overview').controller('sensorsController', [
+  angular.module('app.configuration').controller('sensorsController', [
     '$scope', '$log', '$window', 'APIUtils', 'dataService', 'Constants',
     function($scope, $log, $window, APIUtils, dataService, Constants) {
       $scope.dataService = dataService;
