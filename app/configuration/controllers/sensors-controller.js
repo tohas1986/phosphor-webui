@@ -1,9 +1,9 @@
 /**
- * Controller for sensors-settings
+ * Controller for sensors
  *
  * @module app/configuration
  * @exports sensorsController
- * @name sensorController
+ * @name sensorsController
  */
 
 window.angular && (function(angular) {
