@@ -51,9 +51,9 @@ window.angular && (function(angular) {
                 'controller': 'firmwareController',
                 authenticated: true
               })
-              .when('/configuration/sensors-overview', {
-                'template': require('./controllers/sensors-overview-controller.html'),
-                'controller': 'sensorsOverviewController',
+              .when('/configuration/sensors', {
+                'template': require('./controllers/sensors-controller.html'),
+                'controller': 'sensorsController',
                 authenticated: true
               });
         }

@@ -88,7 +88,7 @@ import smtp_controller from './configuration/controllers/smtp-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 import vm_controller from './configuration/controllers/virtual-media-controller.js';
-import sensors_controller from './configuration/controllers/sensors-overview-controller.js';
+import sensors_controller from './configuration/controllers/sensors-controller.js';
 
 
 import users_index from './users/index.js';
