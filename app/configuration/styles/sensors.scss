@@ -140,7 +140,7 @@ $title-minWidth: 210px;
 
 // Sensors
 
-#sensors, #sensors-overview {
+#sensors, #sensors-settings {
 
   .toggle-filter {
     margin-bottom: 20px;
@@ -151,4 +151,9 @@ $title-minWidth: 210px;
   }
 }
 
+.sensor_edit_field {
+  width: 50px;
+}
+
 //end sensor details
+
