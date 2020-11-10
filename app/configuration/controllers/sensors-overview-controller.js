@@ -1,14 +1,14 @@
 /**
- * Controller for sensors
+ * Controller for sensors-overview
  *
- * @module app/configuration
- * @exports sensorsController
- * @name sensorsController
+ * @module app/serverHealth
+ * @exports sensorsOverviewController
+ * @name sensorsOverviewController
  */
 
 window.angular && (function(angular) {
   'use strict';
-  angular.module('app.configuration').controller('sensorsController', [
+  angular.module('app.overview').controller('sensorsOverviewController', [
     '$scope', '$log', '$window', 'APIUtils', 'dataService', 'Constants',
     function($scope, $log, $window, APIUtils, dataService, Constants) {
       $scope.dataService = dataService;
