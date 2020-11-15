@@ -48,10 +48,16 @@ window.angular && (function(angular) {
 		dataService.smtp_event6,
 		dataService.smtp_event7,
 		dataService.smtp_event8
-	    ]).then(function(data) {
-		     dataService.setSMTPSettings(data.data);
-		     setFields(data.data); // Получить подтвержденные изменения и переписать поля
-	       });
+	    ]).then(
+		function(data) {
+		    dataService.setSMTPSettings(data.data);
+		    setFields(data.data); // Получить подтвержденные изменения и переписать поля
+		    toastService.success('SMTP settings saved');
+		},
+		function(errors) {
+                    console.log(JSON.stringify(errors));
+                    toastService.error('SMTP settings could not be saved');
+                });
       };
 
       // В случае обновления страницы

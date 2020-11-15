@@ -115,7 +115,25 @@ window.angular && (function(angular) {
         return true;
       };
 
-      $scope.loadSensorData = function() {
+      $scope.setSensorData = function() {
+	  var i=0;
+	  for(var sensor of $scope.data){
+	      sensor.CriticalLow  = document.getElemetById("sensor-"+i+"-0");
+	      sensor.WarningLow   = document.getElemetById("sensor-"+i+"-1");
+	      sensor.WarningHigh  = document.getElemetById("sensor-"+i+"-2");
+	      sensor.CriticalHigh = document.getElemetById("sensor-"+i+"-3");
+	      i++;
+	  }
+	  $scope.loading = true;
+          APIUtils.setAllSensorStatus($scope.data,function(data, originalData) {
+              $scope.data = data;
+              $scope.originalData = originalData;
+              $scope.export_data = JSON.stringify(originalData);
+              $scope.loading = false;
+          });
+      };
+
+     $scope.loadSensorData = function() {
         $scope.loading = true;
         APIUtils.getAllSensorStatus(function(data, originalData) {
           $scope.data = data;
@@ -124,6 +142,10 @@ window.angular && (function(angular) {
           $scope.loading = false;
         });
       };
+
+      $scope.refresh = function(){
+	  $scope.loadSensorData();
+      }
 
       $scope.loadSensorData();
     }

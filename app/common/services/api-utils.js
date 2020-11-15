@@ -892,6 +892,19 @@ window.angular && (function(angular) {
 
           return deferred.promise;
         },
+	setAllSensorStatus: function(data,callback){
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/sensors/action/SetSensorsParams',
+                   withCredentials: true,
+                   data: JSON.stringify({'data':data})
+                 })
+	      .then(function(response) {
+		return getAllSensorStatus(callback);
+                //return response.data;
+              });
+	},
         getAllSensorStatus: function(callback) {
           $http({
             method: 'GET',

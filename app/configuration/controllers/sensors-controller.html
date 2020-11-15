@@ -1,7 +1,7 @@
 <loader loading="loading"></loader>
 <div id="sensors-settings">
   <div class="row column">
-    <h1>Sensors Critical Values Setting</h1>
+    <h1>Sensors Settings</h1>
   </div>
 <!--
   <section class="row column">
@@ -46,7 +46,8 @@
     <span ng-if="selectedSeverity.warning">{{messages.WARNING_NO_SENSOR_DATA}}</span>
     <span ng-if="selectedSeverity.normal">{{messages.NORMAL_NO_SENSOR_DATA}}</span>
   </section>
--->
+  -->
+<form class="sensors-settings__form" role="form" action="">
   <section id="sensor-categories" class="row column" ng-show="filteredSensorData.length">
     <div class="row column header-row fixed-table-header">
       <div class="column large-12 header__actions-bar">
@@ -61,28 +62,26 @@
     <!-- sensor -->
     <div class="sensor__readings-row" ng-repeat="sensor in data|filter:filterBySeverity|filter:filterBySearchTerms|orderBy:'+custom_order' as filteredSensorData">
       <p class="inline sensor__title"><span class="icon" ng-class="{'icon__critical': sensor.status == 'critical', 'icon__warning': sensor.status == 'warning', 'icon__normal': sensor.status == 'normal'}" aria-label="sensor.status" ></span>{{sensor.title}}</p>
+
       <p class="inline sensor__reading"><span class="sensor__label">Low critical</span>
-	<span ng-if="sensor.unit == 'C'"><input type="number" min="0"    max="100"  step="1"    name="sensor-lc-{{$index}}" ng-model="data[$index].CriticalLow" ng-value="{{sensor.CriticalLow}}" class="inline sensor_edit_field" /></span>
-	<span ng-if="sensor.unit != 'C'"><input type="number" min="0.00" max="5.00" step="0.05" name="sensor-lc-{{$index}}" ng-model="data[$index].CriticalLow" ng-value="{{sensor.CriticalLow}}" class="inline sensor_edit_field" /></span>
-	<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
+	<input type="text" size="5" pattern="^\d{0,2}(\.\d{0,3})?$" id="sensor-{{$index}}-0" ng-model="data[$index].CriticalLow" ng-value="{{sensor.CriticalLow}}" class="inline sensor__edit_field" /><span class="inline content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
 
       <p class="inline sensor__reading"><span class="sensor__label">Low warning</span>
-	<span ng-if="sensor.unit == 'C'"><input type="number" min="0"    max="100"  step="1"    name="sensor-lw-{{$index}}" ng-model="data[$index].WarningLow" ng-value="{{sensor.WarningLow}}" class="inline sensor_edit_field" /></span>
-	<span ng-if="sensor.unit != 'C'"><input type="number" min="0.00" max="5.00" step="0.05" name="sensor-lw-{{$index}}" ng-model="data[$index].WarningLow" ng-value="{{sensor.WarningLow}}" class="inline sensor_edit_field" /></span>
-	<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
+	<input type="text" size="5" pattern="^\d{0,2}(\.\d{0,3})?$" id="sensor-{{$index}}-1" ng-model="data[$index].WarningLow" ng-value="{{sensor.WarningLow}}" class="inline sensor__edit_field" /><span class="inline content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
 
-      <p class="inline sensor__reading sensor__current" ng-class="{'sensor__critical': sensor.status == 'critical', 'sensor__warn': sensor.status == 'warning', 'sensor__normal': sensor.status == 'normal'}"><span class="sensor__label">Current</span>{{sensor.Value}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
+      <p class="inline sensor__reading sensor__current" ng-class="{'sensor__critical': sensor.status == 'critical', 'sensor__warn': sensor.status == 'warning', 'sensor__normal': sensor.status == 'normal'}"><span class="inline sensor__label">Current</span>{{sensor.Value}}<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
 
       <p class="inline sensor__reading"><span class="sensor__label">High warning</span>
-	<span ng-if="sensor.unit == 'C'"><input type="number" min="0"    max="100"  step="1"     name="sensor-hw-{{$index}}" ng-model="data[$index].WarningHigh" ng-value="{{sensor.WarningHigh}}" class="inline sensor_edit_field" /></span>
-	<span ng-if="sensor.unit != 'C'"><input type="number" min="0.00" max="5.00" step="0.05"  name="sensor-hw-{{$index}}" ng-model="data[$index].WarningHigh" ng-value="{{sensor.WarningHigh}}" class="inline sensor_edit_field" /></span>
-	<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
+	<input type="text" size="5" pattern="^\d{0,2}(\.\d{0,3})?$" id="sensor-{{$index}}-2" ng-model="data[$index].WarningHigh" ng-value="{{sensor.WarningHigh}}" class="inline sensor__edit_field" /><span class="inline content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
 
       <p class="inline sensor__reading"><span class="sensor__label">High critical</span>
-	<span ng-if="sensor.unit == 'C'"><input type="number" min="0"    max="100"  step="1"     name="sensor-hc-{{$index}}" ng-model="data[$index].CriticalHigh" ng-value="{{sensor.CriticalHigh}}" class="inline sensor_edit_field" /></span>
-	<span ng-if="sensor.unit != 'C'"><input type="number" min="0.00" max="5.00" step="0.05"  name="sensor-hc-{{$index}}" ng-model="data[$index].CriticalHigh" ng-value="{{sensor.CriticalHigh}}" class="inline sensor_edit_field" /></span>
-	<span class="content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
+	<input type="text" size="5" pattern="^\d{0,2}(\.\d{0,3})?$" id="sensor-{{$index}}-3" ng-model="data[$index].CriticalHigh" ng-value="{{sensor.CriticalHigh}}" class="inline sensor__edit_field" /><span class="inline content-label">{{sensor.unit}}<span ng-if="sensor.unit == 'C'">&deg;</span></span></p>
 
-    </div>
+   </div>
   </section>
+  <div class="sensors-settings__submit-wrapper">
+   <button type="button" class="btn-primary inline" ng-click="setSensorData()">Save settings</button>
+   <button type="button" class="btn-secondary inline" ng-click="refresh()">Cancel</button>
+  </div>
+ </form>
 </div>

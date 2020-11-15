@@ -1,3 +1,5 @@
+.sensors-settings__form {
+
 @mixin state-label {
   text-transform: uppercase;
   font-weight: 700;
@@ -151,9 +153,30 @@ $title-minWidth: 210px;
   }
 }
 
-.sensor_edit_field {
-  width: 50px;
-}
+  input.sensor__edit_field {
+    width: 50px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 
+  .sensors-settings__submit-wrapper {
+    width: 100%;
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid $medgrey;
+
+    &::after {
+      content: " ";
+      display: block;
+      clear: both;
+    }
+
+    button {
+      float: right;
+      margin: .5em;
+    }
+  }
+
+}
 //end sensor details
 
