@@ -52,11 +52,11 @@ window.angular && (function(angular) {
 		function(data) {
 		    dataService.setSMTPSettings(data.data);
 		    setFields(data.data); // Получить подтвержденные изменения и переписать поля
-		    toastService.success('SMTP settings saved');
+		    toastService.success('SMTP settings saved'+'.\n'+data.data[9]);
 		},
 		function(errors) {
                     console.log(JSON.stringify(errors));
-                    toastService.error('SMTP settings could not be saved');
+                    toastService.error('SMTP settings could not be saved'+'.\n'+data.data[9]);
                 });
       };
 

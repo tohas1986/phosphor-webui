@@ -2,8 +2,8 @@
 
 @mixin state-label {
   text-transform: uppercase;
-  font-weight: 700;
-  font-size: .8em;
+  font-weight: 600;
+  font-size: .7em;
 }
 
 $title-minWidth: 210px;
@@ -11,7 +11,7 @@ $title-minWidth: 210px;
 .header__actions-bar {
   padding-left: 1.5em;
   padding-right: 1em;
-  font-weight: 700;
+  font-weight: 600;
   .sensor__title {
     margin-left: 1.5em;
   }
@@ -33,14 +33,15 @@ $title-minWidth: 210px;
 
 .sensor__label {
   float: left;
-  font-weight: 300;
+  font-weight: 250;
   @include mediaQuery(medium) {
     display: none;
   }
 }
 
 .sensor__title {
-  min-width: 28%;
+  width:20%;
+  min-width: 20%;
   margin-bottom: 0;
 }
 
@@ -67,16 +68,16 @@ $title-minWidth: 210px;
   background: lighten($lightgrey,1%);
   margin-top: 1em;
   @include mediaQuery(medium) {
-    padding: .3em 1em .3em 1.5em;
+    padding: .2em 1em .2em 1.5em;
     margin-top: 0;
     border-top: 0;
     background: transparent;
   }
   .sensor__title {
-    font-weight: 700;
+    font-weight: 600;
     background: darken($lightgrey, 5%);
     min-width: 100%;
-    padding: .8em;
+    padding: .7em;
     @include mediaQuery(medium) {
       min-width: 30%;
       background: transparent;
@@ -117,7 +118,7 @@ $title-minWidth: 210px;
       min-width: 150px;
     }
     .sensor__label {
-      font-weight: 700;
+      font-weight: 600;
       @include mediaQuery(medium) {
         font-weight:300;
       }
