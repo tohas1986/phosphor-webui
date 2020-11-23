@@ -118,10 +118,10 @@ window.angular && (function(angular) {
       $scope.setSensorData = function() {
 	  var i=0;
 	  for(var sensor of $scope.data){
-	      sensor.CriticalLow  = document.getElemetById("sensor-"+i+"-0");
-	      sensor.WarningLow   = document.getElemetById("sensor-"+i+"-1");
-	      sensor.WarningHigh  = document.getElemetById("sensor-"+i+"-2");
-	      sensor.CriticalHigh = document.getElemetById("sensor-"+i+"-3");
+	      sensor.CriticalLow  = document.getElementById("sensor-"+i+"-0");
+	      sensor.WarningLow   = document.getElementById("sensor-"+i+"-1");
+	      sensor.WarningHigh  = document.getElementById("sensor-"+i+"-2");
+	      sensor.CriticalHigh = document.getElementById("sensor-"+i+"-3");
 	      i++;
 	  }
 	  $scope.loading = true;
