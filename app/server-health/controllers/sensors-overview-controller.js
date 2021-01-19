@@ -131,7 +131,7 @@ window.angular && (function(angular) {
       };
 
       $scope.drowGraph = function() {
-	  var graph = document.getElementById("graph");
+	  var graph = document.getElementById("svg_graph");
 	  graph.innerHTML="";
 	  var svgNS = "http://www.w3.org/2000/svg";
 
@@ -141,7 +141,7 @@ newItem.setAttribute("cy", "50%");
 newItem.setAttribute("r", 4);
 newItem.setAttribute("fill", "#333333");
 
-	  document.getElementById("graph").appendChild(newItem);
+	  graph.appendChild(newItem);
       };
 
       $scope.loadSensorData();
