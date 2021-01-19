@@ -11,10 +11,11 @@
   </section>
 
   <section class="row column">
-    <p class="content-label" aria-label="sensor graph">Sensor Graph <input id="content__graph-submit" type="submit" class="btn btn-primary content__graph-submit" value="Show" ng-click="doGraphShowHideOnClick()"/></p>
+    <p class="content-label inline" aria-label="sensor graph">Sensor Graph <input id="content__graph-submit" type="submit" class="btn btn-primary content__graph-submit inline" value="Show" ng-click="doGraphShowHideOnClick()"/></p>
     <div id="content__graph-element" class="content__graph">
       <div class="graph-submit__wrapper">
-        <svg id="svg__graph">
+        <svg id="svg__graph" width="100%" height="600px" viewBox="0 0 1000 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+	    <rect y="200" x="200" width="200" height="100" />
         </svg>
       </div>
     </div>
@@ -37,7 +38,7 @@
       <button class="inline first btn-primary" ng-click="toggleSeverityAll()"
           ng-class="selectedSeverity.all ? 'btn-primary' : 'btn-secondary'">All
       </button>
-      <button class="inline " ng-click="toggleSeverity('critical')"
+      <button class="inline" ng-click="toggleSeverity('critical')"
           ng-class="selectedSeverity.critical ? 'btn-primary' : 'btn-secondary'">Critical
       </button>
       <button class="inline" ng-click="toggleSeverity('warning')"
