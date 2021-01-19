@@ -1,7 +1,7 @@
 
 // content graph
 
-.content__graph { #used
+.content__graph {
   width: 100%;
   float: left;
   position: relative;
@@ -11,7 +11,7 @@
 
   #svg__graph {
     position: absolute;
-    width: 100%;
+    width: auto;
     height: 400px;
     left: 0;
     top: 0;
@@ -48,14 +48,14 @@
     padding: 0;
     margin-right: .5em;
   }
-  .graph-submit__wrapper { #used
+  .graph-submit__wrapper {
     position: absolute;
     width: auto;
     height: 100%;
     top: 0;
     right: 0;
   }
-  .content__graph-submit { #used
+  .content__graph-submit {
     display: inline-block;
     padding: 1em 2em .9em;
     min-height: 20px;
