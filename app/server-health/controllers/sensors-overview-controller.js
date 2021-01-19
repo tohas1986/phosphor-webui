@@ -60,6 +60,11 @@ window.angular && (function(angular) {
         }
       };
 
+      $scope.doGraphShowHideOnClick = function() {
+          var e = document.getElementById("content__graph-element");
+	  e.style.display=(e.style.display == "none")? "block":"none";
+      };
+
       $scope.toggleSeverityAll = function() {
         $scope.selectedSeverity.all = !$scope.selectedSeverity.all;
 
@@ -125,7 +130,23 @@ window.angular && (function(angular) {
         });
       };
 
+      $scope.drowGraph = function() {
+	  var graph = document.getElementById("graph");
+	  graph.innerHTML="";
+	  var svgNS = "http://www.w3.org/2000/svg";
+
+	  var newItem = document.createElementNS(svgNS, "circle");
+newItem.setAttribute("cx", ((16 * 1) + 8));
+newItem.setAttribute("cy", "50%");
+newItem.setAttribute("r", 4);
+newItem.setAttribute("fill", "#333333");
+
+	  document.getElementById("graph").appendChild(newItem);
+      };
+
       $scope.loadSensorData();
+      $scope.drowGraph();	
+	
     }
   ]);
 })(angular);

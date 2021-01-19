@@ -9,6 +9,17 @@
       <a ng-href="data:text/json;charset=utf-8,{{export_data}}" class="inline btn-export float-right" download="{{export_name}}">Export</a>
     </div>
   </section>
+
+  <section class="row column">
+    <p class="content-label" aria-label="sensor graph">Sensor Graph
+      <input id="content__graph-submit" type="submit" class="btn btn-primary content__graph-submit" value="Show" ng-click="doGraphShowHideOnClick()"/>
+    </p>
+    <div id="content__graph-element" class="content__graph">
+      <svg id="svg__graph">
+      </svg>
+    </div>
+  </section>
+  
   <section class="row column">
     <!-- search -->
     <p class="content-label" aria-label="sensors filter">Filter sensors</p>
