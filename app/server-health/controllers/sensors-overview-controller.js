@@ -62,7 +62,14 @@ window.angular && (function(angular) {
 
       $scope.doGraphShowHideOnClick = function() {
           var e = document.getElementById("content__graph-element");
-	  e.style.display=(e.style.display == "none")? "block":"none";
+	  if(e.style.display == "block"){
+	    e.style.display="none";
+	    document.getElementById("content__graph-submit").setAttribute("value","Show");
+	  }
+	  else {
+	    e.style.display="block";
+	    document.getElementById("content__graph-submit").setAttribute("value","Hide");
+	  }
       };
 
       $scope.toggleSeverityAll = function() {
@@ -136,10 +143,10 @@ window.angular && (function(angular) {
 	  var svgNS = "http://www.w3.org/2000/svg";
 
 	  var newItem = document.createElementNS(svgNS, "circle");
-newItem.setAttribute("cx", ((16 * 1) + 8));
-newItem.setAttribute("cy", "50%");
-newItem.setAttribute("r", 4);
-newItem.setAttribute("fill", "#333333");
+newItem.setAttribute("cx", 150);
+newItem.setAttribute("cy", 150);
+newItem.setAttribute("r", 100);
+newItem.setAttribute("fill", "#ff0000");
 
 	  graph.appendChild(newItem);
       };
