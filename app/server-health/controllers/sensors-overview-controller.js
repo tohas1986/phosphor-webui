@@ -131,7 +131,7 @@ window.angular && (function(angular) {
       };
 
       $scope.drowGraph = function() {
-	  var graph = document.getElementById("svg_graph");
+	  var graph = document.getElementById("svg__graph");
 	  graph.innerHTML="";
 	  var svgNS = "http://www.w3.org/2000/svg";
 
