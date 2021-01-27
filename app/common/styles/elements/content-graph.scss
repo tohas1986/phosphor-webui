@@ -1,4 +1,6 @@
 
+
+
 // content graph
 
 .content__graph {
@@ -10,9 +12,8 @@
   display: none;
 
   #svg__graph {
-    position: absolute;
     width: 100%;
-    height: 500;
+    height: 100%;
     left: 0;
     top: 0;
     background-color: #cccccc;
@@ -50,27 +51,12 @@
     margin-right: .5em;
   }
   .graph-submit__wrapper {
-    position: absolute;
     width: auto;
     height: 100%;
     top: 0;
     right: 0;
   }
-  .content__graph-submit {
-    display: inline-block;
-    padding: 1em 2em .9em;
-    min-height: 20px;
-    text-align: center;
-    margin: 0;
-    font-weight: 700;
-    font-size: .8em;
-    border: 0;
-    width: auto;
-    height: 100%;
-    &:hover {
-      cursor: pointer;
-    }
-  }
+
 
   .tag-filter-label {
     text-transform: uppercase;
@@ -83,3 +69,8 @@
     text-align: right;
   }
 }//end event-log__graph
+
+#content__graph-submit {
+  width: 150px;	
+  margin-left: 20px;
+}

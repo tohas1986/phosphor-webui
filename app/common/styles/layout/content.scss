@@ -50,6 +50,10 @@ label {
   margin-bottom: 0;
 }
 
+.content-label[aria-label="sensor graph"] {
+  width: 100%;
+}
+
 .subhead {
   width: 100%;
   border-bottom: 1px solid $medgrey;
