@@ -11,14 +11,6 @@
   margin-bottom: .5em;
   display: none;
 
-  #svg__graph {
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    background-color: #cccccc;
-  }
-  
   #content__graph-input {
     margin: 0;
     border: 1px solid $input-border;
@@ -74,3 +66,17 @@
   width: 150px;	
   margin-left: 20px;
 }
+
+// SVG GRAPH
+
+//#content__graph-element {
+//  border: 1px solid black;
+//}
+
+#svg__graph {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+}
+  

@@ -138,6 +138,20 @@ $title-minWidth: 210px;
 
 }
 
+.sensor__readings-row:hover {
+    background-color: #dddddd;
+    cursor: pointer;
+}
+
+#sensor__selected {
+    width: 300px;	
+    font-weight: 700;
+    font-size: 1.4em;
+    text-transform: none;
+    margin-left: 20px;
+    color: $black;   
+}
+
 // Sensors
 
 #sensors, #sensors-overview {

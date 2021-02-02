@@ -55,6 +55,22 @@ window.angular && (function(angular) {
         if(data[8] !== null) this.smtp_event8=data[8];
       }
 
+      this.selected_sensor_title="Select sensor from table";
+      this.selected_sensor=null;
+      this.sensors_history={};
+      this.appendSensorsData = function(data) {
+	    var history = this.sensors_history;
+	    var test = this.test_this;
+	    data.forEach(function(item){
+		var key=item.title;
+	        var new_data = new Array();
+	        new_data[0] = new Date();
+	        new_data[1] = item.Value;
+	        if(typeof history[key] === "undefined") history[key] = new Array();
+	        history[key].push(new_data);
+	    });
+      };
+	
       this.getServerId = function() {
         return this.host.replace(/^https?\:\/\//ig, '');
       };
@@ -132,6 +148,17 @@ window.angular && (function(angular) {
       this.setSystemName = function(sysName) {
         this.systemName = sysName;
       };
+
+      // повторить с интервалом 10 секунд
+/*
+	let timerId = setInterval(function(){
+        APIUtils.getAllSensorStatus(function(data, originalData) {
+ 	  appendSensorsData(data);
+        });
+      }, 10000);
+*/
+	// остановить вывод через 5 секунд
+	//setTimeout(() => { clearInterval(timerId); alert('stop'); }, 5000);
     }
   ]);
 })(window.angular);
