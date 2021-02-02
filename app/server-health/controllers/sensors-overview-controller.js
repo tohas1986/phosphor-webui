@@ -145,24 +145,29 @@ window.angular && (function(angular) {
 	  var y_min=v_min;
 	  var y_max=height; // y=v*y_max/v_max
 	  var dy=y_max/v_max;
+	  var now=new Date();
+	  var now_year =now.getFullYear();
+	  var now_month=now.getMonth();
+	  var now_date =now.getDate();
 	  history.forEach(function(item){
-	      var hh=item[0].getHours();
-	      var mm=item[0].getMinutes();
-	      console.log("hh=",hh,"mm=",mm);
+	    var date=item[0]; 
+	    if(date.getFullYear()==now_year &&
+		 date.getMonth()==now_month &&
+		 date.getDate()==now_date){
+	      var hh=date.getHours();
+	      var mm=date.getMinutes();
 	      var x=ax+(hh*60+mm);
 	      var y=height-ay-Math.round(item[1]*dy,0);
 	      if(path_str){ path_str+=" "+x+" "+y+","; }
-	      else { path_str="M "+x+" "+y+" L"; }
+	      else { path_str="M "+(x-1)+" "+(y-1)+" L "+x+" "+y+","; }
+	    }
 	  });
 	  var path_element=document.getElementById("sensor_path");
 	  path_element.setAttribute("d",path_str);
-	  console.log(path_str);
       }
 
       function drowGraph() {
-	  var now = new Date();
 	  var svg = document.getElementById("svg__graph");
-	  //console.log(svg, svg.outerHTML);
 	  while (svg.lastChild) {
 	      svg.removeChild(svg.lastChild);
 	  }
