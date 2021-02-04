@@ -141,7 +141,9 @@ window.angular && (function(angular) {
 	  var history=dataService.sensors_history[sensor.title];
 	  var path_str="";
 	  var v_min=0;
-	  var v_max=Math.ceil(sensor.CriticalHigh+sensor.CriticalLow);
+	  var v_ch=(sensor.CriticalHigh>0)? sensor.CriticalHigh:sensor.WarningHigh;
+	  var v_cl=(sensor.CriticalLow>0)? sensor.CriticalLow:sensor.WarningLow;
+	  var v_max=Math.ceil(v_ch+v_cl);
 	  var y_min=v_min;
 	  var y_max=height; // y=v*y_max/v_max
 	  var dy=y_max/v_max;
@@ -149,6 +151,7 @@ window.angular && (function(angular) {
 	  var now_year =now.getFullYear();
 	  var now_month=now.getMonth();
 	  var now_date =now.getDate();
+	  var path_start=document.getElementById("path_start");
 	  history.forEach(function(item){
 	    var date=item[0]; 
 	    if(date.getFullYear()==now_year &&
@@ -159,7 +162,11 @@ window.angular && (function(angular) {
 	      var x=ax+(hh*60+mm);
 	      var y=height-ay-Math.round(item[1]*dy,0);
 	      if(path_str){ path_str+=" "+x+" "+y+","; }
-	      else { path_str="M "+(x-1)+" "+(y-1)+" L "+x+" "+y+","; }
+	      else {
+		 path_start.setAttribute("cx",x);
+		 path_start.setAttribute("cy",y);
+		 path_str="M "+(x-1)+" "+(y-1)+" L "+x+" "+y+",";
+	      }
 	    }
 	  });
 	  var path_element=document.getElementById("sensor_path");
@@ -192,13 +199,24 @@ window.angular && (function(angular) {
 	  var y_warning=200;
 
           var sensor=dataService.selected_sensor;
-
 	  var v_wl=sensor.WarningLow;
 	  var v_cl=sensor.CriticalLow;
+	  if(v_cl > 0){
+	      // Ok
+          }
+	  else { // NaN
+	      v_cl=v_wl;
+	  }
 	  var v_min=0;
 	  var v_wh=sensor.WarningHigh;
 	  var v_ch=sensor.CriticalHigh;
-	  var v_max=Math.ceil(sensor.CriticalHigh+sensor.CriticalLow);
+	  if(v_ch > 0){
+	      // Ok
+          }
+	  else { // NaN
+	      v_ch=v_wh;
+	  }
+	  var v_max=Math.ceil(v_ch+v_cl);
 	  var y_min=v_min;
 	  var y_max=y_base; // y=v*y_max/v_max
 	  
@@ -318,6 +336,16 @@ window.angular && (function(angular) {
 	  axis_x_label.setAttribute("y", y_text);
 	  axis_x_label.textContent="Hour";
 	  svg.appendChild(axis_x_label);
+
+ 	  var circle = document.createElementNS(svgNS, "circle");
+	  circle.setAttribute("id","path_start");
+	  circle.setAttribute("cx",-100);
+	  circle.setAttribute("cy",-100);
+	  circle.setAttribute("r",5);
+	  circle.setAttribute("stroke", "blue");
+	  circle.setAttribute("stroke-width", "2");
+	  circle.setAttribute("fill", "transparent");
+	  svg.appendChild(circle);
 
 	  var path = document.createElementNS(svgNS, "path");
 	  path.setAttribute("d","");
