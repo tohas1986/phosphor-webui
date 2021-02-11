@@ -354,7 +354,7 @@ window.angular && (function(angular) {
 	  path.setAttribute("stroke-width", "2");
 	  path.setAttribute("fill", "transparent");
 	  svg.appendChild(path);
-	  drowPath(1500,540,50,29);
+	  drowPath(1500,511,50,29);
       }
 
       $scope.loadSensorData = function() {
@@ -382,7 +382,7 @@ window.angular && (function(angular) {
 	        }
 */
 	        if(document.getElementById("sensor_path")){
-		    drowPath(1500,540,50,29);
+		    drowPath(1500,511,50,29);
 	        }
 	        else {
 		    drowGraph();
