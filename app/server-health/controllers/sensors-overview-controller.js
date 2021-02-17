@@ -143,7 +143,14 @@ window.angular && (function(angular) {
 	  var v_min=0;
 	  var v_ch=(sensor.CriticalHigh>0)? sensor.CriticalHigh:sensor.WarningHigh;
 	  var v_cl=(sensor.CriticalLow>0)? sensor.CriticalLow:sensor.WarningLow;
-	  var v_max=Math.ceil(v_ch+v_cl);
+	  var epsilon=0.000001;
+/*
+	  v_cl=0.9;
+	  v_ch=1.2;
+*/
+	  var v_max=v_ch+v_cl;
+	  var dv=(v_max<10)? 0.1:0.5;
+	  if(Math.abs(Math.round(v_max,0)-v_max) < epsilon){ v_max+=dv; }
 	  var y_min=v_min;
 	  var y_max=height; // y=v*y_max/v_max
 	  var dy=y_max/v_max;
@@ -152,6 +159,8 @@ window.angular && (function(angular) {
 	  var now_month=now.getMonth();
 	  var now_date =now.getDate();
 	  var path_start=document.getElementById("path_start");
+	  var path_end=document.getElementById("path_end");
+	  var x, y;
 	  history.forEach(function(item){
 	    var date=item[0]; 
 	    if(date.getFullYear()==now_year &&
@@ -159,8 +168,10 @@ window.angular && (function(angular) {
 		 date.getDate()==now_date){
 	      var hh=date.getHours();
 	      var mm=date.getMinutes();
-	      var x=ax+(hh*60+mm);
-	      var y=height-ay-Math.round(item[1]*dy,0);
+	      x=ax+(hh*60+mm);
+	      //var value=1.066; //item[1]
+	      var value=item[1];
+	      y=Math.round(height-value*dy,0);
 	      if(path_str){ path_str+=" "+x+" "+y+","; }
 	      else {
 		 path_start.setAttribute("cx",x);
@@ -171,6 +182,8 @@ window.angular && (function(angular) {
 	  });
 	  var path_element=document.getElementById("sensor_path");
 	  path_element.setAttribute("d",path_str);
+	  path_end.setAttribute("cx",x);
+	  path_end.setAttribute("cy",y);
       }
 
       function drowGraph() {
@@ -195,37 +208,35 @@ window.angular && (function(angular) {
 	  var x2=1500;
 	  var color="gray";
 
-	  var y_critical=100;
-	  var y_warning=200;
+	  //var y_critical=100;
+	  //var y_warning=200;
 
           var sensor=dataService.selected_sensor;
-	  var v_wl=sensor.WarningLow;
-	  var v_cl=sensor.CriticalLow;
-	  if(v_cl > 0){
-	      // Ok
-          }
-	  else { // NaN
-	      v_cl=v_wl;
-	  }
 	  var v_min=0;
+	  var v_wl=sensor.WarningLow;
 	  var v_wh=sensor.WarningHigh;
-	  var v_ch=sensor.CriticalHigh;
-	  if(v_ch > 0){
-	      // Ok
-          }
-	  else { // NaN
-	      v_ch=v_wh;
-	  }
-	  var v_max=Math.ceil(v_ch+v_cl);
+	  var v_cl=(sensor.CriticalLow>0)? sensor.CriticalLow:v_wl;
+	  var v_ch=(sensor.CriticalHigh>0)? sensor.CriticalHigh:v_wh;
+	  var epsilon=0.000001;
+/*
+	  v_wl=0.99;
+	  v_wh=1.1;
+	  v_cl=0.9;
+	  v_ch=1.2;
+*/
+	  var v_max=v_ch+v_cl;
+	  var dv=(v_max<10)? 0.1:0.5;
+	  if(Math.abs(Math.round(v_max,0)-v_max) < epsilon){ v_max+=dv; }
 	  var y_min=v_min;
 	  var y_max=y_base; // y=v*y_max/v_max
+	  var dy=y_max/v_max;
 	  
 	  var g_rect = document.createElementNS(svgNS, "g");
 	  g_rect.setAttribute("fill-opacity",".15");
 	  svg.appendChild(g_rect);
 
 	  var zone_ch = document.createElementNS(svgNS, "rect");
-	  var y=y_base-y_max;
+	  var x, y=y_base-y_max;
 	  var height=y_max*(v_max-v_ch)/v_max;
 	  var width=x2-x_base;
 	  zone_ch.setAttribute("x", x_base);
@@ -236,7 +247,7 @@ window.angular && (function(angular) {
 	  g_rect.appendChild(zone_ch);
 
 	  var zone_wh = document.createElementNS(svgNS, "rect");
-	  y+=height;
+	  y=y_base-y_max*v_ch/v_max;
 	  height=y_max*(v_ch-v_wh)/v_max;
 	  zone_wh.setAttribute("x", x_base);
 	  zone_wh.setAttribute("y", y);
@@ -246,7 +257,7 @@ window.angular && (function(angular) {
 	  g_rect.appendChild(zone_wh);
 
 	  var zone_normal = document.createElementNS(svgNS, "rect");
-	  y+=height;
+	  y=y_base-y_max*v_wh/v_max;
 	  height=y_max*(v_wh-v_wl)/v_max;
 	  zone_normal.setAttribute("x", x_base);
 	  zone_normal.setAttribute("y", y);
@@ -256,7 +267,7 @@ window.angular && (function(angular) {
 	  g_rect.appendChild(zone_normal);
 
 	  var zone_wl = document.createElementNS(svgNS, "rect");
-	  y+=height;
+	  y=y_base-y_max*v_wl/v_max;
 	  height=y_max*(v_wl-v_cl)/v_max;
 	  zone_wl.setAttribute("x", x_base);
 	  zone_wl.setAttribute("y", y);
@@ -266,7 +277,7 @@ window.angular && (function(angular) {
 	  g_rect.appendChild(zone_wl);
 
 	  var zone_cl = document.createElementNS(svgNS, "rect");
-	  y+=height;
+	  y=y_base-y_max*v_cl/v_max;
 	  height=y_max*(v_cl-v_min)/v_max;
 	  zone_cl.setAttribute("x", x_base);
 	  zone_cl.setAttribute("y", y);
@@ -275,12 +286,10 @@ window.angular && (function(angular) {
 	  zone_cl.setAttribute("fill", "red");
 	  g_rect.appendChild(zone_cl);
 
-	  var i_max=v_max*10+1;
-	  var dy=y_max/i_max;
-	  for(var i=0;i<=i_max;i++){
-	      var width=(i % 10)? 1:2;
-	      var x=(width==1)? ((i%5)?x1:x-5):x1-10;
-	      var y=y_base-(i*dy);	      
+	  for(var i=0;i<v_max;i+=dv){
+	      width=(Math.abs(Math.round(i,0)-i) < epsilon)? 2:1;
+	      x=(width==1)? ((Math.abs(Math.round(i*2,0)-i*2) < epsilon)? x1-5:x1):x1-10;
+	      y=Math.round(y_base-i*dy,0);	      
 	      var axis_x = document.createElementNS(svgNS, "line");
 	      axis_x.setAttribute("x1", x);
 	      axis_x.setAttribute("x2", x2);
@@ -291,11 +300,10 @@ window.angular && (function(angular) {
 	      axis_x.setAttribute("fill", "transparent");
 	      svg.appendChild(axis_x);
 	      if(width==2){
-		  var text_content = Math.round(i/10,0);
 	          var value_label = document.createElementNS(svgNS, "text");
 	          value_label.setAttribute("x", x-20);
 	          value_label.setAttribute("y", y+5);
-	          value_label.textContent=text_content;
+	          value_label.textContent=Math.round(i,0);
 		  svg.appendChild(value_label);
 	      }
 	  }
@@ -305,12 +313,13 @@ window.angular && (function(angular) {
 	  axis_y_label.setAttribute("y", 270);
 	  axis_y_label.setAttribute("transform","rotate(-90 12 270)");
 	  axis_y_label.textContent=dataService.selected_sensor.unit;
+	  if(axis_y_label.textContent == "C"){ axis_y_label.textContent="°C"; }
 	  svg.appendChild(axis_y_label);
 
 	  for(var i=0;i<x2;i+=x_step){
-	      var width=(i % (x_step * 6))? 1:2;
-	      var x=x_base+i;
-	      var y=(width==1)? y1:y1+5;
+	      width=(i % (x_step * 6))? 1:2;
+	      x=x_base+i;
+	      y=(width==1)? y1:y1+5;
 	      var axis_y = document.createElementNS(svgNS, "line");
 	      axis_y.setAttribute("x1", x);
 	      axis_y.setAttribute("x2", x);
@@ -346,6 +355,16 @@ window.angular && (function(angular) {
 	  circle.setAttribute("stroke-width", "2");
 	  circle.setAttribute("fill", "transparent");
 	  svg.appendChild(circle);
+
+ 	  var circle2 = document.createElementNS(svgNS, "circle");
+	  circle2.setAttribute("id","path_end");
+	  circle2.setAttribute("cx",-100);
+	  circle2.setAttribute("cy",-100);
+	  circle2.setAttribute("r",2);
+	  circle2.setAttribute("stroke", "blue");
+	  circle2.setAttribute("stroke-width", "2");
+	  circle2.setAttribute("fill", "transparent");
+	  svg.appendChild(circle2);
 
 	  var path = document.createElementNS(svgNS, "path");
 	  path.setAttribute("d","");
