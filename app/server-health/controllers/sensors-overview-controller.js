@@ -32,6 +32,11 @@ window.angular && (function(angular) {
         return JSON.stringify(dt);
       };
 
+      $scope.svg_width=1489;
+      $scope.svg_height=540;
+      var svg_dx=50;
+      var svg_dy=29
+	
       $scope.clear = function() {
         $scope.customSearch = '';
         $scope.searchTerms = [];
@@ -70,7 +75,7 @@ window.angular && (function(angular) {
       };
 
       $scope.doGraphShowHideOnClick = function() {
-          var e = document.getElementById("content__graph-element");
+          var e = document.getElementById("content__graph");
 	  if(e.style.display == "block"){
 	    e.style.display="none";
 	    document.getElementById("content__graph-submit").setAttribute("value","Show");
@@ -136,9 +141,9 @@ window.angular && (function(angular) {
         return true;
       };
 
-     function drowPath(width,height,ax,ay){
+     function drowPath(width,height,svg_dx,svg_dy){
           var sensor=dataService.selected_sensor;
-	  var history=dataService.sensors_history[sensor.title];
+	 
 	  var path_str="";
 	  var v_min=0;
 	  var v_ch=(sensor.CriticalHigh>0)? sensor.CriticalHigh:sensor.WarningHigh;
@@ -152,33 +157,59 @@ window.angular && (function(angular) {
 	  var dv=(v_max<10)? 0.1:0.5;
 	  if(Math.abs(Math.round(v_max,0)-v_max) < epsilon){ v_max+=dv; }
 	  var y_min=v_min;
-	  var y_max=height; // y=v*y_max/v_max
+	  var y_max=height-svg_dy; // y=v*y_max/v_max
 	  var dy=y_max/v_max;
-	  var now=new Date();
-	  var now_year =now.getFullYear();
-	  var now_month=now.getMonth();
-	  var now_date =now.getDate();
+	  var x, y;
+
+	  var TIME_ZONE=3;
+	  var TIME_DURATION_S=1000; // milliseconds
+	  var TIME_DURATION_M=TIME_DURATION_S*60;
+	  var TIME_DURATION_H=TIME_DURATION_M*60;
+	  var TIME_DURATION_D=TIME_DURATION_H*24;
+	  var history=dataService.sensors_history[sensor.title];
+	  var time_length=history.length;
+	  var time_0=history[0][0];
+	  var time_0_ms=time_0.getTime();
+	  var time_last=history[time_length-1][0];
+	  var time_last_ms=time_last.getTime();
+	  var time_diff_ms=time_last_ms-time_0_ms;
+          var time_left_ms=(time_diff_ms<=TIME_DURATION_D)? time_0_ms:time_last_ms-TIME_DURATION_D;
+	  time_left_ms-=time_left_ms % TIME_DURATION_H;
+	  var time_left_h = Math.floor((time_left_ms % TIME_DURATION_D) / TIME_DURATION_H) + TIME_ZONE;
+	  //console.log("time_left_h="+time_left_h);
+	  var time_right_ms=time_left_ms+TIME_DURATION_D;
+	  //var time_right_h = time_right_ms % TIME_DURATION_H;
+	 
+          for(var i=0;i<24;i++){
+	      var time_line=document.getElementById("time_line_"+i);
+	      var time_label=document.getElementById("time_label_"+i);
+	      var hx=(i>=time_left_h)? i-time_left_h:24-time_left_h+i;
+	      x=svg_dx+hx*60;
+	      time_line.setAttribute("x1",x);
+	      time_line.setAttribute("x2",x);
+	      x=(i>=10)? x-10:x-5; 
+	      time_label.setAttribute("x",x);
+	  }
+
 	  var path_start=document.getElementById("path_start");
 	  var path_end=document.getElementById("path_end");
-	  var x, y;
 	  history.forEach(function(item){
-	    var date=item[0]; 
-	    if(date.getFullYear()==now_year &&
-		 date.getMonth()==now_month &&
-		 date.getDate()==now_date){
-	      var hh=date.getHours();
-	      var mm=date.getMinutes();
-	      x=ax+(hh*60+mm);
-	      //var value=1.066; //item[1]
-	      var value=item[1];
-	      y=Math.round(height-value*dy,0);
-	      if(path_str){ path_str+=" "+x+" "+y+","; }
-	      else {
-		 path_start.setAttribute("cx",x);
-		 path_start.setAttribute("cy",y);
-		 path_str="M "+(x-1)+" "+(y-1)+" L "+x+" "+y+",";
+	      var date=item[0];
+	      var t=date.getTime();
+	      if(t>=time_left_ms && t<=time_right_ms){
+		  var hh=Math.floor((t-time_left_ms) / TIME_DURATION_H);
+		  var mm=Math.floor(((t-time_left_ms) % TIME_DURATION_H) / TIME_DURATION_M);
+		  x=svg_dx+(hh*60+mm);
+		  //var value=1.066; //item[1]
+		  var value=item[1];
+		  y=Math.round(y_max-value*dy,0);
+		  if(path_str){ path_str+=" "+x+" "+y+","; }
+		  else {
+		      path_start.setAttribute("cx",x);
+		      path_start.setAttribute("cy",y);
+		      path_str="M "+(x-1)+" "+(y-1)+" L "+x+" "+y+",";
+		  }
 	      }
-	    }
 	  });
 	  var path_element=document.getElementById("sensor_path");
 	  path_element.setAttribute("d",path_str);
@@ -192,24 +223,20 @@ window.angular && (function(angular) {
 	      svg.removeChild(svg.lastChild);
 	  }
 	  var svgNS = "http://www.w3.org/2000/svg";
-	  var y_base=511;
+	  var y1=$scope.svg_height-svg_dy;
+	  var y2=0;
 	  var y_step=10;
 	  var y_steps=5;
 	  var y_period=y_step*y_steps;
-	  var y_text=y_base+25;
-	  var y1=y_base;
-	  var y2=0;
+	  var y_text=y1+25;
 
-	  var x_base=50;
+	  var x1=svg_dx;
+	  var x2=$scope.svg_width;
+	  var width=x2-x1;
 	  var x_step=10;
 	  var x_steps=6;
 	  var x_period=x_step*x_steps;
-	  var x1=x_base;
-	  var x2=1500;
 	  var color="gray";
-
-	  //var y_critical=100;
-	  //var y_warning=200;
 
           var sensor=dataService.selected_sensor;
 	  var v_min=0;
@@ -228,7 +255,7 @@ window.angular && (function(angular) {
 	  var dv=(v_max<10)? 0.1:0.5;
 	  if(Math.abs(Math.round(v_max,0)-v_max) < epsilon){ v_max+=dv; }
 	  var y_min=v_min;
-	  var y_max=y_base; // y=v*y_max/v_max
+	  var y_max=y1; // y=v*y_max/v_max
 	  var dy=y_max/v_max;
 	  
 	  var g_rect = document.createElementNS(svgNS, "g");
@@ -236,10 +263,9 @@ window.angular && (function(angular) {
 	  svg.appendChild(g_rect);
 
 	  var zone_ch = document.createElementNS(svgNS, "rect");
-	  var x, y=y_base-y_max;
+	  var x, y=y1-y_max;
 	  var height=y_max*(v_max-v_ch)/v_max;
-	  var width=x2-x_base;
-	  zone_ch.setAttribute("x", x_base);
+	  zone_ch.setAttribute("x", x1);
 	  zone_ch.setAttribute("y", y);
 	  zone_ch.setAttribute("width", width);
 	  zone_ch.setAttribute("height",height);
@@ -247,9 +273,9 @@ window.angular && (function(angular) {
 	  g_rect.appendChild(zone_ch);
 
 	  var zone_wh = document.createElementNS(svgNS, "rect");
-	  y=y_base-y_max*v_ch/v_max;
+	  y=y1-y_max*v_ch/v_max;
 	  height=y_max*(v_ch-v_wh)/v_max;
-	  zone_wh.setAttribute("x", x_base);
+	  zone_wh.setAttribute("x", x1);
 	  zone_wh.setAttribute("y", y);
 	  zone_wh.setAttribute("width", width);
 	  zone_wh.setAttribute("height",height);
@@ -257,9 +283,9 @@ window.angular && (function(angular) {
 	  g_rect.appendChild(zone_wh);
 
 	  var zone_normal = document.createElementNS(svgNS, "rect");
-	  y=y_base-y_max*v_wh/v_max;
+	  y=y1-y_max*v_wh/v_max;
 	  height=y_max*(v_wh-v_wl)/v_max;
-	  zone_normal.setAttribute("x", x_base);
+	  zone_normal.setAttribute("x", x1);
 	  zone_normal.setAttribute("y", y);
 	  zone_normal.setAttribute("width", width);
 	  zone_normal.setAttribute("height",height);
@@ -267,9 +293,9 @@ window.angular && (function(angular) {
 	  g_rect.appendChild(zone_normal);
 
 	  var zone_wl = document.createElementNS(svgNS, "rect");
-	  y=y_base-y_max*v_wl/v_max;
+	  y=y1-y_max*v_wl/v_max;
 	  height=y_max*(v_wl-v_cl)/v_max;
-	  zone_wl.setAttribute("x", x_base);
+	  zone_wl.setAttribute("x", x1);
 	  zone_wl.setAttribute("y", y);
 	  zone_wl.setAttribute("width", width);
 	  zone_wl.setAttribute("height",height);
@@ -277,9 +303,9 @@ window.angular && (function(angular) {
 	  g_rect.appendChild(zone_wl);
 
 	  var zone_cl = document.createElementNS(svgNS, "rect");
-	  y=y_base-y_max*v_cl/v_max;
+	  y=y1-y_max*v_cl/v_max;
 	  height=y_max*(v_cl-v_min)/v_max;
-	  zone_cl.setAttribute("x", x_base);
+	  zone_cl.setAttribute("x", x1);
 	  zone_cl.setAttribute("y", y);
 	  zone_cl.setAttribute("width", width);
 	  zone_cl.setAttribute("height",height);
@@ -287,19 +313,19 @@ window.angular && (function(angular) {
 	  g_rect.appendChild(zone_cl);
 
 	  for(var i=0;i<v_max;i+=dv){
-	      width=(Math.abs(Math.round(i,0)-i) < epsilon)? 2:1;
-	      x=(width==1)? ((Math.abs(Math.round(i*2,0)-i*2) < epsilon)? x1-5:x1):x1-10;
-	      y=Math.round(y_base-i*dy,0);	      
+	      var stroke_width=(Math.abs(Math.round(i,0)-i) < epsilon)? 2:1;
+	      x=(stroke_width==1)? ((Math.abs(Math.round(i*2,0)-i*2) < epsilon)? x1-5:x1):x1-10;
+	      y=Math.round(y1-i*dy,0);	      
 	      var axis_x = document.createElementNS(svgNS, "line");
 	      axis_x.setAttribute("x1", x);
 	      axis_x.setAttribute("x2", x2);
 	      axis_x.setAttribute("y1", y);
 	      axis_x.setAttribute("y2", y);
 	      axis_x.setAttribute("stroke", color);
-	      axis_x.setAttribute("stroke-width", width);
+	      axis_x.setAttribute("stroke-width", stroke_width);
 	      axis_x.setAttribute("fill", "transparent");
 	      svg.appendChild(axis_x);
-	      if(width==2){
+	      if(stroke_width==2){
 	          var value_label = document.createElementNS(svgNS, "text");
 	          value_label.setAttribute("x", x-20);
 	          value_label.setAttribute("y", y+5);
@@ -316,23 +342,33 @@ window.angular && (function(angular) {
 	  if(axis_y_label.textContent == "C"){ axis_y_label.textContent="°C"; }
 	  svg.appendChild(axis_y_label);
 
-	  for(var i=0;i<x2;i+=x_step){
-	      width=(i % (x_step * 6))? 1:2;
-	      x=x_base+i;
-	      y=(width==1)? y1:y1+5;
-	      var axis_y = document.createElementNS(svgNS, "line");
-	      axis_y.setAttribute("x1", x);
-	      axis_y.setAttribute("x2", x);
-	      axis_y.setAttribute("y1", y);
-	      axis_y.setAttribute("y2", y2);
-	      axis_y.setAttribute("stroke", color);
-	      axis_y.setAttribute("stroke-width", width);
-	      axis_y.setAttribute("fill", "transparent");
-	      svg.appendChild(axis_y);
-	      if(width==2){
+	  for(var i=0;i<width;i+=x_step){
+	      var stroke_width=(i % (x_step * 6))? 1:2;
+	      x=x1+i;
+	      var time_line = document.createElementNS(svgNS, "line");
+	      time_line.setAttribute("x1", x);
+	      time_line.setAttribute("x2", x);
+	      time_line.setAttribute("y1", y1);
+	      time_line.setAttribute("y2", y2);
+	      time_line.setAttribute("stroke", color);
+	      time_line.setAttribute("stroke-width",1);
+	      time_line.setAttribute("fill", "transparent");
+	      svg.appendChild(time_line);
+	      if(stroke_width==2){
 		  var hour = i / x_period;
+	          time_line = document.createElementNS(svgNS, "line");
+	          time_line.setAttribute("id","time_line_" + hour);
+	          time_line.setAttribute("x1", x);
+	          time_line.setAttribute("x2", x);
+	          time_line.setAttribute("y1", y1+5);
+	          time_line.setAttribute("y2", y2);
+	          time_line.setAttribute("stroke", color);
+	          time_line.setAttribute("stroke-width", stroke_width);
+	          time_line.setAttribute("fill", "transparent");
+	          svg.appendChild(time_line);
 	          var time_label = document.createElementNS(svgNS, "text");
 		  x=(hour>=10)? x-10:x-5; 
+	          time_label.setAttribute("id","time_label_" + hour);
 	          time_label.setAttribute("x", x);
 	          time_label.setAttribute("y", y_text);
 	          time_label.textContent=hour;
@@ -373,7 +409,7 @@ window.angular && (function(angular) {
 	  path.setAttribute("stroke-width", "2");
 	  path.setAttribute("fill", "transparent");
 	  svg.appendChild(path);
-	  drowPath(1500,511,50,29);
+	  drowPath($scope.svg_width,$scope.svg_height,svg_dx,svg_dy);
       }
 
       $scope.loadSensorData = function() {
@@ -401,7 +437,7 @@ window.angular && (function(angular) {
 	        }
 */
 	        if(document.getElementById("sensor_path")){
-		    drowPath(1500,511,50,29);
+		    drowPath($scope.svg_width,$scope.svg_height,svg_dx,svg_dy);
 	        }
 	        else {
 		    drowGraph();

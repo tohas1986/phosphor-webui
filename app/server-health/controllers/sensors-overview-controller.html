@@ -14,9 +14,18 @@
     <p class="content-label inline" aria-label="sensor graph">Sensor Graph:
       <span id="sensor__selected">{{selected_sensor_title}}</span>
       <input id="content__graph-submit" type="submit" class="btn btn-primary content__graph-submit inline" value="Show" ng-click="doGraphShowHideOnClick()"/></p>
-    <div id="content__graph-element" class="content__graph">
+    <div id="content__graph" class="content__graph">
       <div class="graph-submit__wrapper"><!-- preserveAspectRatio="none" -->
-    	<svg id="svg__graph" viewBox="0 0 1500 540" xmlns="http://www.w3.org/2000/svg"></svg>
+    	<svg id="svg__graph" viewBox="0 0 1489 540" xmlns="http://www.w3.org/2000/svg"></svg>
+	<div id="graph_navigator">
+	  <div id="button_begin" class="btn inline"></div>
+	  <div id="button_back" class="btn inline"></div>
+	  <div id="scroll_box" class="inline">
+	    <div id="slider"></div>
+	  </div>
+	  <div id="button_forward" class="btn inline"></div>
+	  <div id="button_end" class="btn inline"></div>
+	</div>
       </div>
     </div>
   </section>
