@@ -173,13 +173,17 @@ window.angular && (function(angular) {
 	  var time_last=history[time_length-1][0];
 	  var time_last_ms=time_last.getTime();
 	  var time_diff_ms=time_last_ms-time_0_ms;
-          var time_left_ms=(time_diff_ms<=TIME_DURATION_D)? time_0_ms:time_last_ms-TIME_DURATION_D;
+
+	 //time_last_ms+=time_diff_ms*60;
+	 // time_diff_ms=time_last_ms-time_0_ms;
+	 
+          var time_left_ms=(time_diff_ms<TIME_DURATION_D)? time_0_ms:time_last_ms-TIME_DURATION_D+TIME_DURATION_H;
 	  time_left_ms-=time_left_ms % TIME_DURATION_H;
 	  var time_left_h = Math.floor((time_left_ms % TIME_DURATION_D) / TIME_DURATION_H) + TIME_ZONE;
 	  //console.log("time_left_h="+time_left_h);
 	  var time_right_ms=time_left_ms+TIME_DURATION_D;
 	  //var time_right_h = time_right_ms % TIME_DURATION_H;
-	 
+	  
           for(var i=0;i<24;i++){
 	      var time_line=document.getElementById("time_line_"+i);
 	      var time_label=document.getElementById("time_label_"+i);
@@ -193,9 +197,10 @@ window.angular && (function(angular) {
 
 	  var path_start=document.getElementById("path_start");
 	  var path_end=document.getElementById("path_end");
+	 //var debug=0;
 	  history.forEach(function(item){
 	      var date=item[0];
-	      var t=date.getTime();
+	      var t=date.getTime(); //+debug
 	      if(t>=time_left_ms && t<=time_right_ms){
 		  var hh=Math.floor((t-time_left_ms) / TIME_DURATION_H);
 		  var mm=Math.floor(((t-time_left_ms) % TIME_DURATION_H) / TIME_DURATION_M);
@@ -209,6 +214,7 @@ window.angular && (function(angular) {
 		      path_start.setAttribute("cy",y);
 		      path_str="M "+(x-1)+" "+(y-1)+" L "+x+" "+y+",";
 		  }
+		  //debug+=TIME_DURATION_H;
 	      }
 	  });
 	  var path_element=document.getElementById("sensor_path");
