@@ -16,31 +16,35 @@ window.angular && (function(angular) {
         function($routeProvider) {
           $routeProvider
               .when('/configuration/network', {
-                title: 'Network',
+                title: 'Сеть',
+                title_en: 'Network',
                 'template': require('./controllers/network-controller.html'),
                 'controller': 'networkController',
                 authenticated: true
               })
               .when('/configuration/date-time', {
-                title: 'Date Settings',
+                title: 'Дата и время',
+                title_en: 'Date Settings',
                 'template': require('./controllers/date-time-controller.html'),
                 'controller': 'dateTimeController',
                 authenticated: true
               })
               .when('/configuration', {
-                title: 'Network',
+                title: 'Сеть',
+                title_en: 'Network',
                 'template': require('./controllers/network-controller.html'),
                 'controller': 'networkController',
                 authenticated: true
               })
               .when('/configuration/snmp', {
-                title: 'SNMP',
+                title: 'Почта - SNMP',
                 'template': require('./controllers/snmp-controller.html'),
                 'controller': 'snmpController',
                 authenticated: true
               })
               .when('/configuration/firmware', {
-                title: 'Firmware',
+                title: 'Прошивка',
+                title_en: 'Firmware',
                 'template': require('./controllers/firmware-controller.html'),
                 'controller': 'firmwareController',
                 authenticated: true

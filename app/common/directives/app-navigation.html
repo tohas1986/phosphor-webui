@@ -11,14 +11,16 @@
         <button class="btn-overview" ng-click="change('overview'); RedirectToURL('/overview/server')">
           <icon class="nav-icon" file="icon-overview.svg" aria-hidden="true"></icon>
           <a href="#/overview/server">
-            <span class="nav-link">Overview</span>
+            <!-- <span class="nav-link">Overview</span> -->
+            <span class="nav-link">Обзор</span>
           </a>
         </button>
       </li>
       <li class="nav-item" ng-class="{opened: firstLevel == 'server-health'}">
         <button class="btn-health" ng-click="change('server-health'); RedirectToURL('/server-health/sys-log')">
           <icon class="nav-icon" file="icon-health.svg" aria-hidden="true"></icon>
-          <span class="nav-link">Health</span>
+          <!--<span class="nav-link">Health</span>-->
+          <span class="nav-link">Состояние</span>
         </button>
         <ul class="nav__second-level btn-health" ng-style="navStyle"
           ng-class="{opened: (showSubMenu && firstLevel == 'server-health')}">
@@ -52,7 +54,9 @@
         <button class="btn-control"
           ng-click="change('server-control'); RedirectToURL('/server-control/power-operations')">
           <icon class="nav-icon" file="icon-control.svg" aria-hidden="true"></icon>
-          <span class="nav-link">Control</span>
+          <!--<span class="nav-link">Control</span>-->
+          <span class="nav-link">Управление</span>
+
         </button>
         <ul class="nav__second-level btn-control" ng-class="{opened: (showSubMenu && firstLevel == 'server-control')}">
           <li ng-if="checkPrivilege('Operator')" ng-class="{'active': (path == '/server-control' || path == '/server-control/power-operations')}">
@@ -100,7 +104,8 @@
       <li class="nav-item" ng-class="{opened: firstLevel == 'configuration'}">
         <button class="btn-config" ng-click="change('configuration'); RedirectToURL('/configuration/network')">
           <icon class="nav-icon" file="icon-config.svg" aria-hidden="true"></icon>
-          <span class="nav-link trim-text-xsmall">Config<span class='trim-text-small inline'>uration</span></span>
+          <!--<span class="nav-link trim-text-xsmall">Config<span class='trim-text-small inline'>uration</span></span>-->
+          <span class="nav-link trim-text-xsmall">Конфигурация</span>
         </button>
         <ul class="nav__second-level btn-firmware" ng-class="{opened: (showSubMenu && firstLevel == 'configuration')}">
           <li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}">
@@ -128,7 +133,8 @@
       <li class="nav-item" ng-class="{opened: firstLevel == 'access-control'}">
         <button class="btn-users" ng-click="change('access-control'); RedirectToURL('/access-control/local-users')">
           <icon class="nav-icon" file="icon-user.svg" aria-hidden="true"></icon>
-          <span class="nav-link">Access</span>
+          <!--<span class="nav-link">Access</span>-->
+          <span class="nav-link">Доступ</span>
         </button>
         <ul class="nav__second-level btn-users" ng-style="navStyle"
           ng-class="{opened: (showSubMenu && firstLevel == 'access-control')}">

@@ -16,33 +16,38 @@ window.angular && (function(angular) {
         function($routeProvider) {
           $routeProvider
               .when('/server-health/inventory-overview', {
-                title: 'Hardware',
+                title: 'Оборудование',
+                title_en: 'Hardware',
                 'template':
                     require('./controllers/inventory-overview-controller.html'),
                 'controller': 'inventoryOverviewController',
                 authenticated: true
               })
               .when('/server-health/sensors-overview', {
-                title: 'Sensors',
+                title: 'Датчики',
+                title_en: 'Sensors',
                 'template':
                     require('./controllers/sensors-overview-controller.html'),
                 'controller': 'sensorsOverviewController',
                 authenticated: true
               })
               .when('/server-health/fans-overview', {
-                title: 'Fans',
+                title: 'Вентиляторы',
+                title_en: 'Fans',
                 'template': require('./controllers/fans-overview-controller.html'),
                 'controller': 'fansOverviewController',
                 authenticated: true
               })
               .when('/server-health/sys-log', {
-                title: 'Event Log',
+                title: 'Список событий',
+                title_en: 'Event Log',
                 'template': require('./controllers/syslog-controller.html'),
                 'controller': 'sysLogController',
                 authenticated: true
               })
               .when('/server-health', {
-                title: 'Event Log',
+                title: 'Список событий',
+                title_en: 'Event Log',
                 'template': require('./controllers/syslog-controller.html'),
                 'controller': 'logController',
                 authenticated: true
