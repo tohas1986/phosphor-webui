@@ -1,7 +1,7 @@
 <header id="header">
   <div class="header" ng-class="$root.toggleNavState ? 'collapsed':''">
     <div class="header__info-section">
-      <span class="page-title">{{page_title}}</span>
+      <span class="page-title">{{page_title}} : сделано в России</span>
       <div class="header__title">
         <div>{{ dataService.hostname | limitTo: 64 }}{{dataService.hostname.length > 64 ? '...' : ''}}</div>
         <div>{{ dataService.server_id }}</div>
