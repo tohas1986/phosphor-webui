@@ -15,13 +15,13 @@ window.angular && (function(angular) {
         '$routeProvider',
         function($routeProvider) {
           $routeProvider
-              .when('/server-health/inventory-overview', {
-                title: 'Hardware',
-                'template':
-                    require('./controllers/inventory-overview-controller.html'),
-                'controller': 'inventoryOverviewController',
-                authenticated: true
-              })
+              //.when('/server-health/inventory-overview', {
+              //  title: 'Hardware',
+              //  'template':
+              //      require('./controllers/inventory-overview-controller.html'),
+              //  'controller': 'inventoryOverviewController',
+              //  authenticated: true
+              //})
               .when('/server-health/sensors-overview', {
                 title: 'Sensors',
                 'template':

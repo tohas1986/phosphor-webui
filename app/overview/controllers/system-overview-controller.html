@@ -59,26 +59,26 @@
                     <td>Model</td>
                     <td>{{ server_info.Model  || "N/A"  }}</td>
                   </tr>
-                  <tr>
+                  <!--<tr>
                     <td>Serial number</td>
                     <td>{{ server_info.SerialNumber || "N/A"  }}</td>
-                  </tr>
+                  </tr>-->
                   <tr>
                     <td>Manufacturer</td>
                     <td>{{ server_info.Manufacturer || "N/A" }}</td>
                   </tr>
-                  <tr>
+                  <!--<tr>
                     <td>Firmware version</td>
                     <td>{{ server_info.AssetTag || "N/A"  }}</td>
-                  </tr>
+                  </tr>-->
                 </table>
               </uib-tab>
               <uib-tab index="2" heading="BIOS">
                 <table class="overview-config-table">
-                  <tr>
+                  <!-- <tr>
                     <td>BIOS Version</td>
                     <td>{{ server_info.BiosVersion || "N/A"  }}</td>
-                  </tr>
+                  </tr> -->
                   <tr>
                     <td>Boot Override Enabled</td>
                     <td>{{ server_info.Boot.BootSourceOverrideEnabled || "N/A"  }}</td>
@@ -421,7 +421,7 @@
         </div>
         <div class="float-left">
           <div class="normal-text">Power Consumption</div>
-          <div class="grey-small">Not available</div>
+          <!--<div class="grey-small">Not available</div>-->
         </div>
       </div>
     </div>
