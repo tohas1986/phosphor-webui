@@ -169,7 +169,9 @@ window.angular && (function(angular) {
                             } else {
                               if (curChassis == totalChassis) {
                                 $scope.loadMergedSensors().then(function() {
-                                  $scope.showAlert();
+                                   $scope.sensorLoading =
+                                       false;
+                                   $scope.showAlert();
                                 });
                               }
                             }
