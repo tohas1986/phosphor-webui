@@ -9,6 +9,16 @@
     </div>
     <div class="header__functions-section">
       <div class="header__functions">
+        <select id="language" name="language">
+	<option value="0"><icon class="header-icon" file="RU-ru.png" aria-hidden="true"></icon><span class="header__textlink">'Русский'</span></option>
+	<option value="1"><icon class="header-icon" file="EN-us.png" aria-hidden="true"></icon><span class="header__textlink">'English-US'</span></option>
+	</select>
+
+	<a class="header-icon-wrapper" href="#" ng-class="dataService.language == 'ru' ? 'ru' : 'en'">
+          <icon class="header-icon" file="{{ dataService.language == 'ru' ? 'RU-ru.png' : 'EN-us.png' }}" aria-hidden="true"></icon>
+          <span class="header__textlink">{{ dataService.language == 'ru' ? 'Русский' : 'English-US' }}</span>
+        </a>
+
         <a class="header-icon-wrapper" href="#/server-health/event-log"
           ng-class="dataService.server_health == 'Critical' ? 'alert-text-critical' : dataService.server_health == 'Warning' ? 'alert-text-warning' : ''">
           <status-icon status="{{ dataService.server_health == 'Critical' ? 'error' :
