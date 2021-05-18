@@ -10,10 +10,13 @@
 
       <p class="float-left trim-text-medium">Click "Save Page Settings" to save all changes.</p>
 
-      <div class="float-right padding">
-        <button type="button" class="btn btn-tertiary" ng-click="rowUpdate=false;dismiss=false;refresh()">Reset</button>
+      <div class="float-right padding" ng-class="rowUpdate ? 'highlighted' : ''">
+        <button type="button" class="btn btn-tertiary" ng-click="rowUpdate=false;dismiss=false;refresh()"
+	  ng-class="rowUpdate ? 'highlighted' : ''">
+	  Reset
+	</button>
         <button type="button" class="btn btn-tertiary" ng-click="confirmSettings=true;"
-          ng-class="rowUpdate ? 'highlighted' : ''">
+          ng-class="(rowUpdate || dismiss) ? 'highlighted' : ''" ng-disabled="!rowUpdate && !dismiss">
           Save Page Settings
         </button>
       </div>
@@ -76,11 +79,11 @@
                 </button>
 
                 <button ng-show="editCommonSettings"
-                  ng-class="!interface.HostName || !interface.MACAddress || !interface.IPv6DefaultGateway ? 'disabled' : ''"
+                  ng-class="!interface.HostName || !interface.MACAddress ? 'disabled' : ''"
                   type="button" class="btn btn-primary btn-small" ng-click="editCommonSettings=false;updatedRow()"
-                  ng-disabled="!interface.HostName || !interface.MACAddress || !interface.IPv6DefaultGateway">
+                  ng-disabled="!interface.HostName || !interface.MACAddress"><!--  || !interface.IPv6DefaultGateway -->
                   <icon alt="Complete" title="Complete" ng-file="icon-check.svg"></icon>
-                </button>
+                </button><!--  || !interface.IPv6DefaultGateway -->
 
                 <button ng-show="editCommonSettings" type="button" class="btn btn-primary btn-small"
                   ng-click="editCommonSettings=false">
@@ -241,7 +244,10 @@
 
 
   <div class="float-right padding" ng-class="rowUpdate ? 'highlighted' : ''">
-    <button type="button" class="btn btn-tertiary" ng-click="rowUpdate=false;refresh()">Reset</button>
+    <button type="button" class="btn btn-tertiary" ng-click="rowUpdate=false;dismiss=false;refresh()"
+      ng-class="rowUpdate ? 'highlighted' : ''">
+      Reset
+    </button>
     <button type="button" class="btn btn-tertiary" ng-click="confirmSettings=true;"
       ng-class="(rowUpdate || dismiss) ? 'highlighted' : ''" ng-disabled="!rowUpdate && !dismiss">
       Save Page Settings
