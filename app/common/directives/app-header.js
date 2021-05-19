@@ -124,9 +124,12 @@ window.angular && (function(angular) {
               }, 2000);
             };
 
-	    $scope.setLanguage = function(language){
-		dataService.language=language;
-		$scope.refresh();
+	    $scope.setLanguage = function(){
+		var e=document.getElementById("language");
+		var lang=e.options[e.selectedIndex].value
+		dataService.language=lang;
+		console.log(lang, dataService.language);
+		refresh();
 	    };
 
             var loginListener =
