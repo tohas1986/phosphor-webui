@@ -9,17 +9,15 @@
     </div>
     <div class="header__functions-section">
       <div class="header__functions">
-	<a class="header-icon-wrapper" href="#" ng-class="dataService.language == 'ru' ? 'ru' : 'en'">
-          <icon class="header-icon" file="{{ dataService.language == 'ru' ? 'RU-ru-32.png' : 'EN-us-32.png' }}" aria-hidden="true"></icon>
-          <span class="header__textlink">{{ dataService.language == 'ru' ? 'Русский' : 'English-US' }}</span>
+	<a class="header-icon-wrapper">
+          <icon class="header-icon" file="RU-ru-32.png"></icon>
+          <span class="header__textlink">{{(dataService.language == 'ru') ? 'Русский':'English/US'}}</span>
 	</a>
 
-	<a class="header-icon-wrapper" href="#">
-        <select id="language" name="language" style="display:inline-block;width:100px;">
-	<option value="0" style="background-image:url(RU-ru-32.png);margin-left:32px;">Русский</option>
-	<option value="1" style="background-image:url(EN-us-32.png);margin-left:32px;">English-US</option>
+        <select id="language" name="language" style="display:inline-block;width:128px;margin-left:40">
+	    <option value="0" style="background-image:url(assets/icons/RU-ru-32.png);margin-left:40;">Русский</option>
+	    <option value="1" style="background-image:url(assets/icons/EN-us-32.png);margin-left:40;">English/US</option>
 	</select>
-	</a>
 
         <a class="header-icon-wrapper" href="#/server-health/event-log"
           ng-class="dataService.server_health == 'Critical' ? 'alert-text-critical' : dataService.server_health == 'Warning' ? 'alert-text-warning' : ''">
