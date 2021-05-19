@@ -1566,7 +1566,7 @@ window.angular && (function(angular) {
            return $http({
                     method: 'POST',
                     url: DataService.getHost() +
-                        '/xyz/openbmc_project/ares/rikfan/action/ApplyMode',
+                        '/redfish/v1/Rikfan/' + fanmode,
                     withCredentials: true,
                     data: JSON.stringify({'data':[fanmode]})
                   })
@@ -1578,7 +1578,7 @@ window.angular && (function(angular) {
            return $http({
                     method: 'GET',
                     url: DataService.getHost() +
-                        '/xyz/openbmc_project/ares/rikfan/attr/FanMode',
+                        '/redfish/v1/Rikfan/',
                     withCredentials: true
                   })
                .then(function(response) {
