@@ -134,6 +134,16 @@ window.angular && (function(angular) {
 		$scope.refresh();
 		alert(dataService.language);
 	    };
+	    $scope.setLanguage2 = function() {
+		var e=document.getElementById("language");
+		var lang=e.options[e.selectedIndex].value;
+		alert("setLanguage2");
+		dataService.language=lang;
+		alert(dataService.language);
+		console.log(lang, dataService.language);
+		$scope.refresh();
+		alert(dataService.language);
+	    };
 
             var loginListener =
                 $rootScope.$on('user-logged-in', function(event, arg) {
