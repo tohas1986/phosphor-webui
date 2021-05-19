@@ -124,12 +124,15 @@ window.angular && (function(angular) {
               }, 2000);
             };
 
-	    $scope.setLanguage = function(){
+	    $scope.setLanguage = function() {
 		var e=document.getElementById("language");
-		var lang=e.options[e.selectedIndex].value
+		var lang=e.options[e.selectedIndex].value;
+		alert(lang);
 		dataService.language=lang;
+		alert(dataService.language);
 		console.log(lang, dataService.language);
-		refresh();
+		$scope.refresh();
+		alert(dataService.language);
 	    };
 
             var loginListener =
