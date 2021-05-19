@@ -1,0 +1,23 @@
+<loader loading="loading"></loader>
+<div class="inventory__container">
+  <div class="row column">
+    <h1>Вентиляторы</h1>
+  </div>
+  <div class="row column">
+	<p>
+	    <label for="fanmode">Выберите режим управления вентиляторами:</label>
+	    <select id="fanmode" name="fanmode">
+		<option value="0">Автоматический (зависит от температуры)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+		<option value="1">Минимальный (10% мощности)</option>
+		<option value="2">Оптимальный (50% мощности)</option>
+		<option value="3">Максимальный (100% мощности)</option>
+	    </select>
+	</p>
+   </div>
+   <div class="row column">
+     <p>
+	  <input id="content_fans-submit" type="submit" value="Сохранить" class="btn btn-primary" ng-click="setFanMode()" />
+     </p>
+  </div>
+  
+</div>

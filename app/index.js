@@ -93,6 +93,7 @@ import kvm_window_controller from './server-control/controllers/kvm-window-contr
 import server_health_index from './server-health/index.js';
 import inventory_overview_controller from './server-health/controllers/inventory-overview-controller.js';
 import sensors_overview_controller from './server-health/controllers/sensors-overview-controller.js';
+import fans_overview_controller from './server-health/controllers/fans-overview-controller.js';
 import syslog_controller from './server-health/controllers/syslog-controller.js';
 import remote_logging_server from './server-health/directives/remote-logging-server.js';
 
