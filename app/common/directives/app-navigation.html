@@ -7,14 +7,14 @@
         <a href="#/overview/server">
 	    <img src="../../assets/images/logo-rikor.svg">
 	</a><br>
-	<span class="nav-link">Сделано в России</span>
+	<span class="nav-link">{{(dataService.language == 'ru') ? 'Сделано в России':'Designed in Russia' }}</span>
       </li>
       <li>
         <button class="btn-overview" ng-click="change('overview'); RedirectToURL('/overview/server')">
           <icon class="nav-icon" file="icon-overview.svg" aria-hidden="true"></icon>
           <a href="#/overview/server">
             <!-- <span class="nav-link">Overview</span> -->
-            <span class="nav-link">Обзор</span>
+            <span class="nav-link">{{ dataService.language == 'ru' ? 'Обзор':'Overview' }}</span>
           </a>
         </button>
       </li>
