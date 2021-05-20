@@ -16,45 +16,45 @@ window.angular && (function(angular) {
         function($routeProvider) {
           $routeProvider
               .when('/server-control/bmc-reboot', {
-                title: 'Перезагрузить BMC ',
-                title_en: 'Reboot BMC ',
+                title: 'Reboot BMC',
+                title_ru: 'Перезагрузить BMC',
                 'template': require('./controllers/bmc-reboot-controller.html'),
                 'controller': 'bmcRebootController',
                 authenticated: true
               })
               .when('/server-control/server-led', {
-                title: 'Управление LED-индикаторами',
-                title_en: 'LED Light Control',
+                title: 'LED Light Control',
+                title_ru: 'Управление LED-индикаторами',
                 'template': require('./controllers/server-led-controller.html'),
                 'controller': 'serverLEDController',
                 authenticated: true
               })
               .when('/server-control/power-operations', {
-                title: 'Питание сервера',
-                title_en: 'Server Power',
+                title: 'Server Power',
+                title_ru: 'Питание сервера',
                 'template':
                     require('./controllers/power-operations-controller.html'),
                 'controller': 'powerOperationsController',
                 authenticated: true
               })
               .when('/server-control/power-usage', {
-                title: 'Потребление энергии',
-                title_en: 'Power Usage',
+                title: 'Power Usage',
+                title_ru: 'Потребление энергии',
                 'template':
                     require('./controllers/power-usage-controller.html'),
                 'controller': 'powerUsageController',
                 authenticated: true
               })
               .when('/server-control/remote-console', {
-                title: 'Удаленная консоль',
-                title_en: 'Serial over LAN',
+                title: 'Serial over LAN',
+                title_ru: 'Удаленная консоль',
                 'template':
                     require('./controllers/remote-console-controller.html'),
                 authenticated: true
               })
               .when('/server-control/remote-console-window', {
-                title: 'Удаленна консоль',
-                title_en: 'Serial over LAN',
+                title: 'Serial over LAN',
+                title_ru: 'Удаленна консоль',
                 'template': require(
                     './controllers/remote-console-window-controller.html'),
                 'controller': 'remoteConsoleWindowController',
@@ -62,21 +62,21 @@ window.angular && (function(angular) {
               })
               .when('/server-control/kvm', {
                 title: 'KVM',
-                title_en: 'KVM',
+                title_ru: 'KVM',
                 'template': require('./controllers/kvm-controller.html'),
                 'controller': 'kvmController',
                 authenticated: true
               })
               .when('/server-control/kvm-window', {
                 title: 'KVM',
-                title_en: 'KVM',
+                title_ru: 'KVM',
                 'template': require('./controllers/kvm-window-controller.html'),
                 'controller': 'kvmWindowController',
                 authenticated: true
               })
               .when('/server-control/virtual-media', {
-                title: 'Виртуальные устройства',
-                title_en: 'Virtual Media',
+                title: 'Virtual Media',
+                title_ru: 'Виртуальные устройства',
                 'template':
                     require('./controllers/virtual-media-controller.html'),
                 'controller': 'virtualMediaController',
@@ -91,8 +91,8 @@ window.angular && (function(angular) {
                 }
               })
               .when('/server-control', {
-                title: 'Управление питанием',
-                title_en: 'Power Operations',
+                title: 'Power Operations',
+                title_ru: 'Управление питанием',
                 'template':
                     require('./controllers/power-operations-controller.html'),
                 'controller': 'powerOperationsController',

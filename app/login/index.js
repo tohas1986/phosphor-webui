@@ -15,8 +15,6 @@ window.angular && (function(angular) {
         '$routeProvider',
         function($routeProvider) {
           $routeProvider.when('/login', {
-	    title: 'Авторизация',
-	    title_en: 'Login',
             'template': require('./controllers/login-controller.html'),
             'controller': 'LoginController',
             authenticated: false
