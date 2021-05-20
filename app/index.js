@@ -190,7 +190,7 @@ window.angular && (function(angular) {
 
           $rootScope.$on('$routeChangeStart', function(event, next, current) {
             // set page title
-            $rootScope.page_title = next.title;
+            $rootScope.page_title = (dataService.language == 'ru') ? next.title:next.title_en;
 
             if (next.$$route == null || next.$$route == undefined) return;
             if (next.$$route.authenticated) {
