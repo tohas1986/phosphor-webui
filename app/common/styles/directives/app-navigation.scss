@@ -327,7 +327,7 @@
   @include collapsed-nav;
 }
 
-select#language { width:150px; display:inline-block; padding: 0px 0px 0px 34px; border: 0px; }
+select#language { width:150px; display:inline-block; border: 0px; }
 select#language option {
      -webkit-appearance: none;
      -webkit-box-sizing: contents-box;
@@ -336,7 +336,6 @@ select#language option {
      background-position: left top;
      background-size: 32px 32px;
      background-repeat: no-repeat;
-     padding: 0px 0px 0px 34px;
      text-indent: 34px;
 }
 select#language option[value="ru"] { background-image:url(../assets/icons/RU-ru-32.png);}

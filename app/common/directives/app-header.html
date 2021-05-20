@@ -18,7 +18,7 @@
 	<img src="/app/assets/icons/EN-us-32.png" border="0">EN
 	-->
 	<a><img src="{{(dataService.language == 'ru') ? '/app/assets/icons/RU-ru-32.png':'/app/assets/icons/EN-us-32.png'}}" border="0">
-          <select id="xlanguage" ng-model="dataService.language" ng-change="refresh()">
+          <select id="language" ng-model="dataService.language" ng-change="refresh()">
 	    <option value="ru" ng-selected="selected">Русский</option>
 	    <option value="en" ng-selected="selected">English(US)</option>
 	  </select>
