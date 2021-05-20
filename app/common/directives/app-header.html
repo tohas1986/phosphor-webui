@@ -18,9 +18,9 @@
 	<img src="/app/assets/icons/EN-us-32.png" border="0">EN
 	-->
 	<a>
-          <select id="language" onchange="setLanguage()" ng-change="setLanguage2()">
-	    <option value="ru" selected>Русский</option>
-	    <option value="en" >English/US</option>
+          <select id="language" ng-model="dataService.language" ng-change="refresh()">
+	    <option value="ru" ng-selected="selected">Русский</option>
+	    <option value="en" ng-selected="selected">English/US</option>
 	  </select>
 	</a>
 
