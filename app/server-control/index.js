@@ -62,17 +62,21 @@ window.angular && (function(angular) {
               })
               .when('/server-control/kvm', {
                 title: 'KVM',
+                title_en: 'KVM',
                 'template': require('./controllers/kvm-controller.html'),
                 'controller': 'kvmController',
                 authenticated: true
               })
               .when('/server-control/kvm-window', {
+                title: 'KVM',
+                title_en: 'KVM',
                 'template': require('./controllers/kvm-window-controller.html'),
                 'controller': 'kvmWindowController',
                 authenticated: true
               })
               .when('/server-control/virtual-media', {
-                title: 'Virtual Media',
+                title: 'Виртуальные устройства',
+                title_en: 'Virtual Media',
                 'template':
                     require('./controllers/virtual-media-controller.html'),
                 'controller': 'virtualMediaController',

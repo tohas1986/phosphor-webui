@@ -38,6 +38,7 @@ window.angular && (function(angular) {
               })
               .when('/configuration/snmp', {
                 title: 'Почта - SNMP',
+                title_en: 'SNMP',
                 'template': require('./controllers/snmp-controller.html'),
                 'controller': 'snmpController',
                 authenticated: true
