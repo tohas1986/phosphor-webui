@@ -16,14 +16,16 @@ window.angular && (function(angular) {
         function($routeProvider) {
           $routeProvider
               .when('/overview/server', {
-                title: 'Overview',
+                title: 'Обзор',
+                title_en: 'Overview',
                 'template':
                     require('./controllers/system-overview-controller.html'),
                 'controller': 'systemOverviewController',
                 authenticated: true
               })
               .when('/overview', {
-                title: 'Overview',
+                title: 'Обзор',
+                title_en: 'Overview',
                 'template':
                     require('./controllers/system-overview-controller.html'),
                 'controller': 'systemOverviewController',
