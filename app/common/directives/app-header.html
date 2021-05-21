@@ -9,7 +9,7 @@
     </div>
     <div class="header__functions-section">
       <div class="header__functions">
-	<div class="language-selector-wrapper" ng-class="{{ dataService.language == 'ru' ? 'language_ru':'language_en' }}">
+	<div class="{{ dataService.language == 'ru' ? 'language_ru':'language_en' }}">
           <select id="language" ng-model="dataService.language" >
 	    <option value="ru">Русский</option>
 	    <option value="en">English(US)</option>
