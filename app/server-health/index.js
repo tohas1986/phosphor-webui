@@ -18,16 +18,14 @@ window.angular && (function(angular) {
               .when('/server-health/inventory-overview', {
                 title: 'Hardware',
                 title_ru: 'Оборудование',
-                'template':
-                    require('./controllers/inventory-overview-controller.html'),
+                'template': require('./controllers/inventory-overview-controller.html'),
                 'controller': 'inventoryOverviewController',
                 authenticated: true
               })
               .when('/server-health/sensors-overview', {
                 title: 'Sensors',
                 title_ru: 'Датчики',
-                'template':
-                    require('./controllers/sensors-overview-controller.html'),
+                'template': require('./controllers/sensors-overview-controller.html'),
                 'controller': 'sensorsOverviewController',
                 authenticated: true
               })

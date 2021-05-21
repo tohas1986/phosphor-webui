@@ -32,31 +32,27 @@ window.angular && (function(angular) {
               .when('/server-control/power-operations', {
                 title: 'Server Power',
                 title_ru: 'Питание сервера',
-                'template':
-                    require('./controllers/power-operations-controller.html'),
+                'template': require('./controllers/power-operations-controller.html'),
                 'controller': 'powerOperationsController',
                 authenticated: true
               })
               .when('/server-control/power-usage', {
                 title: 'Power Usage',
                 title_ru: 'Потребление энергии',
-                'template':
-                    require('./controllers/power-usage-controller.html'),
+                'template': require('./controllers/power-usage-controller.html'),
                 'controller': 'powerUsageController',
                 authenticated: true
               })
               .when('/server-control/remote-console', {
                 title: 'Serial over LAN',
                 title_ru: 'Удаленная консоль',
-                'template':
-                    require('./controllers/remote-console-controller.html'),
+                'template': require('./controllers/remote-console-controller.html'),
                 authenticated: true
               })
               .when('/server-control/remote-console-window', {
                 title: 'Serial over LAN',
                 title_ru: 'Удаленна консоль',
-                'template': require(
-                    './controllers/remote-console-window-controller.html'),
+                'template': require('./controllers/remote-console-window-controller.html'),
                 'controller': 'remoteConsoleWindowController',
                 authenticated: true
               })
@@ -77,8 +73,7 @@ window.angular && (function(angular) {
               .when('/server-control/virtual-media', {
                 title: 'Virtual Media',
                 title_ru: 'Виртуальные устройства',
-                'template':
-                    require('./controllers/virtual-media-controller.html'),
+                'template': require('./controllers/virtual-media-controller.html'),
                 'controller': 'virtualMediaController',
                 authenticated: true,
                 redirectTo: function(routeParams, path, search) {
@@ -93,8 +88,7 @@ window.angular && (function(angular) {
               .when('/server-control', {
                 title: 'Power Operations',
                 title_ru: 'Управление питанием',
-                'template':
-                    require('./controllers/power-operations-controller.html'),
+                'template': require('./controllers/power-operations-controller.html'),
                 'controller': 'powerOperationsController',
                 authenticated: true
               });

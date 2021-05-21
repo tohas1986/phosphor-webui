@@ -10,7 +10,7 @@
     <div class="header__functions-section">
       <div class="header__functions">
 	<a><img src="{{ dataService.language == 'ru' ? '/app/assets/icons/RU-ru-32.png':'/app/assets/icons/EN-us-32.png' }}" border="0">
-          <select id="language" ng-model="dataService.language" ng-change="refresh()">
+          <select id="language" ng-model="dataService.language" > <!--ng-change="refresh()"-->
 	    <option value="ru">Русский</option>
 	    <option value="en">English(US)</option>
 	  </select>
