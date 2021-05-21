@@ -329,18 +329,19 @@
 
 .language-selector-wrapper {
     display: inline-block;
-    width: 160px;
+    width: 164px;
     height: 34px;
     padding: 0px 0px 0px 32px;
     background-repeat:no-repeat;
     background-position: left 0px top 0px;
-
-    .language_ru {
-	background-image:url('../assets/icons/RU-ru-32.png');
-    }
-
-    .language_en {
-	background-image:url('../assets/icons/EN-us-32.png');
-    }
 }
-select#language { width:128px; display:inline-block; border: 0px; }
+
+.language_ru {
+    background-image:url('../assets/icons/RU-ru-32.png');
+}
+
+.language_en {
+    background-image:url('../assets/icons/EN-us-32.png');
+}
+
+select#language { width:128px; display:inline-block; border: 0px; margin-right:4px;}
