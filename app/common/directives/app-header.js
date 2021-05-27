@@ -18,15 +18,21 @@ window.angular && (function(angular) {
             $scope.dataService = dataService;
 
             $scope.page_title = $rootScope.page_title;
+
             $scope.$on('$routeChangeSuccess', function(event, data) {
               $scope.page_title = data.title;
+		if(data.title_ru){
+		    $scope.page_title = $scope.page_title + '(ru=' + data.title_ru + ')';
+		}
             });
 
+/*
             $scope.page_title = $rootScope.page_title;
 
             $scope.$on('$routeChangeSuccess', function(event, data) {
               $scope.page_title = data.title;
             });
+*/
 
             $scope.loadServerHealth = function() {
               APIUtils.getServerStatus().then(function(result) {

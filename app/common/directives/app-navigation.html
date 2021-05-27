@@ -99,7 +99,7 @@
           </li>
           <li ng-if="VMEnabled && checkPrivilege('Administrator')" ng-class="{'active': (path == '/server-control/virtual-media')}">
             <a href="#/server-control/virtual-media" tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">
-               <span>Virtual Media</span>
+               <span>{{ dataService.language == 'ru' ? 'Виртуальные носители':'Virtual Media' }}</span>
             </a>
           </li>
         </ul>
@@ -160,8 +160,7 @@
         </ul>
       </li>
 
-      <div id='toggle-collapse' aria-label="Collapse navigation" aria-role="button" ng-click="toggleNav= !toggleNav"
-        tabindex="0" role="button">
+      <div id='toggle-collapse' aria-label="Collapse navigation" aria-role="button" ng-click="toggleNav= !toggleNav" tabindex="0" role="button">
         <icon class="nav-icon" file="icon-collapse.svg"></icon>
       </div>
 

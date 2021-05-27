@@ -1,6 +1,6 @@
 <div class="row firmware__table">
   <div class=" columns col-4">
-    <h5>{{title}}</h5>
+    <h5>{{ dataService.language == 'ru' ? title + '(ru='+title_ru+')' : title }}</h5>
   </div>
 
   <div class="columns col-8" ng-show="(firmwares | filter:filterBy).length > 0">
@@ -45,8 +45,7 @@
         </div>
         <div class="table__cell firmware__version" ng-class="{'active':firmware.isExtended}">
           <span class="table__cell-label">{{ dataService.language == 'ru' ? 'Версия':'Version' }}:</span>{{firmware.Version}}
-          <button ng-click="toggleMoreDropdown($event, firmware)" ng-class="{'active':firmware.isExtended}"
-            ng-show="firmware.isExtended">
+          <button ng-click="toggleMoreDropdown($event, firmware)" ng-class="{'active':firmware.isExtended}" ng-show="firmware.isExtended">
             <icon file="icon-more.svg"></icon>
           </button>
         </div>
