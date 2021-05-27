@@ -16,6 +16,7 @@ window.angular && (function(angular) {
     function(
         $scope, $cookies, APIUtils, $q, toastService, dataService,
         nbdServerService, virtualMediaModel, $uibModal, $timeout, $location) {
+      $scope.dataService = dataService;
       var vms = [];
       var refreshRateMs = 5000;
       var refreshPromise;

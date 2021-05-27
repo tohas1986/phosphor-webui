@@ -9,8 +9,9 @@ window.angular && (function(angular) {
         template: require('./ldap-user-roles.html'),
         scope: {roleGroups: '=', enabled: '=', roleGroupType: '='},
         controller: [
-          '$scope', 'APIUtils', 'toastService', '$q',
-          function($scope, APIUtils, toastService, $q) {
+          '$scope', 'APIUtils', 'toastService', '$q', 'dataService',
+          function($scope, APIUtils, toastService, $q, dataService) {
+	    $scope.dataService = dataService;
             $scope.privileges = [];
             $scope.loading = true;
             $scope.newGroup = {};

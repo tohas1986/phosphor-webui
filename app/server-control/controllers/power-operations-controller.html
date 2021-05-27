@@ -3,31 +3,29 @@
   <section class="page-content-simple">
     <div class="column small-8 ">
       <div class="status-wrapper">
-        <span>Boot setting override</span>
+        <span>{{ dataService.language == 'ru' ? 'Переопределение настроек загрузки':'Boot setting override' }}</span>
         <label ng-class="(boot.BootSourceOverrideTarget.length>0) ? 'status-label' : 'hide'"
-          ng-Show="boot.BootSourceOverrideTarget!='None'">ON:
-          {{prettifyBootTarget(boot.BootSourceOverrideTarget)}} <span ng-show="boot.oneTimeBootEnabled">one
-            time only</span></label>
-        <label class="status-label disabled" ng-show="boot.BootSourceOverrideTarget=='None'">OFF</label>
+          ng-Show="boot.BootSourceOverrideTarget!='None'">{{ dataService.language == 'ru' ? 'Вкл':'ON' }}: {{prettifyBootTarget(boot.BootSourceOverrideTarget)}} 
+	  <span ng-show="boot.oneTimeBootEnabled">{{ dataService.language == 'ru' ? 'только один раз':'one time only' }}</span>
+	</label>
+        <label class="status-label disabled" ng-show="boot.BootSourceOverrideTarget=='None'">{{ dataService.language == 'ru' ? 'Выкл':'OFF' }}</label>
       </div>
     </div>
     <div class="column small-4 align-right">
       <button ng-click="onClickBootSettings()" class="btn btn-tertiary">
         <icon file="icon-config.svg" aria-hidden="true"></icon>
-        Boot Settings
+        {{ dataService.language == 'ru' ? 'Настройки загрузки':'Boot Settings' }}
       </button>
     </div>
   </section>
 
   <!-- Power Indicator Bar -->
   <div class="row">
-    <div class="column small-12 power__indicator-wrapper"
-      ng-class="{'power__state-on': dataService.server_state == 'On', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet': dataService.server_state == 'Standby', 'power__state-error': dataService.server_state == 'Quiesced'}">
-      <div id="power-indicator-bar" class="power__indicator-bar progress-bar-striped">
-      </div>
+    <div class="column small-12 power__indicator-wrapper" ng-class="{'power__state-on': dataService.server_state == 'On', 'power__state-off': dataService.server_state == 'Off', 'power__state-indet': dataService.server_state == 'Standby', 'power__state-error': dataService.server_state == 'Quiesced'}">
+      <div id="power-indicator-bar" class="power__indicator-bar progress-bar-striped"></div>
 
       <div class="power-indicator-status">
-        <div class="inline float-left host-name">Server Power</div>
+        <div class="inline float-left host-name">{{ dataService.language == 'ru' ? 'Питание сервера':'Server Power' }}</div>
         <div class="power__state float-right inline trim-text-small">
           <span>{{dataService.server_state | quiescedToError}}</span>
         </div>
@@ -50,25 +48,23 @@
         <div class="reboot__operations column medium-6 small-12">
           <div class="page-content-rnd table row column">
             <div class="box-header reboot-header">
-              <legend class="boot-operations">Reboot<span class="trim-text-small inline">
-                  server</span></legend>
+              <legend class="boot-operations">{{ dataService.language == 'ru' ? 'Перезагрузка сервера':'Reboot server' }}</legend>
             </div>
 
             <div class="box-content">
               <form id="reboot-form" name="rebootForm" class="reboot-form">
                 <div class="column medium-7 small-12">
                   <fieldset>
-                    <label class="control-radio">Orderly
-                      <span class="helper-text trim-text-medium">OS shuts down, then server
-                        reboots</span>
+                    <label class="control-radio">{{ dataService.language == 'ru'
+ ? 'Аккуратно выключить ОС, затем перезагрузить сервер'
+ : 'Orderly OS shuts down, then server reboots' }}
                       <input type="radio" name="radioReboot" ng-model="defaultRebootSetting" value="warm-reboot" />
                       <span class="control__indicator control__indicator-on"></span>
                     </label>
-                    <label class="control-radio">Immediate
-                      <span class="helper-text trim-text-medium">Server reboots without OS
-                        shutting down; may cause
-                        data
-                        corruption</span>
+                    <label class="control-radio">{{ dataService.language == 'ru'
+ ? 'Немедленно перезагрузить сервер без выключения ОС; это может вызвать повреждение данных'
+ : 'Immediate Server reboots without OS shutting down; may cause data corruption' }}
+                      <span class="helper-text trim-text-medium"></span>
                       <input type="radio" name="radioReboot" ng-model="defaultRebootSetting" value="cold-reboot" />
                       <span class="control__indicator control__indicator-on"></span>
                     </label>
@@ -91,8 +87,8 @@
 
           <div class="page-content-rnd table row column">
             <div class="box-header shutdown-header">
-              <legend class="shutdown-operations">Shutdown<span class="trim-text-small  inline">
-                  server</span>
+              <legend class="shutdown-operations">{{ dataService.language == 'ru' ? 'Выключение сервера':'Shutdown server' }}
+		<span class="trim-text-small inline"></span>
               </legend>
             </div>
 
@@ -100,21 +96,17 @@
               <div class="box-content">
                 <div class="column medium-7 small-12">
                   <fieldset>
-
-                    <label class="control-radio">Orderly
-                      <span class="helper-text trim-text-medium">OS shuts down, then server
-                        shuts down</span>
-                      <input type="radio" name="radioShutdown" ng-model="defaultShutdownSetting"
-                        value='warm-shutdown' />
+                    <label class="control-radio">{{ dataService.language == 'ru'
+ ? 'Аккуратно выключить ОС, затем выключить сервер'
+ : 'Orderly OS shuts down, then server shuts down' }}<span class="helper-text trim-text-medium"></span>
+                      <input type="radio" name="radioShutdown" ng-model="defaultShutdownSetting" value='warm-shutdown' />
                       <span class="control__indicator control__indicator-on"></span>
                     </label>
-                    <label class="control-radio">Immediate
-                      <span class="helper-text trim-text-medium">Server shuts down without OS
-                        shutting down; may cause
-                        data
-                        corruption</span>
-                      <input type="radio" name="radioShutdown" ng-model="defaultShutdownSetting"
-                        value='cold-shutdown' />
+                    <label class="control-radio">{{ dataService.language == 'ru'
+ ? 'Немедленно выключить сервер без выключения ОС; это может вызвать повреждение данных'
+ : 'Immediate Server shuts down without OS shutting down; may cause data corruption' }}
+                      <span class="helper-text trim-text-medium"></span>
+                      <input type="radio" name="radioShutdown" ng-model="defaultShutdownSetting" value='cold-shutdown' />
                       <span class="control__indicator control__indicator-on"></span>
                     </label>
                   </fieldset>
@@ -141,13 +133,13 @@
     <div class="poweron__operations column medium-12 small-12">
       <div class="page-content-rnd table row column">
         <div class="box-header poweron-header">
-          <legend class="boot-operations">Power on<span class="trim-text-small inline"> server</span>
+          <legend class="boot-operations">{{ dataService.language == 'ru' ? 'Включение сервера':'Power on server' }}
+	    <span class="trim-text-small inline"></span>
           </legend>
         </div>
         <div class="box-content">
           <div ng-class="{disabled: dataService.server_unreachable}">
-            <button id="power__power-on" class="btn-power" ng-click="powerOn()" role="button"
-              ng-disabled="dataService.server_unreachable">
+            <button id="power__power-on" class="btn-power" ng-click="powerOn()" role="button" ng-disabled="dataService.server_unreachable">
               <img src="/app/assets/images/btn-poweroff.svg">
             </button>
           </div>
@@ -161,8 +153,9 @@
 
 <!-- Pending reboot warning -->
 <div class="page-content-rnd alert-message" ng-show="operationPending">
-  <p>
-    Power action request is successfully placed. Power operation controls will be restored once completed.
+  <p> {{ dataService.language == 'ru'
+ ? 'Запрос на действие по питанию успешно принят. Управление питанием будет восстановлено после завершения.'
+ : 'Power action request is successfully placed. Power operation controls will be restored once completed.' }}
   </p>
 </div>
 </div>

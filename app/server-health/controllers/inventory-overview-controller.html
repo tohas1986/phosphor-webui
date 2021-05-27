@@ -2,14 +2,11 @@
 
   <section class="page-content-box toggle-filter row">
 
-    <div class="columns col-md-1 col-sm-12"><label class="trim-text-medium">Show:</label>
-    </div>
+    <div class="columns col-md-1 col-sm-12"><label class="trim-text-medium">{{ dataService.language == 'ru' ? 'Показать' : 'Show' }}:</label></div>
 
-    <div class="columns col-sm-6 col-6" ng-repeat="type in hardwareList"
-      ng-class="(type == 'Add-in Cards') ? 'col-md-3' : 'col-md-2'">
+    <div class="columns col-sm-6 col-6" ng-repeat="type in hardwareList" ng-class="(type == 'Add-in Cards') ? 'col-md-3' : 'col-md-2'">
       <div class='filter-box'>
-        <button class="filter-btn" ng-click="toggleHardware(type)"
-          ng-class="(selectedHardwareType == type) ? 'btn-filter-primary' : 'btn-filter-secondary'">
+        <button class="filter-btn" ng-click="toggleHardware(type)" ng-class="(selectedHardwareType == type) ? 'btn-filter-primary' : 'btn-filter-secondary'">
           <span class="">&#9679;</span>&nbsp;{{type}}
         </button>
       </div>
@@ -20,16 +17,14 @@
   <section class="page-content-box" ng-show="selectedHardwareType=='PCIe Devices'">
 
     <div class="columns col-lg-4 col-md-4 col-sm-12"><label class="trim-text-medium">
-        Search hardware components:</label>
+        {{ dataService.language == 'ru' ? 'Поиск аппаратных компонентов' : 'Search hardware components' }}:</label>
     </div>
     <div class="columns col-md-8 col-sm-12">
       <div class="content__search search-box">
-        <input id="content__search-input" placeholder="Keyword" type="text" ng-model="customSearch"
-          ng-keydown="doSearchOnEnter($event)" />
+        <input id="content__search-input" placeholder="{{ dataService.language == 'ru' ? 'Ключевое слово':'Keyword' }}" type="text" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)" />
         <div class="search-submit__wrapper">
           <button class="clear-input" ng-click="clear()">&#10005;</button>
-          <input id="content__search-submit" type="submit" class="btn content__search-submit" value="Search"
-            ng-click="doSearchOnClick()" />
+          <input id="content__search-submit" type="submit" class="btn content__search-submit" value="Search" ng-click="doSearchOnClick()" />
         </div>
       </div>
     </div>
@@ -45,16 +40,16 @@
       <div class="page-content-box">
         <div class="loader-holder text-center" ng-hide="!cpuLoading">
           <div ng-show="cpuLoading" class="spinner-border m-5 individual-component-loader" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{ dataService.language == 'ru' ? 'Загружается' : 'Loading' }}...</span>
           </div>
         </div>
-        <h5>CPUs</h5>
+        <h5>{{ dataService.language == 'ru' ? 'Процессоры' : 'CPUs' }}</h5>
 
         <div ng-show="(CPUData | filter:filterBySearchTermsCPU).length === 0 && searchTerms.length">
-          No CPUs match your search query.
+          {{ dataService.language == 'ru' ? 'Ни один процессор не соответствует вашему поисковому запросу' : 'No CPUs match your search query' }}.
         </div>
         <div ng-show="(CPUData | filter:filterBySearchTermsCPU).length === 0 && !searchTerms.length">
-          No CPUs available to display.
+          {{ dataService.language == 'ru' ? 'Нет доступных процессоров для отображения' : 'No CPUs available to display' }}.
         </div>
 
         <uib-tabset active="CPU_tabs" justified="true" ng-class="{ 'overflow-ht': (DimmTable | filter:filterDimms).length >= 1 || CPUData.length >= 1 }">
@@ -63,8 +58,7 @@
             ng-repeat="CPU in CPUData | filter:filterBySearchTermsCPU" ng-value="$index">
 
             <table class="overview-config-table">
-              <tr ng-repeat="(key, value) in CPU"
-                ng-show="key.indexOf('@') != 0 && key.indexOf('Status') != 0 && key.indexOf('Id') != 0">
+              <tr ng-repeat="(key, value) in CPU" ng-show="key.indexOf('@') != 0 && key.indexOf('Status') != 0 && key.indexOf('Id') != 0">
                 <td>{{ parseNonSpacedWords(key) }}</td>
                 <td>{{(value && value.VendorId) ? value.VendorId : value || 'NA'}}</td>
                 <!-- <td *ng-If="value.ProcessorId">EffectiveFamily</td>
@@ -86,25 +80,23 @@
       <div class="page-content-box">
         <div class="loader-holder text-center" ng-hide="!dimmsLoading">
           <div ng-show="dimmsLoading" class="spinner-border m-5 individual-component-loader" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{ dataService.language == 'ru' ? 'Загружается' : 'Loading' }}...</span>
           </div>
         </div>
-        <h5>DIMMs</h5>
+        <h5>{{ dataService.language == 'ru' ? 'Модули памяти (DIMM)' : 'DIMMs' }}</h5>
 
         <div ng-show="filteredDimms.length == 0 && searchTerms.length">
-          No DIMMs match your search query.
+          {{ dataService.language == 'ru' ? 'Нет модулей DIMM, соответствующих вашему поисковому запросу' : 'No DIMMs match your search query' }}.
         </div>
         <div ng-show="filteredDimms.length == 0 && !searchTerms.length">
-          No DIMMs available to display.
+          {{ dataService.language == 'ru' ? 'Нет доступных модулей DIMM для отображения' : 'No DIMMs available to display' }}.
         </div>
 
         <uib-tabset active="Dimm_tabs" ng-class="{ 'overflow-ht': (DimmTable | filter:filterDimms).length >= 1 || CPUData.length >= 1 }" justified="true" ng-show="7 > (DimmTable | filter:filterDimms).length">
           <uib-tab index="$index" heading="{{Dimm.Id}}"
-            ng-repeat="Dimm in DimmTable | filter:filterBySearchTerms | filter:filterDimms | orderBy:sortKey"
-            ng-value="$index">
+            ng-repeat="Dimm in DimmTable | filter:filterBySearchTerms | filter:filterDimms | orderBy:sortKey" ng-value="$index">
             <table class="Dimm_table overview-config-table">
-              <tr ng-repeat="(key, value) in Dimm"
-                ng-show="key.indexOf('@') != 0 && key.indexOf('Status') != 0 && key.indexOf('Id') != 0 && key.indexOf('Name') != 0">
+              <tr ng-repeat="(key, value) in Dimm" ng-show="key.indexOf('@') != 0 && key.indexOf('Status') != 0 && key.indexOf('Id') != 0 && key.indexOf('Name') != 0">
                 <td>{{parseNonSpacedWords(key)}}</td>
                 <td>{{value || 'N/A'}}</td>
               </tr>
@@ -115,7 +107,7 @@
         <div class="text-intro" ng-show="filteredDimms.length > 6 && filteredDimms.length != 0">
           <div class="trim-text-medium">
             <input type='checkbox' class="toggleDetailsVisibility" ng-click="toggleDIMMdetails = !toggleDIMMdetails;">
-            Show Details
+            {{ dataService.language == 'ru' ? 'Показать детали' : 'Show Details' }}
           </div>
         </div>
 
@@ -124,36 +116,31 @@
             <div class="table__row">
               <div class="table__cell status-icon trim-text-medium"></div>
               <div class="table__cell sort_button_wrapper" ng-click='sortBy("Name")'>
-                <div class="column col-10">Slot Number</div>
+                <div class="column col-10">{{ dataService.language == 'ru' ? 'Номер слота' : 'Slot Number' }}</div>
                 <div class="column col-2"><span class="sortorder" ng-class="{reverse: reverse}"></span></div>
               </div>
               <div class="table__cell sort_button_wrapper" ng-click="sortBySeverity()">
-                <div class="column col-10">Status</div>
-                <div class="column col-2"><span class="sortorder" ng-class="{reverseSeverity: reverseSeverity}"></span>
-                </div>
+                <div class="column col-10">{{ dataService.language == 'ru' ? 'Состояние' : 'Status' }}</div>
+                <div class="column col-2"><span class="sortorder" ng-class="{reverseSeverity: reverseSeverity}"></span></div>
               </div>
-              <div class="table__cell">Enabled</div>
-              <div class="table__cell">Size</div>
-              <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">Capacity MiB</div>
-              <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">Memory Device Type</div>
-              <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">Type</div>
+              <div class="table__cell">{{ dataService.language == 'ru' ? 'Включен' : 'Enabled' }}</div>
+              <div class="table__cell">{{ dataService.language == 'ru' ? 'Ширина в битах' : 'Size' }}</div>
+              <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">{{ dataService.language == 'ru' ? 'Емкость MiB' : 'Capacity MiB' }}</div>
+              <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">{{ dataService.language == 'ru' ? 'Тип устройства памяти' : 'Memory Device Type' }}</div>
+              <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">{{ dataService.language == 'ru' ? 'Тип' : 'Type' }}</div>
             </div>
           </div>
 
           <div class="table__body">
-            <div class="table__row sensor-row__{{sensor.Status.Health}}"
-              ng-repeat="Dimm in filteredDimms = ( DimmTable | filter:filterBySearchTerms | filter:filterDimms | orderBy:sortKey:reverse)">
-              <div class="table__cell status-icon status__{{Dimm.Status.Health}} trim-text-medium">&nbsp;
-              </div>
+            <div class="table__row sensor-row__{{sensor.Status.Health}}" ng-repeat="Dimm in filteredDimms = ( DimmTable | filter:filterBySearchTerms | filter:filterDimms | orderBy:sortKey:reverse)">
+              <div class="table__cell status-icon status__{{Dimm.Status.Health}} trim-text-medium">&nbsp;</div>
               <div class="table__cell">{{Dimm.Id || 'N/A'}}</div>
               <div class="table__cell sensor__status">{{Dimm.Status.Health || 'N/A'}}</div>
               <div class="table__cell">{{Dimm.Status.State || 'N/A'}}</div>
               <div class="table__cell">{{Dimm.DataWidthBits || 'N/A'}}</div>
-              <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">{{Dimm.MemoryDeviceType || 'N/A'}} /
-                {{Dimm.MemoryType || 'N/A'}}</div>
               <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">{{Dimm.CapacityMiB || 'N/A'}}</div>
-              <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">{{Dimm.MemoryDeviceType || 'N/A'}}
-              </div>
+              <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">{{Dimm.MemoryDeviceType || 'N/A'}} / {{Dimm.MemoryType || 'N/A'}}</div>
+              <div class="table__cell trim-text-medium" ng-show="toggleDIMMdetails">{{Dimm.MemoryDeviceType || 'N/A'}}</div>
             </div>
           </div>
 
@@ -167,25 +154,23 @@
       <div class="page-content-box">
         <div class="loader-holder text-center" ng-hide="!drivesLoading">
           <div ng-show="drivesLoading" class="spinner-border m-5 individual-component-loader" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{ dataService.language == 'ru' ? 'Загружается' : 'Loading' }}...</span>
           </div>
         </div>
-        <h5 ng-class="(DriveData.length > 0 && filteredDriveData.length != 0) ? 'float-left' : ''">Drives</h5>
+        <h5 ng-class="(DriveData.length > 0 && filteredDriveData.length != 0) ? 'float-left' : ''">{{ dataService.language == 'ru' ? 'Диски' : 'Drives' }}</h5>
 
         <div ng-show="(DriveData | filter:filterBySearchTerms).length == 0">
-          No drives available to display.
+          {{ dataService.language == 'ru' ? 'Нет доступных дисков для отображения' : 'No drives available to display' }}.
         </div>
 
         <div class="text-intro" ng-show="(DriveData.length > 1) && (filteredDriveData.length != 0)">
           <div class="trim-text-medium inline">
             <input type='checkbox' ng-click="toggleDrivedetails = !toggleDrivedetails;">
-            Show
-            Details
+            {{ dataService.language == 'ru' ? 'Показать детали' : 'Show Details' }}
           </div>
           <div class="trim-text-medium inline">
             <input type='checkbox' ng-click="toggleDrive = !toggleDrive;">
-            Show
-            Disabled
+            {{ dataService.language == 'ru' ? 'Показать отключенные' : 'Show Disabled' }}
           </div>
         </div>
 
@@ -195,30 +180,30 @@
             <div class="table__row">
               <div class="table__cell sort_button_wrapper status-icon_wrapper" ng-click='sortDriveBy("Name")'
                 ng-class="{reverse: reverse}">
-                Slot Number
+                {{ dataService.language == 'ru' ? 'Номер слота' : 'Slot Number' }}
               </div>
               <div class="table__cell status-icon trim-text-medium"></div>
               <div class="table__cell sort_button_wrapper" ng-click='sortDriveBy("Manufacturer")'
                 ng-class="{reverse: reverse}" ng-show="toggleDrivedetails">
-                Manufacturer
+                {{ dataService.language == 'ru' ? 'Производитель' : 'Manufacturer' }}
               </div>
               <div class="table__cell">
-                Status
+                {{ dataService.language == 'ru' ? 'Статус' : 'Status' }}
               </div>
               <div class="table__cell">
-                State
+                {{ dataService.language == 'ru' ? 'Состояние' : 'State' }}
               </div>
               <div class="table__cell sort_button_wrapper" ng-click='sortDriveBy("Model")' ng-show="toggleDrivedetails"
                 ng-class="{reverse: reverse}">
-                Model
+                {{ dataService.language == 'ru' ? 'Модель' : 'Model' }}
               </div>
               <div class="table__cell sort_button_wrapper" ng-click='sortDriveBy("PartNumber")'
                 ng-show="toggleDrivedetails" ng-class="{reverse: reverse}">
-                Part Number
+                {{ dataService.language == 'ru' ? 'Номер партии' : 'Part Number' }}
               </div>
               <div class="table__cell sort_button_wrapper" ng-click='sortDriveBy("Model")' ng-show="toggleDrivedetails"
                 ng-class="{reverse: reverse}">
-                Serial Number
+                {{ dataService.language == 'ru' ? 'Серийный номер' : 'Serial Number' }}
               </div>
             </div>
           </div>
@@ -249,27 +234,26 @@
       <div class="page-content-box">
         <div class="loader-holder text-center" ng-hide="!devicesLoading">
           <div ng-show="devicesLoading" class="spinner-border m-5 individual-component-loader" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{ dataService.language == 'ru' ? 'Загружается' : 'Loading' }}...</span>
           </div>
         </div>
-        <h5 ng-class="(PCIData.length > 7 && filteredPCIData.length != 0) ? 'float-left' : ''">PCIe Devices</h5>
+        <h5 ng-class="(PCIData.length > 7 && filteredPCIData.length != 0) ? 'float-left' : ''">{{ dataService.language == 'ru' ? 'PCIe-устройства' : 'PCIe Devices' }}</h5>
 
         <div ng-show="filteredPCIData.length == 0">
-          No PCIe devices available to display.
+          {{ dataService.language == 'ru' ? 'Нет доступных PCIe-устройств для отображения' : 'No PCIe devices available to display' }}.
         </div>
 
         <div ng-show="PCIData.length > 7 && filteredPCIData.length != 0">
           <div class="text-intro">
             <div class="trim-text-medium">
-              <input type='checkbox' ng-click="toggleDevices = !toggleDevices;"> Show
-              Details
+              <input type='checkbox' ng-click="toggleDevices = !toggleDevices;"> 
+	      {{ dataService.language == 'ru' ? 'Показать детали' : 'Show Details' }}
             </div>
           </div>
           <div class="text-intro">
             <div class="trim-text-medium">
               <input type='checkbox' ng-checked="showasGroups" ng-click="sortPCIBy(sortPCIKey,true)">
-              Group
-              by Device
+              {{ dataService.language == 'ru' ? 'Группировать по устройствам' : 'Group by Device' }}
             </div>
           </div>
         </div>
@@ -277,25 +261,21 @@
         <div class="table row Device__table" ng-show="PCIData.length > 7 && filteredPCIData.length != 0">
           <div class="table__head fixed-table-header">
             <div class="table__row">
-              <div class="table__cell sort_button_wrapper" ng-click='sortPCIBy("DeviceId",false)'
-                ng-class="{reverse: reverse}">
-                Device ID
+              <div class="table__cell sort_button_wrapper" ng-click='sortPCIBy("DeviceId",false)' ng-class="{reverse: reverse}">
+                {{ dataService.language == 'ru' ? 'ID устройства' : 'Device ID' }}
               </div>
-              <div class="table__cell sort_button_wrapper" ng-click='sortPCIBy("ParentId",false)'
-                ng-class="{reverse: reverse}">
-                Device name
+              <div class="table__cell sort_button_wrapper" ng-click='sortPCIBy("ParentId",false)' ng-class="{reverse: reverse}">
+                {{ dataService.language == 'ru' ? 'Название устройства' : 'Device name' }}
               </div>
-              <div class="table__cell sort_button_wrapper" ng-click='sortPCIBy("DeviceId",false)'
-                ng-class="{reverse: reverse}">
-                Manufacturer
+              <div class="table__cell sort_button_wrapper" ng-click='sortPCIBy("DeviceId",false)' ng-class="{reverse: reverse}">
+                {{ dataService.language == 'ru' ? 'Производитель' : 'Manufacturer' }}
               </div>
-              <div class="table__cell sort_button_wrapper" ng-click='sortPCIBy("DeviceClass",false)'
-                ng-class="{reverse: reverse}">
-                Device Class
+              <div class="table__cell sort_button_wrapper" ng-click='sortPCIBy("DeviceClass",false)' ng-class="{reverse: reverse}">
+                {{ dataService.language == 'ru' ? 'Класс устройства' : 'Device Class' }}
               </div>
-              <div class="table__cell trim-text-medium" ng-show="toggleDevices">Subsystem ID</div>
-              <div class="table__cell trim-text-medium" ng-show="toggleDevices">Revision ID</div>
-              <div class="table__cell trim-text-medium" ng-show="toggleDevices">Subsystem Vendor ID</div>
+              <div class="table__cell trim-text-medium" ng-show="toggleDevices">{{ dataService.language == 'ru' ? 'ID подсистемы' : 'Subsystem ID' }}</div>
+              <div class="table__cell trim-text-medium" ng-show="toggleDevices">{{ dataService.language == 'ru' ? 'ID ревизии' : 'Revision ID' }}</div>
+              <div class="table__cell trim-text-medium" ng-show="toggleDevices">{{ dataService.language == 'ru' ? 'ID поставщика подсистемы' : 'Subsystem Vendor ID' }}</div>
             </div>
           </div>
           <div class="table__body">

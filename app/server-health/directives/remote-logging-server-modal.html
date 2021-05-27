@@ -3,37 +3,36 @@
     <icon file="icon-close.svg" aria-hidden="true"></icon>
   </button>
   <div class="modal-header">
-    <h2 class="modal-title" id="dialog_label">{{activeModalProps.title}}</h2>
+    <h2 class="modal-title" id="dialog_label">{{ dataService.language == 'ru' ? activeModalProps.title_ru : activeModalProps.title }}</h2>
   </div>
   <form name="form">
     <div ng-if="activeModal !== 2" class="modal-body">
-      <label for="remoteServerIP">Hostname or IP Address</label>
+      <label for="remoteServerIP">{{ dataService.language == 'ru' ? 'Доменное имя сервера или IP-адрес' : 'Hostname or IP Address' }}</label>
       <input id="remoteServerIP" type="text" required name="hostname" ng-model="remoteServerForm.hostname" />
       <div ng-if="form.hostname.$invalid && form.hostname.$dirty" class="form__validation-message">
-        <span ng-show="form.hostname.$error.required">Field is required</span>
+        <span ng-show="form.hostname.$error.required">{{ dataService.language == 'ru' ? 'Обязательное поле' : 'Field is required' }}</span>
       </div>
-      <label for="remoteServerPort">Port</label>
-      <p class="label__helper-text">Value must be between 0 – 65535</p>
-      <input id="remoteServerPort" type="number" required name="port" min="0" max="65535"
-        ng-model="remoteServerForm.port" />
+      <label for="remoteServerPort">{{ dataService.language == 'ru' ? 'Порт' : 'Port' }}</label>
+      <p class="label__helper-text">{{ dataService.language == 'ru' ? 'Значение должно быть между' : 'Value must be between' }} 0 – 65535</p>
+      <input id="remoteServerPort" type="number" required name="port" min="0" max="65535" ng-model="remoteServerForm.port" />
       <div ng-if="form.port.$invalid && form.port.$dirty" class="form__validation-message">
-        <span ng-show="form.port.$error.required">Field is required</span>
+        <span ng-show="form.port.$error.required">{{ dataService.language == 'ru' ? 'Обязательное поле' : 'Field is required' }}</span>
         <span ng-show="form.port.$error.min || form.port.$error.max">
-          Value must be between 0 – 65535
+          {{ dataService.language == 'ru' ? 'Значение должно быть между' : 'Value must be between' }} 0 – 65535
         </span>
       </div>
     </div>
     <div ng-if="activeModal === 2" class="modal-body">
-      <p>Are you sure you want to remove remote logging server
-        {{remoteServer.hostname}}?</p>
+      <p>{{ dataService.language == 'ru'
+ ? 'Вы уверены, что хотите удалить удаленный сервер регистрации'
+ : 'Are you sure you want to remove remote logging server' }} {{remoteServer.hostname}}?</p>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" ng-click="$close()" type="button">
-        Cancel
+        {{ dataService.language == 'ru' ? 'Отменить' : 'Cancel' }}
       </button>
-      <button class="btn btn-primary" type="submit" ng-click="$close(activeModal)" ng-disabled="form.$invalid"
-        ng-class="{'disabled': form.$invalid}">
-        {{activeModalProps.actionLabel}}
+      <button class="btn btn-primary" type="submit" ng-click="$close(activeModal)" ng-disabled="form.$invalid" ng-class="{'disabled': form.$invalid}">
+        {{ dataService.language == 'ru' ? activeModalProps.actionLabel_ru : activeModalProps.actionLabel }}
       </button>
     </div>
   </form>

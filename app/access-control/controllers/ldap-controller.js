@@ -10,8 +10,9 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.accessControl').controller('ldapController', [
-    '$scope', 'APIUtils', '$q', 'toastService',
-    function($scope, APIUtils, $q, toastService) {
+    '$scope', 'APIUtils', '$q', 'toastService', 'dataService',
+    function($scope, APIUtils, $q, toastService, dataService) {
+      $scope.dataService = dataService;
       $scope.loading = false;
       $scope.isSecure = false;
       $scope.ldapProperties = {};

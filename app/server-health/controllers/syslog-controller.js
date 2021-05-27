@@ -19,10 +19,11 @@ window.angular && (function(angular) {
 
       .controller('sysLogController', [
         '$scope', '$filter', '$location', '$timeout', 'APIUtils',
-        'toastService', 'Constants',
+        'toastService', 'Constants', 'dataService',
         function(
             $scope, $filter, $location, $timeout, APIUtils, toastService,
-            Constants) {
+            Constants, dataService) {
+	  $scope.dataService = dataService;
           $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
           $scope.loading = true;
           $scope.sysLogs = [];

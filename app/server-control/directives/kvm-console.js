@@ -18,6 +18,7 @@ window.angular && (function(angular) {
         restrict: 'E', template: require('./kvm-console.html'),
             scope: {newWindowBtn: '=?'}, link: function(scope, element) {
               var rfb;
+		scope.dataService = dataService;
               scope.autoscale = true;
 
               element.on('$destroy', function() {

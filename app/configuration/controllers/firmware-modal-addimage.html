@@ -6,7 +6,7 @@
     </button>
     <div class="modal-header" id="modal-operation">
       <h3>
-        Add Image File
+        {{ dataService.language == 'ru' ? 'Добавить файл образа':'Add Image File' }}
       </h3>
     </div>
     <div class="modal-body">
@@ -14,20 +14,20 @@
         <div class="row">
           <div class="columns col-12">
             <legend for="boot-selected align-left">
-              Upload image file from workstation</legend>
+{{ dataService.language == 'ru' ? 'Загрузить файл образа с рабочего места':'Upload image file from workstation' }}
+	    </legend>
           </div>
           <div class="columns col-12">
             <p>
-              Select a BMC firmware file to use to update the BMC.
+{{ dataService.language == 'ru' ? 'Выберите файл прошивки BMC, который будет использоваться для обновления BMC.':'Select a BMC firmware file to use to update the BMC.' }}
             </p>
             <label for="file-upload" class="inline firmware__upload-chooser">
-              <input id="file-upload" name="uploadedfile" type="file" file="file" class="hide"
-                ng-model="modalCtrl.uploadedfile" />
-              <span class="btn btn-secondary">Choose a file</span>
-              <span class="inline firmware__upload-file-name"><span ng-if="!file">No file chosen</span><span
+              <input id="file-upload" name="uploadedfile" type="file" file="file" class="hide" ng-model="modalCtrl.uploadedfile" />
+              <span class="btn btn-secondary">{{ dataService.language == 'ru' ? 'Выберите файл':'Choose a file' }}</span>
+              <span class="inline firmware__upload-file-name"><span ng-if="!file">{{ dataService.language == 'ru' ? 'Файл не выбран':'No file chosen' }}</span><span
                   ng-if="file.name !== undefined">{{file.name}}</span></span>
             </label>
-            <div class="inline uploading" ng-show="uploading">Upload in progress...</div>
+            <div class="inline uploading" ng-show="uploading">{{ dataService.language == 'ru' ? 'Выполняется загрузка файла':'Upload in progress' }}...</div>
           </div>
         </div>
       </section>
@@ -40,7 +40,7 @@
     <!-- form actions -->
     <div class="boot-form-actions">
       <button type="reset" class="btn btn-secondary" ng-click="$dismiss();">
-        Cancel
+        {{ dataService.language == 'ru' ? 'Отменить':'Cancel' }}
       </button>
       <input type="button" ng-disabled="!file" value="Upload firmware" class="btn btn-primary float-right" ng-click="$close(form)" />
     </div>

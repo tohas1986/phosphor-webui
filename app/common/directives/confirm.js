@@ -10,8 +10,9 @@ window.angular && (function(angular) {
         'scope':
             {'title': '@', 'message': '@', 'confirm': '=', 'callback': '='},
         'controller': [
-          '$scope',
-          function($scope) {
+          '$scope', 'dataService',
+          function($scope, dataService) {
+	    $scope.dataService = dataService;
             $scope.cancel = function() {
               $scope.confirm = false;
               $scope.$parent.confirm = false;

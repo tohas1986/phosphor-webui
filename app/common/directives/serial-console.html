@@ -1,7 +1,7 @@
 <div>
   <div class="serial-lan__actions align-right">
     <button class="btn btn-tertiary" ng-click="openTerminalWindow()" ng-show="showTabBtn === true">
-      <icon file="icon-launch.svg"></icon>Open in new tab
+      <icon file="icon-launch.svg"></icon>{{ dataService.language == 'ru' ? 'Открыть в новой вкладке':'Open in new tab' }}
     </button>
   </div>
 

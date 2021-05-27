@@ -10,8 +10,9 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('powerUsageController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q', 'toastService',
-    function($scope, $window, APIUtils, $route, $q, toastService) {
+    '$scope', '$window', 'APIUtils', '$route', '$q', 'toastService', 'dataService',
+    function($scope, $window, APIUtils, $route, $q, toastService, dataService) {
+	$scope.dataService = dataService;
       $scope.power_consumption = '';
       $scope.power = {};
       $scope.power_cap = {};

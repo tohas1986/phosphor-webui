@@ -10,8 +10,9 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.accessControl').controller('userController', [
-    '$scope', 'APIUtils', 'toastService', 'Constants', '$uibModal', '$q',
-    function($scope, APIUtils, toastService, Constants, $uibModal, $q) {
+    '$scope', 'APIUtils', 'toastService', 'Constants', '$uibModal', '$q', 'dataService',
+    function($scope, APIUtils, toastService, Constants, $uibModal, $q, dataService) {
+      $scope.dataService = dataService;
       $scope.loading;
       $scope.accountSettings;
       $scope.userRoles;

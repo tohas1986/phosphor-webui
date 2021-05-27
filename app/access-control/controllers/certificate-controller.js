@@ -11,9 +11,10 @@ window.angular && (function(angular) {
 
   angular.module('app.configuration').controller('certificateController', [
     '$scope', 'APIUtils', '$q', 'Constants', 'toastService', '$timeout',
-    '$uibModal',
+    '$uibModal','dataService',
     function(
-        $scope, APIUtils, $q, Constants, toastService, $timeout, $uibModal) {
+        $scope, APIUtils, $q, Constants, toastService, $timeout, $uibModal, dataService) {
+      $scope.dataService = dataService;
       $scope.loading = false;
       $scope.certificates = [];
       $scope.availableCertificateTypes = [];

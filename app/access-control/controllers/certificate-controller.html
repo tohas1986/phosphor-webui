@@ -3,19 +3,19 @@
   <div class="row">
     <div class="columns col-md-12 col-sm-12">
       <div class="page-content-box">
-        <legend>SSL Certificates</legend>
+        <legend>{{ dataService.language == 'ru' ? 'Сертификаты SSL':'SSL Certificates'}}</legend>
         <div class="row">
           <div class="message-box" ng-show="certificates.length == 0">
-            No SSL Certificates currently loaded.
+            {{ dataService.language == 'ru' ? 'В настоящее время сертификаты SSL не загружены':'No SSL Certificates currently loaded' }}.
           </div>
           <div class="table row column certificate-list" ng-show="certificates.length > 0">
             <div class="table__head fixed-table-header">
               <div class="table__row">
-                <div class="table__cell">Certificate</div>
-                <div class="table__cell">Issued by</div>
-                <div class="table__cell">Issued to</div>
-                <div class="table__cell">Valid from</div>
-                <div class="table__cell">Valid until</div>
+                <div class="table__cell">{{ dataService.language == 'ru' ? 'Сертификат':'Certificate' }}</div>
+                <div class="table__cell">{{ dataService.language == 'ru' ? 'Выдан кем':'Issued by' }}</div>
+                <div class="table__cell">{{ dataService.language == 'ru' ? 'Выдан для':'Issued to' }}</div>
+                <div class="table__cell">{{ dataService.language == 'ru' ? 'Действует с':'Valid from' }}</div>
+                <div class="table__cell">{{ dataService.language == 'ru' ? 'Действует до':'Valid until' }}</div>
                 <div class="table__cell action-wrapper"></div>
               </div>
             </div>
@@ -29,7 +29,7 @@
             <button ng-disabled="availableCertificateTypes.length === 0" ng-click="addCertModal('Add')"
               class="btn-icon">
               <icon file="add--alt.svg" aria-hidden="true"></icon>
-              Add SSL certificate
+              {{ dataService.language == 'ru' ? 'Добавить сертификат SSL':'Add SSL certificate' }}
             </button>
           </div>
         </div>
@@ -44,18 +44,18 @@
     <div ng-repeat="certificate in certificates | filter:{isExpiring:true}">
       <div class="alert alert-warning" role="alert">
         <icon file="warning--filled.svg" aria-hidden="true"></icon>
-        The uploaded {{ certificate.name }} is expiring in
+        {{ dataService.language == 'ru' ? 'Загруженный':'The uploaded' }} {{ certificate.name }} {{ dataService.language == 'ru' ? 'истекает ':'is expiring in ' }}
         {{ getDays(certificate.ValidNotAfter) === 0
-            ? "less than one day."
-            : getDays(certificate.ValidNotAfter) + " days!" }}
-        Consider replacing it with a new certificate.
+            ? (dataService.language == 'ru') ? 'менее чем через день.':'less than one day.'
+            : (dataService.language == 'ru') ? 'через ' +getDays(certificate.ValidNotAfter)+' дней!': getDays(certificate.ValidNotAfter)+' days!' }}
+        {{ dataService.language == 'ru' ? 'Рассмотрите возможность замены его новым сертификатом':'Consider replacing it with a new certificate' }}.
       </div>
     </div>
     <div ng-repeat="certificate in certificates | filter:{isExpired:true}">
       <div class="alert alert-danger" role="alert">
         <icon file="icon-critical.svg" aria-hidden="true"></icon>
-        The uploaded {{ certificate.name }} has expired. Consider replacing it
-        with a new certificate.
+        {{ dataService.language == 'ru' ? 'У загруженного ' + certificate.name + ' истек срок действия. Рассмотрите возможность замены его новым сертификатом.'
+	    :'The uploaded'+ certificate.name +' has expired. Consider replacing it with a new certificate.' }}
       </div>
     </div>
   </div>

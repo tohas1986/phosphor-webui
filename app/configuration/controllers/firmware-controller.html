@@ -2,10 +2,10 @@
 
 <div id="firmware-controller">
   <div class="page-content-box">
-    <h2 class="text-left firmware-header">Firmware Version</h2>
+    <h2 class="text-left firmware-header">{{ dataService.language == 'ru' ? 'Версия прошивки':'Firmware Version' }}</h2>
     <section class="columns col-12 first-section">
       <div class="columns col-md-4 col-sm-12">
-        <label>BMC Version</label>
+        <label>{{ dataService.language == 'ru' ? 'Версия BMC':'BMC Version' }}</label>
       </div>
       <div class="columns col-md-8 col-sm-12">
         <label>
@@ -15,7 +15,7 @@
     </section>
     <section class="columns col-12 first-section">
       <div class="columns col-md-4 col-sm-12">
-        <label>BIOS Version</label>
+        <label>{{ dataService.language == 'ru' ? 'Версия BIOS':'BIOS Version' }}</label>
       </div>
       <div class="columns col-md-8 col-sm-12">
         <label>
@@ -25,10 +25,10 @@
     </section>
   </div>
   <div class="page-content-box">
-    <h2 class="text-left firmware-header">Firmware Image</h2>
+    <h2 class="text-left firmware-header">{{ dataService.language == 'ru' ? 'Образ прошивки':'Firmware Image' }}</h2>
     <section class="columns col-12 first-section mt-2" ng-class="{'highlighted': rowUpdate}">
         <div class="columns col-md-4 col-sm-12">
-          <label class="dropdown-label">Firmware update options</label>
+          <label class="dropdown-label">{{ dataService.language == 'ru' ? 'Варианты обновления прошивки':'Firmware update options' }}</label>
         </div>
         <div class="columns col-md-8 col-sm-12">
           <div class="select-box">
@@ -42,16 +42,16 @@
     </section>
     <section class="columns col-12 first-section mt-2">
       <div ng-show="!uploading" class="columns col-md-4 col-sm-12">
-        <label class="trim-text-medium">Firmware update image file</label>
+        <label class="trim-text-medium">{{ dataService.language == 'ru' ? 'Файл обновления образа прошивки':'Firmware update image file' }}</label>
       </div>
       <div ng-show="!uploading" class="columns col-md-8 col-sm-12">
         <button ng-click="onClickAddImageFile('upload')" class="btn-icon firmware-btn-icon">
           <icon file="add--alt.svg" aria-hidden="true"></icon>
-          Add image file from workstation
+          {{ dataService.language == 'ru' ? 'Добавить файл образа с рабочего места':'Add image file from workstation' }}
         </button>
       </div>
       <div>
-        <div class="inline uploading" ng-show="uploading">Upload in progress...</div>
+        <div class="inline uploading" ng-show="uploading">{{ dataService.language == 'ru' ? 'Выполняется загрузка файла':'Upload in progress' }}...</div>
       </div>
     </section>
   </div>
@@ -59,14 +59,14 @@
   <section class="page-content-simple">
     <div class="columns col-md-6 col-sm-12">
       <div class="status-wrapper" ng-show="bmcActiveVersion">
-        <div>BMC image to be used next boot:</div>
+        <div>{{ dataService.language == 'ru' ? 'Образ BMC, который будет использоваться при следующей загрузке':'BMC image to be used next boot' }}:</div>
         <label class="status-label">{{bmcActiveVersion}}</label>
       </div>
     </div>
 
     <div class="columns col-md-6 col-sm-12">
       <div class="status-wrapper align-right" ng-show="hostActiveVersion">
-        <div>Server image to be used next boot:</div>
+        <div>{{ dataService.language == 'ru' ? 'Образ BIOS сервера, который будет использоваться при следующей загрузке':'Server image to be used next boot' }}:</div>
         <label class="status-label">{{hostActiveVersion}}</label>
       </div>
     </div>
@@ -77,19 +77,19 @@
   <section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription"
     role="dialog" ng-class="{'active': confirm_priority}">
     <div class="modal__tftp-unreachable" role="document">
-      <div class="screen-reader-offscreen modal-description">Update image priority</div>
+      <div class="screen-reader-offscreen modal-description">{{ dataService.language == 'ru' ? 'Обновить приоритет образа':'Update image priority' }}</div>
       <!-- accessibility only; used for screen readers -->
       <div class="page-header">
         <icon file="warning--filled.svg" aria-hidden="true"></icon><span class="accessible-text"
-          role="alert">Warning</span>
-        <h3 class="modal-title inline">Change image priority</h3>
+          role="alert">{{ dataService.language == 'ru' ? 'Предупреждение':'Warning' }}</span>
+        <h3 class="modal-title inline">{{ dataService.language == 'ru' ? 'Изменить приоритет образа':'Change image priority' }}</h3>
       </div>
       <div class="modal__content">
-        <p>Change firmware {{priority_image_version}} priority?</p>
+        <p>{{ dataService.language == 'ru' ? 'Изменить приоритет прошивки '+priority_image_version:'Change firmware '+priority_image_version+' priority' }}?</p>
       </div>
       <div class="modal__button-wrapper">
-        <button class="btn btn-secondary" ng-click="confirm_priority=false;">Cancel</button>
-        <button class="btn btn-primary" ng-click="confirmChangePriority()">Continue</button>
+        <button class="btn btn-secondary" ng-click="confirm_priority=false;">{{ dataService.language == 'ru' ? 'Отменить':'Cancel' }}</button>
+        <button class="btn btn-primary" ng-click="confirmChangePriority()">{{ dataService.language == 'ru' ? 'Продолжить':'Continue' }}</button>
       </div>
     </div>
   </section>
@@ -97,19 +97,19 @@
   <section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription"
     role="dialog" ng-class="{'active': confirm_delete}">
     <div class="modal__tftp-unreachable" role="document">
-      <div class="screen-reader-offscreen modal-description">Delete firmware image</div>
+      <div class="screen-reader-offscreen modal-description">{{ dataService.language == 'ru' ? 'Удалить образ прошивки':'Delete firmware image' }}</div>
       <!-- accessibility only; used for screen readers -->
       <div class="page-header ">
         <icon file="warning--filled.svg" aria-hidden="true"></icon><span class="accessible-text"
-          role="alert">Warning</span>
-        <h3 class="modal-title inline">Delete image</h3>
+          role="alert">{{ dataService.language == 'ru' ? 'Предупреждение':'Warning' }}</span>
+        <h3 class="modal-title inline">{{ dataService.language == 'ru' ? 'Удалить образ':'Delete image' }}</h3>
       </div>
       <div class="modal__content">
-        <p>Delete firmware {{delete_image_version}}?</p>
+        <p>{{ dataService.language == 'ru' ? 'Удалить прошивку ' + delete_image_version:'Delete firmware ' + delete_image_version }}?</p>
       </div>
       <div class="modal__button-wrapper">
-        <button class="btn  btn-secondary" ng-click="confirm_delete=false;">Cancel</button>
-        <button class="btn  btn-primary" ng-click="confirmDeleteImage()">Continue</button>
+        <button class="btn  btn-secondary" ng-click="confirm_delete=false;">{{ dataService.language == 'ru' ? 'Отменить':'Cancel' }}</button>
+        <button class="btn  btn-primary" ng-click="confirmDeleteImage()">{{ dataService.language == 'ru' ? 'Продолжить':'Continue' }}</button>
       </div>
     </div>
   </section>
@@ -117,40 +117,43 @@
   <section class="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription"
     role="dialog" ng-class="{'active': activate_confirm}">
     <div class="modal__activate" role="document">
-      <div class="screen-reader-offscreen modal-description">Activate modal</div>
+      <div class="screen-reader-offscreen modal-description">{{ dataService.language == 'ru' ? 'Активировать модально':'Activate modal' }}</div>
       <!-- accessibility only; used for screen readers -->
       <div class="page-header ">
         <h3 class="modal-title">
           <icon class="icon__info" file="icon-information.svg"></icon>
           <!-- We call "Host" firmware "server" firmware -->
-          Confirm {{activate_image_type == 'Host' ? 'server' : activate_image_type}} firmware file activation
+          {{ dataService.language == 'ru'
+ ? 'Подтвердите активацию файла прошивки ' + (activate_image_type == 'Host' ? 'BIOS сервера' : activate_image_type)
+ : 'Confirm '+(activate_image_type == 'Host' ? 'server' : activate_image_type)+' firmware file activation' }}
         </h3>
       </div>
       <div class="modal__content">
         <div ng-switch on="activate_image_type">
-          <p ng-switch-when="BMC">When you activate the BMC firmware file, {{activate_image_version}}, the BMC must be
-            rebooted before it will operate with the new firmware code. Note that when you reboot the BMC, the BMC will
-            be
-            unavailable for several minutes and you must log in again.</p>
-          <p ng-switch-when="Host">When you activate the server firmware file, {{activate_image_version}}, the new
-            firmware will not operate until the next time the server boots.</p>
+          <p ng-switch-when="BMC">{{ dataService.language == 'ru'
+ ? 'Когда Вы активируете файл прошивки BMC, '+activate_image_version+', BMC необходимо перезагрузить, прежде чем он начнет работать с новым кодом прошивки. Обратите внимание, что когда Вы перезагрузите BMC, он будет недоступен несколько минут и Вы должны войти снова.'
+ : 'When you activate the BMC firmware file, '+activate_image_version+', the BMC must be rebooted before it will operate with the new firmware code. Note that when you reboot the BMC, the BMC will be unavailable for several minutes and you must log in again.'
+	 }}</p>
+          <p ng-switch-when="Host">{{ dataService.language == 'ru'
+ ? 'Когда Вы активируете файл прошивки BIOS сервера, '+activate_image_version+', новая прошивка не будет работать до следующей загрузки сервера.'
+ : 'When you activate the server firmware file, '+activate_image_version+', the new firmware will not operate until the next time the server boots.'
+	 }}</p>
         </div>
         <form ng-if="activate_image_type == 'BMC'">
           <fieldset>
             <div class="row column">
-              <label class="control-radio bold" for="activate-without-reboot">Activate firmware file without rebooting
-                BMC
-                <input type="radio" name="activate-without-reboot" id="activate-without-reboot"
-                  ng-model="activate.reboot" ng-value="false" />
+              <label class="control-radio bold" for="activate-without-reboot">{{ dataService.language == 'ru'
+ ? 'Активировать файл прошивки без перезагрузки BMC'
+ : 'Activate firmware file without rebooting BMC' }}
+                <input type="radio" name="activate-without-reboot" id="activate-without-reboot" ng-model="activate.reboot" ng-value="false" />
                 <span class="control__indicator control__indicator-on"></span>
               </label>
             </div>
             <div class="row column">
-              <label class="control-radio bold" for="activate-with-reboot">Activate firmware file and automatically
-                reboot
-                BMC
-                <input type="radio" name="activate-with-reboot" id="activate-with-reboot" ng-model="activate.reboot"
-                  ng-value="true" />
+              <label class="control-radio bold" for="activate-with-reboot">{{ dataService.language == 'ru'
+ ? 'Активировать файл прошивки и автоматически перезагрузить BMC'
+ : 'Activate firmware file and automatically reboot BMC' }}
+                <input type="radio" name="activate-with-reboot" id="activate-with-reboot" ng-model="activate.reboot" ng-value="true" />
                 <span class="control__indicator control__indicator-on"></span>
               </label>
             </div>
@@ -159,18 +162,18 @@
         <form ng-if="activate_image_type == 'Host'">
           <fieldset>
             <div class="row column">
-              <label class="control-radio bold" for="activate-host-without-reboot">Activate firmware file without
-                {{isServerOff() ? "booting" : "rebooting"}} server
-                <input type="radio" name="activate-host-without-reboot" id="activate-host-without-reboot"
-                  ng-model="activate.reboot" ng-value="false" />
+              <label class="control-radio bold" for="activate-host-without-reboot">{{ dataService.language == 'ru'
+ ? 'Активировать файл прошивки без '+(isServerOff() ? "загрузки" : "перезагрузки")+' сервера'
+ : 'Activate firmware file without '+(isServerOff() ? "booting" : "rebooting")+' server' }}
+                <input type="radio" name="activate-host-without-reboot" id="activate-host-without-reboot" ng-model="activate.reboot" ng-value="false" />
                 <span class="control__indicator control__indicator-on"></span>
               </label>
             </div>
             <div class="row column">
-              <label class="control-radio bold" for="activate-host-with-reboot">Activate firmware file and automatically
-                {{isServerOff() ? "boot" : "reboot"}} server
-                <input type="radio" name="activate-host-with-reboot" id="activate-host-with-reboot"
-                  ng-model="activate.reboot" ng-value="true" />
+              <label class="control-radio bold" for="activate-host-with-reboot">{{ dataService.language == 'ru'
+ ? 'Активировать файл прошивки и автоматически '+(isServerOff() ? "загрузить" : "перезагрузить")+' сервер'
+ : 'Activate firmware file and automatically '+(isServerOff() ? "boot" : "reboot")+' server' }}
+                <input type="radio" name="activate-host-with-reboot" id="activate-host-with-reboot" ng-model="activate.reboot" ng-value="true" />
                 <span class="control__indicator control__indicator-on"></span>
               </label>
             </div>
@@ -178,8 +181,8 @@
         </form>
       </div>
       <div class="modal__button-wrapper">
-        <button class="btn  btn-secondary" ng-click="activate_confirm=false;">Cancel</button>
-        <button class="btn  btn-primary" ng-click="activateConfirmed()">Continue</button>
+        <button class="btn  btn-secondary" ng-click="activate_confirm=false;">{{ dataService.language == 'ru' ? 'Отменить':'Cancel' }}</button>
+        <button class="btn  btn-primary" ng-click="activateConfirmed()">{{ dataService.language == 'ru' ? 'Продолжить':'Continue' }}</button>
       </div>
     </div>
   </section>

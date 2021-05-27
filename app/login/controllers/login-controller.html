@@ -11,38 +11,36 @@
           </div>
 
           <div class="form-row">
-            <span class="form-intro">Login</span>
+            <span class="form-intro">{{ dataService.language == 'ru' ? 'Вход':'Login' }}</span>
           </div>
 
           <fieldset ng-disabled="dataService.loading">
             <div class="form-row">
               <div class="alert alert-danger" role="alert" ng-if="invalidCredentials">
-                <b>Invalid username or password.</b>
-                <br>Please try again.
+                <b>{{ dataService.language == 'ru' ? 'Неправильное имя пользователя или пароль':'Invalid username or password' }}.</b>
+                <br>{{ dataService.language == 'ru' ? 'Пожалуйста, попробуйте снова':'Please try again' }}.
               </div>
             </div>
 
             <div class="form-row">
               <div class="input-wrapper input-login">
-                <input type="text" id="username" name="username" placeholder="Username"
+                <input type="text" id="username" name="username" placeholder="{{ dataService.language == 'ru' ? 'Имя пользователя':'Username' }}"
                   has-error="invalidCredentials && login__form.$pristine" required ng-model="username"
                   ng-keydown="tryLogin(host, username, password, $event)" autocomplete="off" autofocus>
               </div>
-              <div ng-messages="login__form.username.$error" class="form-error"
-                ng-class="{'visible' : login__form.username.$touched || submitted}">
-                <p ng-message="required">Field is required</p>
+              <div ng-messages="login__form.username.$error" class="form-error" ng-class="{'visible' : login__form.username.$touched || submitted}">
+                <p ng-message="required">{{ dataService.language == 'ru' ? 'Обязательное поле':'Field is required' }}</p>
               </div>
             </div>
 
             <div class="form-row">
               <div class="input-wrapper input-pwd">
-                <input type="password" id="password" name="password" placeholder="Password"
+                <input type="password" id="password" name="password" placeholder="{{ dataService.language == 'ru' ? 'Пароль':'Password' }}"
                   has-error="invalidCredentials && login__form.$pristine" required ng-model="password"
                   ng-keydown="tryLogin(host, username, password, $event)" autocomplete="off">
               </div>
-              <div ng-messages="login__form.password.$error" class="form-error"
-                ng-class="{'visible': login__form.password.$touched || submitted}">
-                <p ng-message="required">Field is required</p>
+              <div ng-messages="login__form.password.$error" class="form-error" ng-class="{'visible': login__form.password.$touched || submitted}">
+                <p ng-message="required">{{ dataService.language == 'ru' ? 'Обязательное поле':'Field is required' }}</p>
               </div>
             </div>
 

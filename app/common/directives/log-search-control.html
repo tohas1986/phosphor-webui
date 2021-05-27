@@ -1,7 +1,7 @@
 <section id="event-search" class="row column" aria-label="event log search">
-  <p class="content-label">Filter events</p>
+  <p class="content-label">{{ dataService.language == 'ru' ? 'Фильтровать события':'Filter events' }}</p>
   <div class="content__search">
-    <label for="content__search-input">Event Log Search</label>
+    <label for="content__search-input">{{ dataService.language == 'ru' ? 'Поиск по журналу событий':'Event Log Search' }}</label>
     <input id="content__search-input" type="text" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)"/>
     <div class="search-submit__wrapper">
       <button class="btn" type="button" aria-label="clear filter" ng-click="clear()">

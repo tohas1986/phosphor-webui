@@ -112,7 +112,7 @@
         <ul class="nav__second-level btn-firmware" ng-class="{opened: (showSubMenu && firstLevel == 'configuration')}">
           <li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}">
             <a href="#/configuration/network" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">
-               <span>{{ dataService.language == 'ru' ? 'Настройки сети':'Network settings' }}</span>
+               <span>{{ dataService.language == 'ru' ? 'Параметры сети':'Network settings' }}</span>
             </a>
           </li>
 <!--

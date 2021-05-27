@@ -10,8 +10,9 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('dateTimeController', [
-    '$scope', 'APIUtils', '$filter', '$route', '$q', 'toastService', '$timeout',
-    function($scope, APIUtils, $filter, $route, $q, toastService, $timeout) {
+    '$scope', 'APIUtils', '$filter', '$route', '$q', 'toastService', '$timeout', 'dataService',
+    function($scope, APIUtils, $filter, $route, $q, toastService, $timeout, dataService) {
+      $scope.dataService = dataService;
       $scope.editNTPSettings = [];
       $scope.ntp = {servers: []};
       $scope.editNTPSettings = {};

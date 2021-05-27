@@ -10,8 +10,9 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('snmpController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q', 'toastService',
-    function($scope, $window, APIUtils, $route, $q, toastService) {
+    '$scope', '$window', 'APIUtils', '$route', '$q', 'toastService', 'dataService',
+    function($scope, $window, APIUtils, $route, $q, toastService, dataService) {
+	$scope.dataService = dataService;
       $scope.managers = [];
       $scope.loading = true;
       $scope.managersToDelete = [];

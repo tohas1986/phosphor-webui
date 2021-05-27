@@ -38,14 +38,14 @@ window.angular && (function(angular) {
               })
               .when('/server-health/sys-log', {
                 title: 'Event Log',
-                title_ru: 'Список событий',
+                title_ru: ':Журнал событий',
                 'template': require('./controllers/syslog-controller.html'),
                 'controller': 'sysLogController',
                 authenticated: true
               })
               .when('/server-health', {
                 title: 'Event Log',
-                title_ru: 'Список событий',
+                title_ru: 'Журнал событий',
                 'template': require('./controllers/syslog-controller.html'),
                 'controller': 'logController',
                 authenticated: true

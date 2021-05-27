@@ -4,24 +4,20 @@
 
     <section class="columns col-12">
       <div class="page-controls" ng-class="{'highlighted' : rowUpdate, 'collapsed' : $root.toggleNavState}">
-        <button type="button" class="offset-close float-left btn btn--close" ng-click="rowUpdate=false;dismiss=true"
-          aria-label="close">
+        <button type="button" class="offset-close float-left btn btn--close" ng-click="rowUpdate=false;dismiss=true" aria-label="close">
           <icon file="icon-close.svg" aria-hidden="true"></icon>
         </button>
 
-        <p class="float-left trim-text-medium">Click "Save Page Settings" to save all<span
-            class="inline trim-text-large">
-            changes</span>.</p>
+        <p class="float-left trim-text-medium">{{ dataService.language == 'ru'
+ ? 'Кликните по "Сохранить настройки страницы" для сохранения всех изменений'
+ : 'Click "Save Page Settings" to save all changes' }}<span class="inline trim-text-large"></span>.</p>
 
         <div class="float-right padding">
           <button type="button" class="btn btn-tertiary"
-            ng-click="rowUpdate=false;dismiss=false;refresh()">Reset</button>
-          <button type="button" class="btn btn-tertiary"
-            ng-disabled="!rowUpdate && !dismiss && ((ntp.servers.length == 0) && (use == 'NTP'))"
-            ng-click="saveDateTimeSettings()"
-            ng-class="((ntp.servers.length == 0) && (use == 'NTP')) ? 'disabled' : (rowUpdate || dismiss) ? 'highlighted' : ''">Save
-            Page
-            Settings</button>
+            ng-click="rowUpdate=false;dismiss=false;refresh()">{{ dataService.language == 'ru' ? 'Сбросить':'Reset' }}</button>
+          <button type="button" class="btn btn-tertiary" ng-disabled="!rowUpdate && !dismiss && ((ntp.servers.length == 0) && (use == 'NTP'))"
+            ng-click="saveDateTimeSettings()" ng-class="((ntp.servers.length == 0) && (use == 'NTP')) ? 'disabled' : (rowUpdate || dismiss) ? 'highlighted' : ''">
+		{{ dataService.language == 'ru' ? 'Сохранить настройки страницы':'Save Page Settings' }}</button>
         </div>
       </div>
     </section>
@@ -29,21 +25,21 @@
     <section class="columns col-md-12 col-sm-12 first-section" ng-class="{'highlighted': rowUpdate}">
 
       <div class="page-content-box">
-        <legend>Date and time configuration:</legend>
+        <legend>{{ dataService.language == 'ru' ? 'Конфигурация даты и времени':'Date and time configuration' }}:</legend>
         <div class="row">
-          <label class="control-radio indent" for="ntp-time">Obtain automatically from a Network Time Protocol (NTP)
-            Server
+          <label class="control-radio indent" for="ntp-time">
+{{ dataService.language == 'ru' ? 'Пролучать автоматически с NTP-сервера':'Obtain automatically from a Network Time Protocol (NTP) Server' }}
             <input type="radio" id="ntp-time" ng-model="use" value="NTP" ng-click="updatedRow()">
             <span class="control__indicator control__indicator-on"></span>
           </label>
 
           <div class="page-content-rnd slide-in" ng-class="use == 'NTP' ? 'opened' : ''" ng-show="use == 'NTP'">
-            <h5>NTP Servers</h5>
+            <h5>{{ dataService.language == 'ru' ? 'NTP-серверы':'NTP Servers' }}</h5>
             <div class="table row column dns-settings" ng-show="ntp.servers.length > 0">
               <div class="table__head fixed-table-header">
                 <div class="table__row">
-                  <div class="table__cell">Entry</div>
-                  <div class="table__cell">NTP Server</div>
+                  <div class="table__cell">{{ dataService.language == 'ru' ? 'Точка входа':'Entry' }}</div>
+                  <div class="table__cell">{{ dataService.language == 'ru' ? 'NTP-сервер':'NTP Server' }}</div>
                   <div class="table__cell action-wrapper"></div>
                 </div>
               </div>
@@ -51,7 +47,7 @@
                 <div class="table__row date-time__ntp-servers"
                   ng-class="!editNTPSettings ? 'showborders' : 'hideborders'"
                   ng-repeat="server in ntp.servers track by $index">
-                  <div class="table__cell">{{$index+1}} <span ng-if="$first">(Primary)</span>
+                  <div class="table__cell">{{$index+1}} <span ng-if="$first">({{ dataService.language == 'ru' ? 'Первичный':'Primary' }})</span>
                   </div>
 
                   <div class="table__cell">
@@ -66,15 +62,13 @@
                     <div class="bmc-table__row-actions ng-scope">
                       <button ng-class="!server ? 'disabled' : ''" ng-show="editNTPSettings[$index]"
                         class="btn btn-primary btn-small" ng-click="editNTPSettings[$index]=false;updatedRow()">
-                        <icon alt="Complete" title="Complete" file="icon-check.svg" aria-hidden="true"></icon>
+                        <icon alt="{{ dataService.language == 'ru' ? 'Завершить':'Complete' }}" title="{{ dataService.language == 'ru' ? 'Завершить':'Complete' }}" file="icon-check.svg" aria-hidden="true"></icon>
                       </button>
-                      <button ng-show="!editNTPSettings[$index]" class="btn btn-primary btn-small"
-                        ng-click="editNTPSettings[$index]=true">
-                        <icon alt="Edit" title="Edit" file="icon-edit.svg" aria-hidden="true"></icon>
+                      <button ng-show="!editNTPSettings[$index]" class="btn btn-primary btn-small" ng-click="editNTPSettings[$index]=true">
+                        <icon alt="{{ dataService.language == 'ru' ? 'Редактировать':'Edit' }}" title="{{ dataService.language == 'ru' ? 'Редактировать':'Edit' }}" file="icon-edit.svg" aria-hidden="true"></icon>
                       </button>
-                      <button ng-show="editNTPSettings[$index]" class="btn btn-primary btn-small"
-                        ng-click="removeNTPField($index)">
-                        <icon alt="Remove" title="Remove" file="icon-trashcan.svg" aria-hidden="true"></icon>
+                      <button ng-show="editNTPSettings[$index]" class="btn btn-primary btn-small" ng-click="removeNTPField($index)">
+                        <icon alt="{{ dataService.language == 'ru' ? 'Удалить':'Remove' }}" title="{{ dataService.language == 'ru' ? 'Удалить':'Remove' }}" file="icon-trashcan.svg" aria-hidden="true"></icon>
                       </button>
                     </div>
 
@@ -85,13 +79,13 @@
             </div>
 
             <div class="message-box" ng-show="ntp.servers.length == 0">
-              Add at least one NTP Server to save this setting.
+              {{ dataService.language == 'ru' ? 'Добавьте хотя бы один NTP-сервер, чтобы сохранить эти настройки':'Add at least one NTP Server to save this setting' }}.
             </div>
 
             <div>
               <button ng-click="addNTPField(false)" class="btn-icon">
                 <icon file="add--alt.svg" aria-hidden="true"></icon>
-                Add NTP server
+                {{ dataService.language == 'ru' ? 'Добавить NTP-сервер':'Add NTP server' }}
               </button>
             </div>
 
@@ -99,7 +93,7 @@
         </div>
 
         <div class="row">
-          <label class="control-radio indent" for="manual-time">Use server date and time
+          <label class="control-radio indent" for="manual-time">{{ dataService.language == 'ru' ? 'Использовать дату и время сервера':'Use server date and time' }}
             <input type="radio" id="manual-time" ng-model="use" value="Server" ng-click="updatedRow()" />
             <span class="control__indicator control__indicator-on"></span>
           </label>
@@ -108,7 +102,7 @@
 
             <table class="overview-config-table">
               <tr>
-                <td>Server time</td>
+                <td>{{ dataService.language == 'ru' ? 'Время сервера':'Server time' }}</td>
                 <td>{{ UTCTime | localeDate }}
                   <div class="grey-small">{{ UTCTime | localeDate : true }}</div>
                 </td>
@@ -116,47 +110,47 @@
             </table>
 
             <div ng-show="false">
-              <h5>Time Owner</h5>
+              <h5>{{ dataService.language == 'ru' ? 'Владелец времени':'Time Owner' }}</h5>
               <select id="date-time-owner" ng-model="time.owner" class="minimal">
                 <option ng-repeat="owner in timeOwners">{{owner}}</option>
               </select>
 
               <div class="bmc-time">
-                <h5>
-                  BMC <span ng-if="time.owner != 'Split'">and Host</span> Time
+                <h5>{{ dataService.language == 'ru' ? ('Время BMC'+(time.owner != 'Split' ? ' и системы':''))
+		    :('BMC'+(time.owner != 'Split' ? ' and Host':'')+' Time') }}
                 </h5>
                 <table class="overview-config-table">
                   <tr>
-                    <td>Date</td>
+                    <td>{{ dataService.language == 'ru' ? 'Дата':'Date' }}</td>
                     <td><input type="date" ng-change="updatedRow()" ng-model="bmc.date" ng-readonly="use == 'NTP'"
                         min="2018-01-01" max="2099-12-31" /></td>
                   </tr>
                   <tr>
-                    <td>Time</td>
+                    <td>{{ dataService.language == 'ru' ? 'Время':'Time' }}</td>
                     <td><input type="time" ng-change="updatedRow()" ng-model="bmc.date" ng-readonly="use == 'NTP'" />
                     </td>
                   </tr>
                   <tr>
-                    <td>Time Zone</td>
+                    <td>{{ dataService.language == 'ru' ? 'Временная зона':'Time Zone' }}</td>
                     <td class="align-left">{{bmc.timezone}}</td>
                   </tr>
                 </table>
               </div>
 
               <div class="host-time" ng-show="time.owner == 'Split'">
-                <h5>Host Time</h5>
+                <h5>{{ dataService.language == 'ru' ? 'Время системы':'Host Time' }}</h5>
                 <table class="overview-config-table">
                   <tr>
-                    <td>Date</td>
+                    <td>{{ dataService.language == 'ru' ? 'Дата':'Date' }}</td>
                     <td><input type="date" ng-change="updatedRow()" ng-model="host.date" min="2018-01-01"
                         max="2099-12-31" /></td>
                   </tr>
                   <tr>
-                    <td>Time</td>
+                    <td>{{ dataService.language == 'ru' ? 'Время':'Time' }}</td>
                     <td><input type="time" ng-change="updatedRow()" ng-model="host.date" /></td>
                   </tr>
                   <tr>
-                    <td>Time Zone</td>
+                    <td>{{ dataService.language == 'ru' ? 'Временная зона':'Time Zone' }}</td>
                     <td class="align-left">{{host.timezone}}</td>
                   </tr>
                 </table>
@@ -172,12 +166,12 @@
     </section>
 
     <div class="float-right padding">
-      <button type="button" class="btn btn-tertiary" ng-click="rowUpdate=false;dismiss=false;refresh()">Reset</button>
+      <button type="button" class="btn btn-tertiary" ng-click="rowUpdate=false;dismiss=false;refresh()">{{ dataService.language == 'ru' ? '':'' }}Reset</button>
       <button type="button" class="btn btn-tertiary"
         ng-disabled="!rowUpdate && !dismiss && ((ntp.servers.length == 0) && (use == 'NTP'))"
         ng-click="saveDateTimeSettings()"
         ng-class="((ntp.servers.length == 0) && (use == 'NTP')) ? 'disabled' : (rowUpdate || dismiss) ? 'highlighted' : ''">
-        Save Page Settings</button>
+        {{ dataService.language == 'ru' ? 'Сохранить настройки страницы':'Save Page Settings' }}</button>
     </div>
 
   </form>

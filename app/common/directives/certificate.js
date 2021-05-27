@@ -9,8 +9,9 @@ window.angular && (function(angular) {
         'template': require('./certificate.html'),
         'scope': {'cert': '=', 'reload': '&'},
         'controller': [
-          '$scope', 'APIUtils', 'toastService', 'Constants', '$uibModal',
-          function($scope, APIUtils, toastService, Constants, $uibModal) {
+          '$scope', 'APIUtils', 'toastService', 'Constants', '$uibModal', 'dataService',
+          function($scope, APIUtils, toastService, Constants, $uibModal, dataService) {
+	    $scope.dataService = dataService;
             var certificateType = 'PEM';
             var availableCertificateTypes = Constants.CERTIFICATE_TYPES;
 

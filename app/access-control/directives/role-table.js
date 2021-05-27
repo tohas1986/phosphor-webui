@@ -6,13 +6,14 @@ window.angular && (function(angular) {
    * Table of privilege role descriptions
    */
   angular.module('app.accessControl').directive('roleTable', [
-    '$sce',
-    function($sce) {
+    '$sce','dataService',
+    function($sce, dataService) {
       return {
         restrict: 'E',
         template: require('./role-table.html'),
         controllerAs: 'roleTableCtrl',
         controller: function() {
+	  this.dataService = dataService;
           // TODO: This is a workaround to render the checkmark svg icon
           // Would eventually like to enhance <bmc-table> component to
           // compile custom directives as table items

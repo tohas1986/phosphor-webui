@@ -1,26 +1,26 @@
 <div class="page">
-  <h1 class="h1">Virtual Media</h1>
+  <h1 class="h1">{{ dataService.language == 'ru' ? 'Виртуальные носители' : 'Virtual Media' }}</h1>
   <section class="section">
     <div class="section-header">
-      <h2 class="h2">Serve image in a web browser</h2>
+      <h2 class="h2">{{ dataService.language == 'ru' ? 'Работа с образом в web-браузере' : 'Serve image in a web browser' }}</h2>
     </div>
     <div class="section-content">
       <div id="virtual_media-proxy" class="vm__upload ng-scope">
         <p ng-if="!proxyDevices.length">
-            There are no Virtual Media proxy devices available.
+            {{ dataService.language == 'ru' ? 'Прокси-сервер виртуальных носителей недоступен' : 'There are no Virtual Media proxy devices available' }}.
         </p>
         <div ng-repeat="dev in proxyDevices track by $index" class="row column">
           <div id="vm_{{dev.name}}" class="column">
           <!-- name and error message -->
-          <h3 class="inline column"><span>{{dev.name}}</span><span ng-if="dev.isActive"> (Active)</span></h3>
+          <h3 class="inline column"><span>{{dev.name}}</span><span ng-if="dev.isActive"> ({{ dataService.language == 'ru' ? 'Активен' : 'Active' }})</span></h3>
           <!-- Button -->
-          <label for="vm_{{dev.name}}_file-upload" class="btn btn-primary"ng-disabled="dev.isActive">Browse...</label>
+          <label for="vm_{{dev.name}}_file-upload" class="btn btn-primary"ng-disabled="dev.isActive">{{ dataService.language == 'ru' ? 'Просматривается' : 'Browse' }}...</label>
           <input class="inline" hidden id="vm_{{dev.name}}_file-upload" type="file" file="dev.file" ng-disabled="dev.isActive"/>
           <span ng-if="dev.file">{{dev.file.name}}</span>
-          <span ng-if="!dev.file">No file chosen</span>
+          <span ng-if="!dev.file">{{ dataService.language == 'ru' ? 'Файл не выбран' : 'No file chosen' }}</span>
           <button id="vm_{{dev.name}}_start_stop" type="button" ng-disabled="!dev.file" class="btn btn-primary float-right" ng-click="dev.isActive? stopVM($index) : startVM($index)">
-            <span ng-if="!dev.isActive">Start</span>
-            <span ng-if="dev.isActive">Stop</span>
+            <span ng-if="!dev.isActive">{{ dataService.language == 'ru' ? 'Начать' : 'Start' }}</span>
+            <span ng-if="dev.isActive">{{ dataService.language == 'ru' ? 'Остановить' : 'Stop' }}</span>
           </button>
          </div>
         </div>
@@ -29,23 +29,23 @@
   </section>
   <section class="section">
     <div class="section-header">
-      <h2 class="h2">Load image from external server</h2>
+      <h2 class="h2">{{ dataService.language == 'ru' ? 'Загрузить образ с внешнего сервера' : 'Load image from external server' }}</h2>
     </div>
     <div class="section-content">
       <div id="virtual_media-legacy" class="vm__upload ng-scope">
         <p ng-if="legacyDevices.length < 1">
-            There are no Virtual Media legacy devices available.
+            {{ dataService.language == 'ru' ? 'Нет доступных legacy-устройств виртуальных носителей' : 'There are no Virtual Media legacy devices available' }}.
         </p>
         <div ng-repeat="dev in legacyDevices track by $index" class="row column">
           <div id="vm_{{dev.name}}" class="column">
             <!-- name and error message -->
-            <h3 class="inline column"><span>{{dev.name}}</span><span ng-if="dev.isActive"> (Active)</span></h3>
+            <h3 class="inline column"><span>{{dev.name}}</span><span ng-if="dev.isActive"> ({{ dataService.language == 'ru' ? 'Активен' : 'Active' }})</span></h3>
             <button id="vm_{{dev.name}}_config" type="button" class="btn btn-primary" ng-click="legacyConfigModal($index)">
-              <span>Configure connection</span>
+              <span>{{ dataService.language == 'ru' ? 'Настроить соединение' : 'Configure connection' }}</span>
             </button>
             <button id="vm_{{dev.name}}_start_stop" type="button" ng-disabled="!dev.configured" class="btn btn-primary float-right" ng-click="dev.isActive? stopLegacy($index) : startLegacy($index)">
-              <span ng-if="!dev.isActive">Start</span>
-              <span ng-if="dev.isActive">Stop</span>
+              <span ng-if="!dev.isActive">{{ dataService.language == 'ru' ? 'Начать' : 'Start' }}</span>
+              <span ng-if="dev.isActive">{{ dataService.language == 'ru' ? 'Остановить' : 'Stop' }}</span>
             </button>
           </div>
         </div>
