@@ -35,6 +35,12 @@ window.angular && (function(angular) {
                 'controller': 'fansOverviewController',
                 authenticated: true
               })
+              .when('/server-health/mails-overview', {
+                title: 'Mails',
+                'template': require('./controllers/mails-overview-controller.html'),
+                'controller': 'mailsOverviewController',
+                authenticated: true
+              })
               .when('/server-health/sys-log', {
                 title: 'Event Log',
                 'template': require('./controllers/syslog-controller.html'),

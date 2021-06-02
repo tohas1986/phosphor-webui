@@ -1585,6 +1585,120 @@ window.angular && (function(angular) {
                  return response.data;
                });
         },
+        setSMTPMode: function(smtpmode) {
+           return $http({
+                    method: 'POST',
+                    url: DataService.getHost() +
+                        '/redfish/v1/Riksmtp/' + smtpmode,
+                    withCredentials: true,
+                    data: JSON.stringify({'data':[smtpmode]})
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
+        },
+        getAllSMTPStatus: function() {
+           return $http({
+                    method: 'GET',
+                    url: DataService.getHost() +
+                        '/redfish/v1/Riksmtp/',
+                    withCredentials: true
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
+        },
+        addSMTPManager: function(recipient, period, mode) {
+          return $http({
+                   method: 'POST',
+                   url: DataService.getHost() +
+                       '/redfish/v1/Riksmtp/',
+                   withCredentials: true,
+                   data: JSON.stringify({'data': [recipient, +period, +mode]})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setSMTPManagerPeriod: function(smtpManagerPath, period) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() + '/redfish/v1/Riksmtp/' + smtpManagerPath,
+                   withCredentials: true,
+                   data: JSON.stringify({'data': +period})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setSMTPManagerMode: function(smtpManagerPath, mode) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() + '/redfish/v1/Riksmtp/' + smtpManagerPath,
+                   withCredentials: true,
+                   data: JSON.stringify({'data': +mode})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setSMTPManagerRecipient: function(smtpManagerPath, recipient) {
+          return $http({
+                   method: 'PUT',
+                   url: DataService.getHost() + '/redfish/v1/Riksmtp/' + smtpManagerPath,
+                   withCredentials: true,
+                   data: JSON.stringify({'data': recipient})
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        getSMTPStatus: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                        '/redfish/v1/Riksmtp/',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        setMailMode: function(mailmode) {
+           return $http({
+                    method: 'POST',
+                    url: DataService.getHost() +
+                        '/redfish/v1/Rikmail/' + mailmode,
+                    withCredentials: true,
+                    data: JSON.stringify({'data':[mailmode]})
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
+        },
+        //setMailStatus: function(mailrecipient,mailperiod,mailmode) {
+        //   return $http({
+        //            method: 'POST',
+        //            url: DataService.getHost() +
+        //                '/redfish/v1/Rikmail/',
+        //            withCredentials: true,
+        //            data: JSON.stringify({'data':[mailrecipient, +mailperiod, +mailmode]})
+        //          })
+        //       .then(function(response) {
+        //         return response.data;
+        //       });
+        //},
+        getMailStatus: function() {
+           return $http({
+                    method: 'GET',
+                    url: DataService.getHost() +
+                        '/redfish/v1/Rikmail/',
+                    withCredentials: true
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
+        },
         getPowerConsumption: function() {
           return $http({
                    method: 'GET',

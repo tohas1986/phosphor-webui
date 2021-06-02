@@ -39,6 +39,12 @@ window.angular && (function(angular) {
                 'controller': 'snmpController',
                 authenticated: true
               })
+              .when('/configuration/smtp', {
+                title: 'SMTP',
+                'template': require('./controllers/smtp-controller.html'),
+                'controller': 'smtpController',
+                authenticated: true
+              })
               .when('/configuration/firmware', {
                 title: 'Firmware',
                 'template': require('./controllers/firmware-controller.html'),

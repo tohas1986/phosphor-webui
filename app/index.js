@@ -94,6 +94,7 @@ import server_health_index from './server-health/index.js';
 import inventory_overview_controller from './server-health/controllers/inventory-overview-controller.js';
 import sensors_overview_controller from './server-health/controllers/sensors-overview-controller.js';
 import fans_overview_controller from './server-health/controllers/fans-overview-controller.js';
+import mails_overview_controller from './server-health/controllers/mails-overview-controller.js';
 import syslog_controller from './server-health/controllers/syslog-controller.js';
 import remote_logging_server from './server-health/directives/remote-logging-server.js';
 
@@ -103,6 +104,7 @@ import configuration_index from './configuration/index.js';
 import date_time_controller from './configuration/controllers/date-time-controller.js';
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
+import smtp_controller from './configuration/controllers/smtp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 
 import access_control from './access-control/index.js';
