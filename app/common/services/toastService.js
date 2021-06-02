@@ -48,9 +48,19 @@ window.angular && (function(angular) {
             '<div role="alert"><b>Alert</b><br>' + message + '</div>');
         ngToast.create({className: 'danger', content: errorMessage});
       };
+      this.alert = function(message,title) {
+        var errorMessage = $sce.trustAsHtml(
+            '<div role="alert"><b>'+ title  +'</b><br>' + message + '</div>');
+        ngToast.create({className: 'danger', content: errorMessage});
+      };
       this.warning = function(message) {
         var errorMessage = $sce.trustAsHtml(
             '<div role="alert"><b>Warning</b><br>' + message + '</div>');
+        ngToast.create({className: 'warning', content: errorMessage});
+      };
+      this.warning = function(message,title) {
+        var errorMessage = $sce.trustAsHtml(
+            '<div role="alert"><b>'+ title + '</b><br>' + message + '</div>');
         ngToast.create({className: 'warning', content: errorMessage});
       };
     }

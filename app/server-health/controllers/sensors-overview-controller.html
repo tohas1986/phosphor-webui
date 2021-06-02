@@ -70,8 +70,7 @@
       <div class="table__body">
         <div class="table__row status-row__{{sensor.Status.Health}}"
           ng-repeat="sensor in (filteredSensors = (filteredMergedSensors = (mergedSensors | filter:filterByComponent | filter:filterBySearchTerms | filter:filterBySeverity | orderBy: orderDatabySeverity | orderBy:sortKey:reverse)))">
-          <div class="table__cell status-icon status__{{sensor.Status.Health}} trim-text-medium">&nbsp;
-          </div>
+          <div class="table__cell status-icon status__{{sensor.Status.Health}} trim-text-medium">&nbsp;</div>
           <div class="table__cell sensor__title">{{sensor.Name}}</div>
           <div class="table__cell sensor__status">{{sensor.Status.Health}}</div>
           <div class="table__cell sensor__reading">

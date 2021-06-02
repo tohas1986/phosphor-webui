@@ -49,7 +49,7 @@
                   </tr>
                 </table>
               </uib-tab>
-              <uib-tab index="1" heading="Server">
+              <uib-tab index="1" heading="{{ dataService.language == 'ru' ? 'Сервер':'Server' }}">
                 <table class="overview-config-table">
                   <tr>
                     <td>{{ dataService.language == 'ru' ? 'ID сервера':'Server ID' }}</td>
@@ -127,7 +127,7 @@
             <figure id="two" class="bar-chart">
               <ul class="legend">
                 <li>{{ dataService.language == 'ru' ? 'Нормальных':'Normal' }}</li>
-                <li>{{ dataService.language == 'ru' ? 'Предупреждений':'Warning' }}</li>
+                <li>{{ dataService.language == 'ru' ? 'Опасных':'Warning' }}</li>
                 <li>{{ dataService.language == 'ru' ? 'Критических':'Critical' }}</li>
               </ul>
 
@@ -182,7 +182,7 @@
         <!--End Events Overview-->
 
         <div class="row bottom-moreinfo" ng-hide="eventOverviewLoading">
-          <div class="col col-sm-6 grey-medium padding-none">{{ dataService.language == 'ru' ? 'Последние '+daysToShow+' дней':'Last '+daysToShow+' days' }}</div>
+          <div class="col col-sm-6 grey-medium padding-none">{{ dataService.language == 'ru' ? 'За последние '+daysToShow+' дней':'Last '+daysToShow+' days' }}</div>
           <div class="col col-sm-6 align-right more-info-link padding-none"><a href
               ng-click="RedirectToURL('/server-health/sys-log')">{{ dataService.language == 'ru' ? 'СОБЫТИЯ':'EVENTS' }}
               ></a></div>
@@ -240,7 +240,7 @@
                   <div class="icon-wrapper status-icon status-warning">
                     <icon file="warning--filled.svg" class="warningFilter" aria-hidden="true"></icon>
                   </div>
-                  <div class="grey-small">{{ dataService.language == 'ru' ? 'Предупреждение':'Warning' }}</div>
+                  <div class="grey-small">{{ dataService.language == 'ru' ? 'Опасно':'Warning' }}</div>
                   <div class="normal-text">{{(countWarning/totalSensors*100) | number : 0}}% ({{countWarning}})</div>
                 </div>
                 <div class="col col-md-4 col-sm-12">
@@ -270,8 +270,7 @@
         </div>
 
         <section id="sensors-detail" ng-hide="sensorLoading">
-          <div class="overview-box-heading">{{sensorHeading}}
-          </div>
+          <div class="overview-box-heading">{{ dataService.language == 'ru' ? sensorHeading_ru:sensorHeading }}</div>
 
           <div class="overview-box-body sensor-bars">
             <div class="sensor-container">
@@ -280,12 +279,10 @@
 
 
                 <div class="hide-while-loading">
-                  <div ng-repeat="sensors in sensorBar |  orderBy:orderDatabySeverity | filter:filterBySeverity"
-                    ng-value=" {{$index}}">
+                  <div ng-repeat="sensors in sensorBar |  orderBy:orderDatabySeverity | filter:filterBySeverity" ng-value=" {{$index}}">
 
                     <!--BEGIN REPEATING SENSORS-->
-                    <TABLE class="sensor" ng-mouseenter="showSensor = !showSensor"
-                      ng-mouseleave="showSensor = !showSensor">
+                    <TABLE class="sensor" ng-mouseenter="showSensor = !showSensor" ng-mouseleave="showSensor = !showSensor">
                       <TR>
                         <TD class="box-{{$index+1}} {{sensorBarItem.statusHealth | lowercase}}-{{sensorBarItem.colorValue}} status-{{sensorBarItem.colorValue}}"
                           ng-repeat="sensorBarItem in sensors">
@@ -331,7 +328,7 @@
           </div>
           <!-- TO DO: Bottom left of all appropriate boxes will be drop down to change displayed data-->
           <div class="row bottom-moreinfo">
-            <div class="col col-sm-6 grey-medium padding-none">{{sensorHeading}}</div>
+            <div class="col col-sm-6 grey-medium padding-none">{{ dataService.language == 'ru' ? sensorHeading_ru:sensorHeading }}</div>
             <div class="col col-sm-6 align-right more-info-link padding-none"><a href
                 ng-click="RedirectToURL('/server-health/sensors-overview')">{{ dataService.language == 'ru' ? 'ДАТЧИКИ':'SENSORS' }}
                 ></a></div>
@@ -375,7 +372,7 @@
           </div>
 
           <div class="row bottom-moreinfo">
-            <div class="col col-sm-6 grey-medium padding-none">{{ dataService.language == 'ru' ? 'Самое последнее':'Most recent' }}</div>
+            <div class="col col-sm-6 grey-medium padding-none">{{ dataService.language == 'ru' ? 'Самые последние':'Most recent' }}</div>
             <div class="col col-sm-6 align-right more-info-link padding-none"><a href
                 ng-click="RedirectToURL('/server-health/sys-log')">{{ dataService.language == 'ru' ? 'СОБЫТИЯ':'EVENTS' }}
                 ></a></div>
@@ -406,7 +403,7 @@
           <!--end toggle container -->
         </div>
         <div class="float-left">
-          <div class="normal-text">{{ dataService.language == 'ru' ? 'LED-индикатор ID сервера':'Server ID LED' }}</div>
+          <div class="normal-text">{{ dataService.language == 'ru' ? 'ID LED-индикатор сервера':'Server ID LED' }}</div>
           <div class="grey-small">
             {{ dataService.language == 'ru' ? (dataService.LED_state ? "Вкл" : "Выкл") : (dataService.LED_state ? "On" : "Off") }}
           </div>
@@ -421,7 +418,7 @@
         </div>
         <div class="float-left">
           <div class="normal-text">{{ dataService.language == 'ru' ? 'Потребляемая мощность':'Power Consumption' }}</div>
-          <div class="grey-small">{{ dataService.language == 'ru' ? 'Недоступен':'Not available' }}</div>
+          <div class="grey-small">{{ dataService.language == 'ru' ? 'Недоступно':'Not available' }}</div>
         </div>
       </div>
     </div>

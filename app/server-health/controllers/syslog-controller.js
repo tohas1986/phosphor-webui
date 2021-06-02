@@ -34,8 +34,10 @@ window.angular && (function(angular) {
           $scope.recordTypeList =
               ['SEL', 'Event', 'Oem'];          // From Redfish specification.
           $scope.selectedRecordType = 'Event';  // Default Select to Event log
+          $scope.selectedRecordType_ru = 'Событие';  // Default Select to Event log
           $scope.typeFilter = false;
           $scope.severityList = ['All', 'Critical', 'Warning', 'Ok'];
+          $scope.severityList_ru = ['Все', 'Критические', 'Опасные', 'Нормальные'];
           $scope.selectedSeverity = 'all';
 
           $scope.severeLogCount = 0;

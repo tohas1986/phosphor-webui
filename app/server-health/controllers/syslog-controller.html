@@ -8,7 +8,7 @@
       <div class='filter-box'>
         <button class="active filter-btn" ng-click="toggleSeverity(severity)"
           ng-class="(selectedSeverity == (severity | lowercase)) ? 'btn-filter-primary' : 'btn-filter-secondary'">
-          <span class="alert-text-{{severity | lowercase}}">&#9679;</span>&nbsp;{{severity}}
+          <span class="alert-text-{{severity | lowercase}}">&#9679;</span>&nbsp;{{ dataService.language == 'ru' ? severityList_ru[$index] : severity }}
         </button>
       </div>
     </div>
@@ -21,11 +21,11 @@
         <div class="row sys-log__date-filter">
           <div class="columns col-6">
             <label for="sys-log-filter-start-date" class="small-label">{{ dataService.language == 'ru' ? 'Начальная дата' : 'Start Date' }}</label>
-            <input id="sys-log-filter-start-date" type="date" max="{{end_date | date:'yyyy-MM-dd'}}" placeholder="MM/DD/YYYY" ng-model="start_date.value" />
+            <input id="sys-log-filter-start-date" type="date" max="{{end_date | date:'yyyy-MM-dd'}}" placeholder="{{ dataService.language == 'ru' ? 'дд . мм . гггг' : 'MM/DD/YYYY' }}" ng-model="start_date.value" />
           </div>
           <div class="columns col-6 padding-left">
             <label for="sys-log-filter-end-date" class="small-label">{{ dataService.language == 'ru' ? 'Конечная дата' : 'End Date' }}</label>
-            <input id="sys-log-filter-end-date" type="date" min="{{start_date | date:'yyyy-MM-dd'}}" placeholder="MM/DD/YYYY" ng-model="end_date.value" />
+            <input id="sys-log-filter-end-date" type="date" min="{{start_date | date:'yyyy-MM-dd'}}" placeholder="{{ dataService.language == 'ru' ? 'дд . мм . гггг' : 'MM/DD/YYYY' }}" ng-model="end_date.value" />
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@
               ng-keydown="doSearchOnEnter($event)" />
             <div class="search-submit__wrapper">
               <button class="clear-input" ng-click="clear()">&#10005;</button>
-              <input id="content__search-submit" type="submit" class="btn content__search-submit" value="Search" ng-click="doSearchOnClick()" />
+              <input id="content__search-submit" type="submit" class="btn content__search-submit" value="Search" ng-click="doSearchOnClick()">{{ dataService.language == 'ru' ? 'Искать' : 'Search' }}</input>
             </div>
           </div>
         </div>
@@ -70,8 +70,7 @@
       <div class="table__head fixed-table-header">
         <div class="table__row">
 
-          <div class="table__cell status-icon_wrapper sys-log__col-date sort_button_wrapper"
-            ng-click='sortBy("Created")' ng-class="{reverse: reverse}">
+          <div class="table__cell status-icon_wrapper sys-log__col-date sort_button_wrapper" ng-click='sortBy("Created")' ng-class="{reverse: reverse}">
             <div class="inline">
               {{ dataService.language == 'ru' ? 'Отметка времени' : 'Timestamp' }}
             </div>
@@ -109,7 +108,7 @@
 
   <section id="sys-log__logs" class="row column page-content-rnd" ng-show="(filtersysLogs.length)==0">
     <span>{{ dataService.language == 'ru'
- ? 'В настоящее время нет журналов ' + (selectedRecordType | lowercase) + ' для отображения'
+ ? 'В настоящее время нет записей ' + (selectedRecordType | lowercase) + ' для отображения'
  : 'There are no ' + (selectedRecordType | lowercase) + ' logs to display at this time' }}.</span>
   </section>
 
