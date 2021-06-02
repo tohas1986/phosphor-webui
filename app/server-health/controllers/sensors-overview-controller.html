@@ -8,7 +8,7 @@
       <div class='filter-box'>
         <button class="filter-btn" ng-click="toggleSeverity(severity)"
           ng-class="(selectedSeverity == (severity | lowercase)) ? 'btn-filter-primary' : 'btn-filter-secondary'">
-          <span class="alert-text-{{severity | lowercase}}">&#9679;</span>&nbsp;{{severity}}
+          <span class="alert-text-{{severity | lowercase}}">&#9679;</span>&nbsp;{{ dataService.language == 'ru' ? severityList_ru[$index] : severity }}
         </button>
       </div>
     </div>
@@ -30,18 +30,20 @@
         <input id="content__search-input" placeholder="{{ dataService.language == 'ru' ? 'Ключевое слово' : 'Keyword' }}" type="text" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)" />
         <div class="search-submit__wrapper">
           <button class="clear-input" ng-click="clear()">&#10005;</button>
-          <input id="content__search-submit" type="submit" class="btn content__search-submit" value="Search" ng-click="doSearchOnClick()" />
+          <input id="content__search-submit" type="submit" class="btn content__search-submit" value="{{ dataService.language == 'ru' ? 'Искать' : 'Search' }}" ng-click="doSearchOnClick()" />
         </div>
       </div>
     </div>
   </div>
 
   <section class="page-content-rnd relative table row column" ng-hide="(filteredMergedSensors).length == 0">
+<!--
     <div class="loader-holder text-center" ng-hide="!sensorLoading">
       <div ng-show="sensorLoading" class="spinner-border m-5 individual-component-loader" role="status">
         <span class="sr-only">{{ dataService.language == 'ru' ? 'Загружается' : 'Loading' }}...</span>
       </div>
     </div>
+-->
     <div class="text-intro">
       <div class="trim-text-medium">
         <input type='checkbox' id="toggleThresholdVisibility" ng-click="showThresholds = !showThresholds;"> {{ dataService.language == 'ru' ? 'Показать пороговые значения' : 'Show Thresholds' }}
@@ -50,11 +52,8 @@
     <div class="table row column sensor__table">
       <div class="table__head fixed-table-header">
         <div class="table__row">
-          <div class="table__cell status-icon_wrapper sensor__title sort_button_wrapper" ng-click='sortBy("Name")'
-            ng-class="{reverse: reverse}">
-            <div class="inline">
-              {{ dataService.language == 'ru' ? 'Название Датчика' : 'Sensor Name' }}
-            </div>
+          <div class="table__cell status-icon_wrapper sensor__title sort_button_wrapper" ng-click='sortBy("Name")' ng-class="{reverse: reverse}">
+            <div class="inline">{{ dataService.language == 'ru' ? 'Название Датчика' : 'Sensor Name' }}</div>
           </div>
           <div class="table__cell status-icon trim-text-medium"></div>
           <div class="table__cell sensor__status sort_button_wrapper" ng-click="sortBySeverity()" ng-class="{reverse: reverseSeverity}">

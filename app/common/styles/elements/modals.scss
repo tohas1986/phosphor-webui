@@ -26,8 +26,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  max-width: 850px;
-  min-width: 450px;
+  max-width: 900px;
+  min-width: 500px;
   padding: 0.8em 1.5em;
   border: thin $primary-dark solid;
   background-color: $background-01;
@@ -131,7 +131,7 @@
 
 .uib-modal .modal-dialog {
   // override bootstrap max-width set at 500px
-  max-width: 550px;
+  max-width: 650px;
 }
 
 .modal-backdrop.in {

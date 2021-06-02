@@ -51,7 +51,9 @@
             </div>
 
             <div class="form-row built-on center">
-              <img class="padding" src="../../assets/images/logo-OpenBmc-builton.svg">
+              <img class="padding" src="../../assets/images/logo-OpenBmc-builton.svg"    style="display:{{ dataService.language == 'ru' ? 'none':'yes' }}">
+              <img class="padding" src="../../assets/images/logo-OpenBmc-builton-ru.svg" style="display:{{ dataService.language == 'ru' ? 'yes':'none' }}">
+
             </div>
 
           </fieldset>

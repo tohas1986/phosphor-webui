@@ -626,7 +626,7 @@ window.angular && (function(angular) {
         if ($scope.countWarning > 0 || $scope.countCritical > 0) {
           $scope.sensorsOutofRange = true;
           $scope.sensorHeading = 'Out of Range';
-          $scope.sensorHeading_ru = 'Вне диапазона';
+          $scope.sensorHeading_ru = 'Вне нормального диапазона';
 	  
         } else {
           $scope.filterSeverity = 'all';

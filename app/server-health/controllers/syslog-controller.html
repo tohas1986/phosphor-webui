@@ -37,7 +37,7 @@
               ng-keydown="doSearchOnEnter($event)" />
             <div class="search-submit__wrapper">
               <button class="clear-input" ng-click="clear()">&#10005;</button>
-              <input id="content__search-submit" type="submit" class="btn content__search-submit" value="Search" ng-click="doSearchOnClick()">{{ dataService.language == 'ru' ? 'Искать' : 'Search' }}</input>
+              <input id="content__search-submit" type="submit" class="btn content__search-submit" value="{{ dataService.language == 'ru' ? 'Искать' : 'Search' }}" ng-click="doSearchOnClick()" />
             </div>
           </div>
         </div>

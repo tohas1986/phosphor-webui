@@ -38,7 +38,7 @@ window.angular && (function(angular) {
               })
               .when('/server-health/sys-log', {
                 title: 'Event Log',
-                title_ru: ':Журнал событий',
+                title_ru: 'Журнал событий',
                 'template': require('./controllers/syslog-controller.html'),
                 'controller': 'sysLogController',
                 authenticated: true

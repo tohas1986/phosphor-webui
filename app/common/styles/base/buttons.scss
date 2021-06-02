@@ -231,7 +231,7 @@ optional actions given on a page.
 .btn-icon {
   color:#88898a;
   font-size: 14px;
-  text-transform: capitalize;
+  text-transform: none;
   padding:1em;
   img{
     @include greyFilter;

@@ -14,12 +14,12 @@
           <!-- name and error message -->
           <h3 class="inline column"><span>{{dev.name}}</span><span ng-if="dev.isActive"> ({{ dataService.language == 'ru' ? 'Активен' : 'Active' }})</span></h3>
           <!-- Button -->
-          <label for="vm_{{dev.name}}_file-upload" class="btn btn-primary"ng-disabled="dev.isActive">{{ dataService.language == 'ru' ? 'Просматривается' : 'Browse' }}...</label>
+          <label for="vm_{{dev.name}}_file-upload" class="btn btn-primary"ng-disabled="dev.isActive">{{ dataService.language == 'ru' ? 'Выбрать файл' : 'Browse' }}...</label>
           <input class="inline" hidden id="vm_{{dev.name}}_file-upload" type="file" file="dev.file" ng-disabled="dev.isActive"/>
           <span ng-if="dev.file">{{dev.file.name}}</span>
           <span ng-if="!dev.file">{{ dataService.language == 'ru' ? 'Файл не выбран' : 'No file chosen' }}</span>
           <button id="vm_{{dev.name}}_start_stop" type="button" ng-disabled="!dev.file" class="btn btn-primary float-right" ng-click="dev.isActive? stopVM($index) : startVM($index)">
-            <span ng-if="!dev.isActive">{{ dataService.language == 'ru' ? 'Начать' : 'Start' }}</span>
+            <span ng-if="!dev.isActive">{{ dataService.language == 'ru' ? 'Загрузить' : 'Start' }}</span>
             <span ng-if="dev.isActive">{{ dataService.language == 'ru' ? 'Остановить' : 'Stop' }}</span>
           </button>
          </div>
@@ -44,7 +44,7 @@
               <span>{{ dataService.language == 'ru' ? 'Настроить соединение' : 'Configure connection' }}</span>
             </button>
             <button id="vm_{{dev.name}}_start_stop" type="button" ng-disabled="!dev.configured" class="btn btn-primary float-right" ng-click="dev.isActive? stopLegacy($index) : startLegacy($index)">
-              <span ng-if="!dev.isActive">{{ dataService.language == 'ru' ? 'Начать' : 'Start' }}</span>
+              <span ng-if="!dev.isActive">{{ dataService.language == 'ru' ? 'Загрузить' : 'Start' }}</span>
               <span ng-if="dev.isActive">{{ dataService.language == 'ru' ? 'Остановить' : 'Stop' }}</span>
             </button>
           </div>
