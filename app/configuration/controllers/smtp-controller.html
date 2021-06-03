@@ -1,0 +1,118 @@
+<loader loading="loading"></loader>
+<div id="configuration-smtp">
+
+  <section class="columns col-12">
+    <div class="page-controls" ng-class="{'highlighted' : rowUpdate, 'collapsed' : $root.toggleNavState}">
+      <button type="button" class="offset-close float-left btn btn--close" ng-click="rowUpdate=false;dismiss=true"
+        aria-label="close">
+        <icon file="icon-close.svg" aria-hidden="true"></icon>
+      </button>
+
+      <p class="float-left trim-text-medium">Click "Save Page Settings" to save all changes.</p>
+
+      <div class="float-right padding">
+        <button type="button" class="btn btn-tertiary" ng-click="rowUpdate=false;dismiss=false;refresh()">Reset</button>
+        <button type="button" class="btn btn-tertiary" ng-click="submitted=true;  smtp__form.$valid && setSMTP();"
+          ng-class="(rowUpdate || dismiss) ? 'highlighted' : ''" ng-disabled="!rowUpdate && !dismiss">Save
+          Page Settings</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="columns col-12  first-section" ng-class="{'highlighted': rowUpdate}">
+    <form id="smtp__form" name="smtp__form" novalidate>
+      <div class="page-content-box">
+        <h5>E-mail (SMTP) Perameters</h5>
+
+        <div class="table row column" ng-show="managers.length > 0">
+          <div class="table__head fixed-table-header">
+            <div class="table__row">
+              <div class="table__cell">Recipient E-mail Address</div>
+              <div class="table__cell">Period</div>
+              <div class="table__cell">Mode</div>
+              <div class="table__cell action-wrapper"></div>
+            </div>
+          </div>
+          <div class="table__body">
+            <div class="table__row" ng-class="editSMTPSettings ? 'showborders' : 'hideborders'"
+              ng-repeat="manager in managers track by $index">
+              <div class="table__cell">
+                <input ng-class="editSMTPSettings ? 'showborders' : 'hideborders'"
+                  id="smtp-manager{{ $index + 1 }}-recipient" name="smtp-manager{{ $index + 1 }}-recipient" type="text"
+                  ng-change="manager.updateRecipient=true" ng-model="manager.recipient" required
+                  ng-disabled="!editSMTPSettings" />
+                <div ng-messages="manager_group['smtp-manager'+($index+1)+'-recipient'].$error" class="form-error"
+                  ng-class="{'visible': manager_group['smtp-manager'+($index+1)+'-recipient'].$touched || submitted}"">
+                  <p ng-message=" required" role="alert">Field is required</p>
+                </div>
+              </div>
+              <div class="table__cell">
+                <input ng-class="editSMTPSettings ? 'showborders' : 'hideborders'"
+                  id="smtp-manager{{ $index + 1 }}-period" name="smtp-manager{{ $index + 1 }}-period" type="number" min="0"
+                  max="3" step="1" ng-change="manager.updatePeriod=true" ng-model="manager.period" required
+                  ng-disabled="!editSMTPSettings" />
+                <div ng-messages=" manager_group['smtp-manager'+($index+1)+'-period'].$error" class="form-error"
+                  ng-class="{'visible': manager_group['smtp-manager'+($index+1)+'-period'].$touched || submitted}">
+                  <p ng-message="required" role="alert">Value must be between 0 - 3</p>
+                </div>
+              </div>
+              <div class="table__cell">
+                <input ng-class="editSMTPSettings ? 'showborders' : 'hideborders'"
+                  id="smtp-manager{{ $index + 1 }}-mode" name="smtp-manager{{ $index + 1 }}-mode" type="number" min="0"
+                  max="3" step="1" ng-change="manager.updateMode=true" ng-model="manager.mode" required
+                  ng-disabled="!editSMTPSettings" />
+                <div ng-messages=" manager_group['smtp-manager'+($index+1)+'-mode'].$error" class="form-error"
+                  ng-class="{'visible': manager_group['smtp-manager'+($index+1)+'-mode'].$touched || submitted}">
+                  <p ng-message="required" role="alert">Value must be between 0 - 3</p>
+                </div>
+              </div>
+              <div class="table__cell action-wrapper">
+
+                <div class="bmc-table__row-actions ng-scope">
+                  <button ng-disabled="!manager.period || !manager.mode || !manager.recipient" ng-show="editSMTPSettings"
+                    class="btn btn-primary btn-small" ng-click="editSMTPSettings=false;updatedRow()">
+                    <icon alt="Complete" title="Complete" file="icon-check.svg" aria-hidden="true"></icon>
+                  </button>
+                  <button ng-show="!editSMTPSettings" class="btn btn-primary btn-small"
+                    ng-click="editSMTPSettings=true">
+                    <icon alt="Edit" title="Edit" file="icon-edit.svg" aria-hidden="true"></icon>
+                  </button>
+                  <button ng-show="editSMTPSettings" class="btn btn-primary btn-small"
+                    ng-click="removeSMTPManager($index);updatedRow()">
+                    <icon alt="Remove" title="Remove" file="icon-trashcan.svg" aria-hidden="true"></icon>
+                  </button ng-show="!editSMTPSettings">
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="message-box" ng-show="managers.length == 0">
+          No SMTP Managers currently specified.
+        </div>
+
+        <div>
+          <button ng-click="editSMTPSettings=true;submitted=false; addNewSMTPManager();" class="btn-icon">
+            <icon file="add--alt.svg" aria-hidden="true"></icon>
+            Add Manager
+          </button>
+        </div>
+
+      </div>
+    </form>
+  </section>
+
+
+  <div class="float-right padding" ng-class="rowUpdate ? 'highlighted' : ''">
+    <button type="button" class="btn btn-tertiary" ng-click="rowUpdate=false;dismiss=false;refresh()">Reset</button>
+    <button type="button" class="btn btn-tertiary" ng-click="submitted=true;  smtp__form.$valid && setSMTP();"
+      ng-class="(rowUpdate || dismiss) ? 'highlighted' : ''" ng-disabled="!rowUpdate && !dismiss">
+      Save Page Settings
+    </button>
+  </div>
+
+
+  <br clear="all">
+</div>
