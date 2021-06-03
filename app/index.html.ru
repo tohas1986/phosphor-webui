@@ -15,8 +15,7 @@
     <toast ng-if="dataService.showNavigation"></toast>
     <app-header ng-if="dataService.showNavigation" path="dataService.path"></app-header>
 
-    <main ng-view
-        ng-class="[dataService.showNavigation ? 'content__container' : 'login__wrapper',$root.toggleNavState ? 'collapsed':'']">
+    <main ng-view ng-class="[dataService.showNavigation ? (dataService.language == 'ru' ? 'content__container_ru':'content__container') : 'login__wrapper',$root.toggleNavState ? 'collapsed':'']">
     </main>
 </body>
 

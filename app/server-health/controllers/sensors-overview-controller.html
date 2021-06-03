@@ -59,11 +59,11 @@
           <div class="table__cell sensor__status sort_button_wrapper" ng-click="sortBySeverity()" ng-class="{reverse: reverseSeverity}">
             {{ dataService.language == 'ru' ? 'Состояние' : 'Status' }}
           </div>
-          <div class="table__cell sensor__reading">{{ dataService.language == 'ru' ? 'Считывание' : 'Reading' }}</div>
-          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Ниже критического' : 'Low Critical' }}</div>
-          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Ниже опасного' : 'Low Warning' }}</div>
-          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Выше опасного' : 'High Warning' }}</div>
-          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Выше критического' : 'High Critical' }}</div>
+          <div class="table__cell sensor__reading">{{ dataService.language == 'ru' ? 'Текущее значение' : 'Reading' }}</div>
+          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Нижнее критическое' : 'Low Critical' }}</div>
+          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Нижнее опасное' : 'Low Warning' }}</div>
+          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Верхнее опасное' : 'High Warning' }}</div>
+          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Верхнее критическое' : 'High Critical' }}</div>
         </div>
       </div>
       <div class="table__body">
