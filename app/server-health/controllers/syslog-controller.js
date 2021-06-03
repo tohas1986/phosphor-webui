@@ -270,8 +270,7 @@ window.angular && (function(angular) {
               // TODO: Form it while getting data
               var search_text = log.Id + ' ' + log.Name.toLowerCase() + ' ' +
                   log.Message.toLowerCase();
-              if (search_text.indexOf($scope.searchTerms[i].toLowerCase()) ==
-                  -1)
+              if (search_text.indexOf($scope.searchTerms[i].toLowerCase()) == -1)
                 return false;
             }
             return true;
@@ -306,7 +305,7 @@ window.angular && (function(angular) {
             $scope.warningLogCount = $filter('filter')($scope.filtersysLogs, 'warning').length;
             $scope.alertloadMessage = '';
 	    if(dataService.language == 'ru'){
-        	$scope.alertloadMessage = () 'За последние ' + $scope.defaultDaysShown + ' дней:<br> было зарегистрировано ';
+        	$scope.alertloadMessage = 'За последние ' + $scope.defaultDaysShown + ' дней:<br> было зарегистрировано ';
         	if (($scope.severeLogCount > 0 || $scope.warningLogCount > 0) && !$scope.suppressAlerts) {
             	    if ($scope.severeLogCount) {
             		$scope.alertloadMessage = $scope.alertloadMessage + $scope.severeLogCount;
@@ -327,7 +326,7 @@ window.angular && (function(angular) {
             	    $scope.suppressAlerts = true;
         	};
 	    } else {
-        	$scope.alertloadMessage = () 'In the last ' + $scope.defaultDaysShown + ' days:<br>';
+        	$scope.alertloadMessage = 'In the last ' + $scope.defaultDaysShown + ' days:<br>';
         	if (($scope.severeLogCount > 0 || $scope.warningLogCount > 0) && !$scope.suppressAlerts) {
             	    if ($scope.severeLogCount) {
             		$scope.alertloadMessage = $scope.alertloadMessage + $scope.severeLogCount;
