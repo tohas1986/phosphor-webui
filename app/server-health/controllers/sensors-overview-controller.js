@@ -173,12 +173,10 @@ window.angular && (function(angular) {
                                         })
                                         .finally(function() {
                                           if (curChassis == totalChassis) {
-                                            if (res.Members.length <=
-                                                index + 1) {
+                                            if (res.Members.length <= index + 1) {
                                               $scope.loadMergedSensors().then(
                                                   function() {
-                                                    $scope.sensorLoading =
-                                                        false;
+                                                    $scope.sensorLoading = false;
                                                     $scope.showAlert();
                                                   });
                                             }

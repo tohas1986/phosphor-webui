@@ -31,13 +31,22 @@ window.angular && (function(angular) {
       this.error = function(message) {
         initToast('danger', 'Error', message);
       };
+      this.error = function(message, title) {
+        initToast('danger', title, message);
+      };
 
       this.success = function(message) {
         initToast('success', 'Success!', message, true);
       };
+      this.success = function(message, title) {
+        initToast('success', title, message, true);
+      };
 
       this.warn = function(message) {
         initToast('warning', 'Warning', message);
+      };
+      this.warn = function(message, title) {
+        initToast('warning', title, message);
       };
 
       this.info = function(title, message) {

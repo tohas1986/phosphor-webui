@@ -33,7 +33,7 @@ window.angular && (function(angular) {
             }
           },
           function(error) {
-            toastService.error('Unable to load SNMP settings.');
+            toastService.error(( dataService.language == 'ru' ) ? 'Невозможно загрузить настройки SNMP.' : 'Unable to load SNMP settings.');
             console.log(JSON.stringify(error));
           });
 
@@ -71,7 +71,7 @@ window.angular && (function(angular) {
         for (let i in $scope.managers) {
           if (!$scope.managers[i].address || !$scope.managers[i].port) {
             $scope.loading = false;
-            toastService.error('Cannot save. Please resolve errors on page.');
+            toastService.error(( dataService.language == 'ru' ) ? 'Невозможно загрузить. Пожалуйста, устраните ошибки на странице.' : 'Cannot save. Please resolve errors on page.');
             return;
           }
         }
@@ -110,10 +110,10 @@ window.angular && (function(angular) {
                 function() {
                   $scope.refresh();
                   $scope.editSNMPSettings = true;
-                  toastService.success('SNMP settings have been saved.');
+                  toastService.success(( dataService.language == 'ru' ) ? 'Настройки SNMP сохранены.' : 'SNMP settings have been saved.');
                 },
                 function(errors) {
-                  toastService.error('Unable to set SNMP Managers.');
+                  toastService.error(( dataService.language == 'ru' ) ? 'Невозможно установить менеджеров SNMP.' : 'Unable to set SNMP Managers.');
                   console.log(JSON.stringify(errors));
                 })
             .finally(function() {

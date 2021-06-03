@@ -74,7 +74,7 @@ window.angular && (function(angular) {
                   deferred.resolve(state);
                 } else if (imageStateFailed) {
                   console.log('Image failed to activate: ', imageStateFailed);
-                  toastService.error('Image failed to activate.');
+                  toastService.error(( dataService.language == 'ru' ) ? 'Не удалось активировать образ' : 'Image failed to activate.');
                   deferred.reject(error);
                 }
               },
@@ -90,8 +90,7 @@ window.angular && (function(angular) {
             $interval.cancel(pollActivationTimer);
             pollActivationTimer = undefined;
             console.log('Time out activating image, ' + imageId);
-            deferred.reject(
-                'Time out. Image did not activate in allotted time.');
+            deferred.reject(( dataService.language == 'ru' ) ? 'Время истекло. Образ не активировался в отведенное время.' : 'Time out. Image did not activate in allotted time.');
           }
         }, Constants.POLL_INTERVALS.ACTIVATION);
         return deferred.promise;
@@ -165,7 +164,7 @@ window.angular && (function(angular) {
                 },
                 function(error) {
                   console.log(JSON.stringify(error));
-                  toastService.error('Unable to activate image');
+                  toastService.error(( dataService.language == 'ru' ) ? 'Невозможно активировать образ' : 'Unable to activate image');
                 })
             .then(function(activationState) {
               waitForActive($scope.activate_image_id)
@@ -173,7 +172,7 @@ window.angular && (function(angular) {
                       function(state) {},
                       function(error) {
                         console.log(JSON.stringify(error));
-                        toastService.error('Unable to activate image');
+                        toastService.error(( dataService.language == 'ru' ) ? 'Невозможно активировать образ' : 'Unable to activate image');
                       })
                   .then(function(state) {
                     if ($scope.activate.reboot &&
@@ -191,11 +190,11 @@ window.angular && (function(angular) {
                       $timeout(function() {
                         APIUtils.bmcReboot().then(
                             function(response) {
-                              toastService.success('BMC is rebooting.')
+                              toastService.success(( dataService.language == 'ru' ) ? 'BMC перезагружается.' : 'BMC is rebooting.')
                             },
                             function(error) {
                               console.log(JSON.stringify(error));
-                              toastService.error('Unable to reboot BMC.');
+                              toastService.error(( dataService.language == 'ru' ) ? 'Невозможно перезагрузить BMC.' : 'Unable to reboot BMC.');
                             });
                       }, 10000);
                     }
@@ -255,9 +254,10 @@ window.angular && (function(angular) {
               .then(
                   function(response) {
                     $scope.uploading = false;
-                    toastService.success(
-                        'Image file "' + $scope.file.name +
-                        '" has been uploaded. Activate it to make it available for use.');
+                    toastService.success(( dataService.language == 'ru' )
+ ? 'Файл образа "' + $scope.file.name + '" загружен. Активируйте его, чтобы сделать его доступным для использования.'
+ : 'Image file "' + $scope.file.name + '" has been uploaded. Activate it to make it available for use.'
+		    );
                     $scope.file = '';
                     if ($scope.slectedFirmware == 'Immediate') {
                       alert(Constants.MESSAGES.FIRMWARE.MESSAGE_IMMEDIATE);
@@ -270,7 +270,7 @@ window.angular && (function(angular) {
                   function(error) {
                     $scope.uploading = false;
                     console.log(error);
-                    toastService.error('Unable to upload image file');
+                    toastService.error(( dataService.language == 'ru' ) ? 'Невозможно загрузить файл образа' : 'Unable to upload image file');
                     alert(Constants.MESSAGES.FIRMWARE.MESSAGE_FAILED);
                   });
         }
@@ -313,8 +313,7 @@ window.angular && (function(angular) {
 
       $scope.download = function() {
         if (!$scope.download_host || !$scope.download_filename) {
-          toastService.error(
-              'TFTP server IP address and file name are required!');
+          toastService.error(( dataService.language == 'ru' ) ? 'Требуются IP-адрес TFTP-сервера и имя файла!' : 'TFTP server IP address and file name are required!');
           return false;
         }
 
@@ -338,14 +337,15 @@ window.angular && (function(angular) {
                   $scope.download_host = '';
                   $scope.download_filename = '';
                   $scope.downloading = false;
-                  toastService.success('Download complete');
+                  toastService.success(( dataService.language == 'ru' ) ? 'Загрузка файла завершена' : 'Download complete');
                   loadFirmwares();
                 },
                 function(error) {
                   console.log(error);
-                  toastService.error(
-                      'Image file from TFTP server "' + $scope.download_host +
-                      '" could not be downloaded');
+                  toastService.error(( dataService.language == 'ru' )
+ ? 'Не удалось загрузить файл образа с TFTP-сервера "' + $scope.download_host
+ : 'Image file from TFTP server "' + $scope.download_host + '" could not be downloaded'
+		  );
                   $scope.downloading = false;
                 });
       };
@@ -364,7 +364,7 @@ window.angular && (function(angular) {
             .then(function(response) {
               $scope.loading = false;
               if (response.status == 'error') {
-                toastService.error('Unable to update boot priority');
+                toastService.error(( dataService.language == 'ru' ) ? 'Невозможно обновить приоритет загрузки' : 'Unable to update boot priority');
               } else {
                 loadFirmwares();
               }
@@ -381,7 +381,7 @@ window.angular && (function(angular) {
         APIUtils.deleteImage($scope.delete_image_id).then(function(response) {
           $scope.loading = false;
           if (response.status == 'error') {
-            toastService.error('Unable to delete image');
+            toastService.error(( dataService.language == 'ru' ) ? 'Невозможно удалить образ' : 'Unable to delete image');
           } else {
             loadFirmwares();
           }

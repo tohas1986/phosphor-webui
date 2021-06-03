@@ -106,8 +106,7 @@ window.angular && (function(angular) {
             if (!APIUtils.validIPV4IP(
                     $scope.interface.IPv4Addresses[i].Address)) {
               toastService.error(
-                  $scope.interface.IPv4Addresses[i].Address +
-                  ' invalid IP parameter');
+                  $scope.interface.IPv4Addresses[i].Address +  (( dataService.language == 'ru' ) ? ' недопустимый параметр IP' : ' invalid IP parameter'));
               $scope.loading = false;
               return false;
             }
@@ -116,8 +115,7 @@ window.angular && (function(angular) {
                 !APIUtils.validIPV4IP(
                     $scope.interface.IPv4Addresses[i].Gateway)) {
               toastService.error(
-                  $scope.interface.IPv4Addresses[i].Address +
-                  ' invalid gateway parameter');
+                  $scope.interface.IPv4Addresses[i].Address + (( dataService.language == 'ru' ) ? ' недопустимый параметр шлюза' : ' invalid gateway parameter'));
               $scope.loading = false;
               return false;
             }
@@ -126,8 +124,7 @@ window.angular && (function(angular) {
                 !APIUtils.validIPV4IP(
                     $scope.interface.IPv4Addresses[i].SubnetMask)) {
               toastService.error(
-                  $scope.interface.IPv4Addresses[i].Address +
-                  ' invalid subnet mask parameter');
+                  $scope.interface.IPv4Addresses[i].Address + (( dataService.language == 'ru' ) ? ' недопустимый параметр маски подсети' : ' invalid subnet mask parameter'));
               $scope.loading = false;
               return false;
             }
@@ -207,7 +204,7 @@ window.angular && (function(angular) {
           if (promises.length) {
             $q.all(promises).then(
                 function(response) {
-                  toastService.success('Network settings saved');
+                  toastService.success(( dataService.language == 'ru' ) ? 'Сетевые настройки сохранены' : 'Network settings saved');
                   $scope.loading = false;
 
 
@@ -223,7 +220,7 @@ window.angular && (function(angular) {
                   $scope.interface =
                       JSON.parse(JSON.stringify($scope.oldInterface));
                   $scope.loading = false;
-                  toastService.error('Network settings could not be saved');
+                  toastService.error(( dataService.language == 'ru' ) ? 'Сетевые настройки не могут быть сохранены' : 'Network settings could not be saved');
                 })
           } else {
             $scope.loading = false;

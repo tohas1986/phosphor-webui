@@ -46,7 +46,7 @@ window.angular && (function(angular) {
               }
               $q.all(promises)
                   .catch(function(error) {
-                    toastService.error('Failed to load certificates.');
+                    toastService.error(( dataService.language == 'ru' ) ? 'Не удалось загрузить сертификаты.' : 'Failed to load certificates.');
                     console.log(JSON.stringify(error));
                   })
                   .finally(function() {
@@ -74,14 +74,14 @@ window.angular && (function(angular) {
             function(error) {
               $scope.loading = false;
               $scope.availableCertificateTypes = [];
-              toastService.error('Failed to load certificates.');
+              toastService.error(( dataService.language == 'ru' ) ? 'Не удалось загрузить сертификаты.' : 'Failed to load certificates.');
               console.log(JSON.stringify(error));
             });
       };
 
       $scope.uploadCertificate = function() {
         if ($scope.newCertificate.file.name.split('.').pop() !== 'pem') {
-          toastService.error('Certificate must be a .pem file.');
+          toastService.error(( dataService.language == 'ru' ) ? 'Сертификат должен быть файлом .pem .' : 'Certificate must be a .pem file.');
           return;
         }
         APIUtils
@@ -89,16 +89,12 @@ window.angular && (function(angular) {
                 $scope.newCertificate.file, $scope.newCertificate.selectedType)
             .then(
                 function(data) {
-                  toastService.success(
-                      $scope.newCertificate.selectedType.name +
-                      ' was uploaded.');
+                  toastService.success( $scope.newCertificate.selectedType.name + (( dataService.language == 'ru' ) ? ' был загружен.' : ' was uploaded.'));
                   $scope.newCertificate = {};
                   $scope.loadCertificates();
                 },
                 function(error) {
-                  toastService.error(
-                      $scope.newCertificate.selectedType.name +
-                      ' failed upload.');
+                  toastService.error($scope.newCertificate.selectedType.name + (( dataService.language == 'ru' ) ? ' не удалось загрузить.' : ' failed upload.'));
                   console.log(JSON.stringify(error));
                 });
       };

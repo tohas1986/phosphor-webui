@@ -109,20 +109,20 @@ window.angular && (function(angular) {
             .then(
                 function(response) {
                   if (!response.data.hasOwnProperty('error')) {
-                    toastService.success('Successfully updated LDAP settings.');
+                    toastService.success((dataService.language == 'ru')? 'Настройки LDAP успешно обновлены.':'Successfully updated LDAP settings.');
                     $scope.loadLdap();
                   } else {
                     // The response returned a 200 but there was an error
                     // property sent in the response. It is unclear what
                     // settings were saved. Reloading LDAP to make it clear
                     // to the user.
-                    toastService.error('Unable to update all LDAP settings.');
+                    toastService.error((dataService.language == 'ru') ? 'Невозможно обновить все настройки LDAP':'Unable to update all LDAP settings.');
                     $scope.loadLdap();
                     console.log(response.data.error.message);
                   }
                 },
                 function(error) {
-                  toastService.error('Unable to update LDAP settings.');
+                  toastService.error((dataService.language == 'ru') ? 'Невозможно обновить настройки LDAP':'Unable to update LDAP settings.');
                   console.log(JSON.stringify(error));
                 });
       };
@@ -147,12 +147,12 @@ window.angular && (function(angular) {
           APIUtils.saveLdapProperties(disabledServicePayload)
               .then(
                   function(response) {
-                    toastService.success('Successfully disabled LDAP.');
+                    toastService.success((dataService.language == 'ru') ? 'LDAP успешно отключен':'Successfully disabled LDAP.');
                     $scope.roleGroups = [];
                     $scope.loadLdap();
                   },
                   function(error) {
-                    toastService.error('Unable to update LDAP settings.');
+                    toastService.error((dataService.language == 'ru') ? 'Невозможно обновить настройки LDAP':'Unable to update LDAP settings.');
                     console.log(JSON.stringify(error));
                   });
         }

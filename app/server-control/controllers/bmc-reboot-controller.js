@@ -30,12 +30,11 @@ window.angular && (function(angular) {
       $scope.reboot = function() {
         APIUtils.bmcReboot().then(
             function(response) {
-              toastService.success(
-                  'BMC reboot action successful. BMC is rebooting...')
+              toastService.success(( dataService.language == 'ru' ) ? 'Перезагрузка BMC успешно начата. BMC перезагружается...' : 'BMC reboot action successful. BMC is rebooting...')
             },
             function(error) {
               console.log(JSON.stringify(error));
-              toastService.error('Unable to perform BMC reboot action.');
+              toastService.error(( dataService.language == 'ru' ) ? 'Невозможно выполнить перезагрузку BMC.' : 'Unable to perform BMC reboot action.');
             });
       };
     }
