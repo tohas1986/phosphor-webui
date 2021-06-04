@@ -1,21 +1,32 @@
 /**
- * Controller for mails-overview
+ * Controller for SMTP
  *
- * @module app/serverHealth
- * @exports mailsOverviewController
- * @name mailsOverviewController
+ * @module app/configuration
+ * @exports smtpController
+ * @name smtpController
+ */
 
-
+/**
+ * Controller for SMTP
+ *
+ * @module app/configuration
+ * @exports smtpController
+ * @name smtpController
  */
 
 window.angular && (function(angular) {
   'use strict';
-  angular.module('app.overview').controller('mailsOverviewController', [
-      '$scope', '$log', '$window', 'APIUtils', 'dataService', 'Constants', '$q',
-      function($scope, $log, $window, APIUtils, dataService, Constants, $q) {
-      $scope.dataService = dataService;
 
-      $scope.dropdown_selected = false;
+  angular.module('app.configuration').controller('smtpController', [
+    '$scope', '$window', 'APIUtils', 'dataService', '$timeout', '$route', '$q',
+    'toastService', 'Constants',
+    function(
+        $scope, $window, APIUtils, dataService, $timeout, $route, $q,
+        toastService, Constants) {
+
+      $scope.dataService = dataService;
+      $scope.cofirmSettings = false;
+
 
       $scope.$log = $log;
       $scope.customSearch = '';
@@ -23,7 +34,8 @@ window.angular && (function(angular) {
       $scope.messages = Constants.MESSAGES.SENSOR;
       $scope.selectedSeverity =
           {all: true, normal: false, warning: false, critical: false};
-      $scope.export_name = 'mails.json';
+      $scope.export_name = 'smtp.json';
+
       $scope.loading = false;
       $scope.jsonData = function(data) {
         var dt = {};
@@ -33,9 +45,9 @@ window.angular && (function(angular) {
         return JSON.stringify(dt);
       };
 
-      $scope.setMailMode = function(){
-	    $scope.mailmode=document.getElementById("mailmode").value;
-	    return APIUtils.setMailMode($scope.mailmode)
+      $scope.setSMTPMode = function(){
+            $scope.smtpmode=document.getElementById("smtpmode").value;
+            return APIUtils.setSMTPMode($scope.smtpmode)
             .then(
                 function(data) {},
                 function(error) {
@@ -44,21 +56,28 @@ window.angular && (function(angular) {
                 });
       };
 
-      function loadMailData() {
-        return APIUtils.getAllMailStatus().then(
+      //$scope.setSMTPMode = function(){
+      //      $scope.smtpmode=document.getElementById("smtpmode").value;
+      //      $scope.smtpperiod=document.getElementById("smtpperiod").value;
+      //      $scope.smtprecipient=document.getElementById("smtprecipient").value;
+      //      return APIUtils.setSMTPMode($scope.smtpmode,$scope.smtpperiod,$scope.smtprecipient)
+      //      .then(
+      //          function(data) {},
+      //          function(error) {
+      //            console.log(JSON.stringify(error));
+      //            return $q.reject();
+      //          });
+      //};
+
+      function loadSMTPData() {
+        return APIUtils.getAllSMTPStatus().then(
                 function(data) {
-                 document.querySelector('#mailmode [value="' + data.data + '"]').setAttribute('selected', 'selected'); },
+                 document.querySelector('#smtpmode [value="' + data.data + '"]').setAttribute('selected', 'selected'); },
                 function(error) {
                   console.log(JSON.stringify(error));
-
-
                   return $q.reject();
                 });
       };
-
-
-
-
 
       $scope.clear = function() {
         $scope.customSearch = '';
@@ -123,31 +142,48 @@ window.angular && (function(angular) {
         }
       };
 
-      $scope.filterBySeverity = function(mail) {
+      $scope.filterBySeverity = function(smtp) {
         if ($scope.selectedSeverity.all) return true;
 
         return (
-            (mail.severity_flags.normal && $scope.selectedSeverity.normal) ||
-            (mail.severity_flags.warning &&
+            (smtp.severity_flags.normal && $scope.selectedSeverity.normal) ||
+            (smtp.severity_flags.warning &&
              $scope.selectedSeverity.warning) ||
-            (mail.severity_flags.critical &&
+            (smtp.severity_flags.critical &&
              $scope.selectedSeverity.critical));
       };
-      $scope.filterBySearchTerms = function(mail) {
+
+      $scope.filterBySearchTerms = function(smtp) {
         if (!$scope.searchTerms.length) return true;
 
         for (var i = 0, length = $scope.searchTerms.length; i < length; i++) {
-          if (mail.search_text.indexOf($scope.searchTerms[i].toLowerCase()) ==
+          if (smtp.search_text.indexOf($scope.searchTerms[i].toLowerCase()) ==
               -1)
             return false;
         }
         return true;
       };
 
-	loadMailData();
+	loadSMTPData();
 
+      // Получить SMTP-настройки с сервера
+      //getSMTPSettings();
 
+      // Сохранить изменения
+      //$scope.setSMTPSettings = function() {
+      //};
 
+      // В случае обновления страницы
+      //$scope.refresh = function() {
+      //};
+
+      // Получение настроек с сервера
+      //function getSMTPSettings() {
+      //}
+
+      // Присвоение полей через объект $scope
+      //function setFields(data){
+      //}
     }
   ]);
 })(angular);

@@ -1585,6 +1585,41 @@ window.angular && (function(angular) {
                  return response.data;
                });
         },
+        setMailMode: function(mailmode) {
+           return $http({
+                    method: 'POST',
+                    url: DataService.getHost() +
+                        '/redfish/v1/Rikmail/' + mailmode,
+                    withCredentials: true,
+                    data: JSON.stringify({'data':[mailmode]})
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
+        },
+        getAllMailStatus: function() {
+           return $http({
+                    method: 'GET',
+                    url: DataService.getHost() +
+                        '/redfish/v1/Rikmail/',
+                    withCredentials: true
+                  })
+               .then(function(response) {
+                 return response.data;
+               });
+        },
+        //setMailStatus: function(mailrecipient,mailperiod,mailmode) {
+        //   return $http({
+        //            method: 'POST',
+        //            url: DataService.getHost() +
+        //                '/redfish/v1/Rikmail/',
+        //            withCredentials: true,
+        //            data: JSON.stringify({'data':[mailrecipient, +mailperiod, +mailmode]})
+        //          })
+        //       .then(function(response) {
+        //         return response.data;
+        //       });
+        //},
         setSMTPMode: function(smtpmode) {
            return $http({
                     method: 'POST',
@@ -1663,41 +1698,6 @@ window.angular && (function(angular) {
               .then(function(response) {
                 return response.data;
               });
-        },
-        setMailMode: function(mailmode) {
-           return $http({
-                    method: 'POST',
-                    url: DataService.getHost() +
-                        '/redfish/v1/Rikmail/' + mailmode,
-                    withCredentials: true,
-                    data: JSON.stringify({'data':[mailmode]})
-                  })
-               .then(function(response) {
-                 return response.data;
-               });
-        },
-        //setMailStatus: function(mailrecipient,mailperiod,mailmode) {
-        //   return $http({
-        //            method: 'POST',
-        //            url: DataService.getHost() +
-        //                '/redfish/v1/Rikmail/',
-        //            withCredentials: true,
-        //            data: JSON.stringify({'data':[mailrecipient, +mailperiod, +mailmode]})
-        //          })
-        //       .then(function(response) {
-        //         return response.data;
-        //       });
-        //},
-        getMailStatus: function() {
-           return $http({
-                    method: 'GET',
-                    url: DataService.getHost() +
-                        '/redfish/v1/Rikmail/',
-                    withCredentials: true
-                  })
-               .then(function(response) {
-                 return response.data;
-               });
         },
         getPowerConsumption: function() {
           return $http({

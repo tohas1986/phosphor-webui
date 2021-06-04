@@ -1,0 +1,40 @@
+<loader loading="loading"></loader>
+<div class="inventory__container">
+  <div class="row column">
+    <h1>Настройки почтовой рассылки:</h1>
+  </div>
+  <div class="row column">
+	<p>
+	    <label for="smtpmode">Выберите режим почтовой рассылки:</label>
+	    <select id="smtpmode" name="smtpmode">
+<!-- 		<option value="0">Custom (User-Defined)</option> -->
+		<option value="1">Минимальный (Criticals Only)</option>
+		<option value="2">Оптимальный (Criticals and Warnings)</option>
+		<option value="3">Максимальный (Full Sensor Info)</option>
+	    </select>
+	</p>
+	<p>
+	    <label for="smtpperiod">Выберите режим почтовой рассылки:</label>
+	    <select id="smtpperiod" name="smtpperiod">
+<!-- 		<option value="0">Custom (User-Defined)</option> -->
+		<option value="1">Hourly (Every Hour 00 minutes)</option>
+		<option value="2">Daily (Every Day 00 hours)</option>
+		<option value="3">Weekly (Every Weel Monday)</option>
+	    </select>
+	</p>
+        <p>
+            <label for="smtprecipient">Recipient E-mai address: </label>
+            <input id="smtprecipient" type="text" name="smtprecipient" />
+        </p>
+
+
+
+
+   </div>
+   <div class="row column">
+     <p>
+	  <input id="content_smtp-submit" type="submit" value="Сохранить" class="btn btn-primary" ng-click="setSMTPMode()" />
+     </p>
+  </div>
+  
+</div>
