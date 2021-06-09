@@ -1585,13 +1585,13 @@ window.angular && (function(angular) {
                  return response.data;
                });
         },
-        setMailMode: function(mailmode) {
+        setMailMode: function(mailmode,mailparam) {
            return $http({
                     method: 'POST',
                     url: DataService.getHost() +
-                        '/redfish/v1/Rikmail/' + mailmode,
+                        '/redfish/v1/Rikmail/' + mailparam,
                     withCredentials: true,
-                    data: JSON.stringify({'data':[mailmode]})
+                    data: JSON.stringify({'data':[mailparam]})
                   })
                .then(function(response) {
                  return response.data;
@@ -1608,18 +1608,6 @@ window.angular && (function(angular) {
                  return response.data;
                });
         },
-        //setMailStatus: function(mailrecipient,mailperiod,mailmode) {
-        //   return $http({
-        //            method: 'POST',
-        //            url: DataService.getHost() +
-        //                '/redfish/v1/Rikmail/',
-        //            withCredentials: true,
-        //            data: JSON.stringify({'data':[mailrecipient, +mailperiod, +mailmode]})
-        //          })
-        //       .then(function(response) {
-        //         return response.data;
-        //       });
-        //},
         setSMTPMode: function(smtpmode) {
            return $http({
                     method: 'POST',

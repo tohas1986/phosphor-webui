@@ -35,7 +35,8 @@ window.angular && (function(angular) {
 
       $scope.setMailMode = function(){
 	    $scope.mailmode=document.getElementById("mailmode").value;
-	    return APIUtils.setMailMode($scope.mailmode)
+	    $scope.mailparam=document.getElementById("mailmode").value + '_' + document.getElementById("mailperiod").value + '_' + document.getElementById("mailrecipient").value;
+	    return APIUtils.setMailMode($scope.mailmode,$scope.mailparam)
             .then(
                 function(data) {},
                 function(error) {

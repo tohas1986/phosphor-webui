@@ -7,12 +7,34 @@
 	    <label for="mailmode">Select E-mail mode:</label>
 	    <select id="mailmode" name="mailmode">
 <!-- 		<option value="0">Auto (custom)</option> -->
-		<option value="1">Minimal (Criticals)</option>
-		<option value="2">Optimal (Criticals, Warnings)</option>
-		<option value="3">Maximal (All)</option>
+		<option value="1">Minimal (Errors)</option>
+<!--		<option value="2">Optimal (Errors/Warnings)</option> -->
+<!--		<option value="3">Maximal (All)</option> -->
 	    </select>
 	</p>
    </div>
+
+  <div class="row column">
+	<p>
+	    <label for="mailperiod">Select E-mail period:</label>
+	    <select id="mailperiod" name="mailperiod">
+<!-- 		<option value="0">Auto (custom)</option> -->
+		<option value="1">Every 2 minutes</option>
+		<option value="2">Every day</option>
+	    </select>
+	</p>
+   </div>
+
+   <div class="row column">
+	<p>
+	    <label for="mailrecipient">Select E-mail recipient:</label>
+            <input id="mailrecipient" name="mailrecipient" type="text"/>
+	</p>
+        <!-- <p>current E-mail: <output name="mailrecipient">No</output></p> -->
+   </div>
+
+
+
    <div class="row column">
      <p>
 	  <input id="content_mails-submit" type="submit" value="Сохранить" class="btn btn-primary" ng-click="setMailMode()" />
