@@ -1585,7 +1585,7 @@ window.angular && (function(angular) {
                  return response.data;
                });
         },
-        setMailMode: function(mailmode,mailparam) {
+        setMailMode: function(mailparam) {
            return $http({
                     method: 'POST',
                     url: DataService.getHost() +

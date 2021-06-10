@@ -25,6 +25,13 @@ window.angular && (function(angular) {
           {all: true, normal: false, warning: false, critical: false};
       $scope.export_name = 'mails.json';
       $scope.loading = false;
+      $scope.mailmode = '2';
+      $scope.mailperiod = '1';
+      $scope.mailrecipient = '';
+      $scope.mailparam='2_1_';
+
+      loadMailData();
+
       $scope.jsonData = function(data) {
         var dt = {};
         data.data.forEach(function(item) {
@@ -34,9 +41,8 @@ window.angular && (function(angular) {
       };
 
       $scope.setMailMode = function(){
-	    $scope.mailmode=document.getElementById("mailmode").value;
 	    $scope.mailparam=document.getElementById("mailmode").value + '_' + document.getElementById("mailperiod").value + '_' + document.getElementById("mailrecipient").value;
-	    return APIUtils.setMailMode($scope.mailmode,$scope.mailparam)
+	    return APIUtils.setMailMode($scope.mailparam)
             .then(
                 function(data) {},
                 function(error) {
@@ -48,7 +54,7 @@ window.angular && (function(angular) {
       function loadMailData() {
         return APIUtils.getAllMailStatus().then(
                 function(data) {
-                 document.querySelector('#mailmode [value="' + data.data + '"]').setAttribute('selected', 'selected'); },
+                 document.querySelector('#mailparam [value="' + data.data + '"]').setAttribute('selected', 'selected'); },
                 function(error) {
                   console.log(JSON.stringify(error));
 
