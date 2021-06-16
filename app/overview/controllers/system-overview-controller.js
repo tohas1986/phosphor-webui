@@ -87,11 +87,11 @@ window.angular && (function(angular) {
         var getBMCTimePromise = APIUtils.getBMCTime().then(
             function(data) {
               $scope.curTime = new Date(data.DateTime);
-              $scope.curTime2 = $filter('date')($scope.curTime,'mediumTime','en-US');
-              $scope.curTime = $filter('date')($scope.curTime,'mediumDate','en-US');
+              $scope.curTime2 = $filter('date')($scope.curTime,'mediumTime').en;
+              $scope.curTime = $filter('date')($scope.curTime,'mediumDate').en;
               $scope.curTime_ru = new Date(data.DateTime);
-              $scope.curTime2_ru = $filter('date')($scope.curTime_ru,'mediumTime','ru-RU');
-              $scope.curTime_ru  = $filter('date')($scope.curTime_ru,'mediumDate','ru-RU');
+              $scope.curTime2_ru = $filter('date')($scope.curTime_ru,'mediumTime').ru;
+              $scope.curTime_ru  = $filter('date')($scope.curTime_ru,'mediumDate').ru;
             },
             function(error) {
               console.log(JSON.stringify(error));
