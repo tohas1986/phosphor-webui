@@ -38,10 +38,11 @@ window.angular && (function(angular) {
           //   "Dec 3, 2018 17:35:01 GMT" for en-GB at 'Europe/London'
           //   "Dec 3, 2018 20:35:01 GMT+3" for ru-RU at 'Europe/Moscow'
           //   "Dec 3, 2018 17:35:01 UTC" for ru-RU at 'UTC'
-          return {
+	  const formatedDate = {
 	    en: dt.toLocaleDateString('en-US', { timeZone: tz, month: 'short', year: 'numeric', day: 'numeric' }) + ' ' + dt.toLocaleTimeString(ro.locale, {timeZone: tz, timeZoneName: 'short'}),
 	    ru: dt.toLocaleDateString('ru-RU', { timeZone: tz, month: 'short', year: 'numeric', day: 'numeric' }) + ' ' + dt.toLocaleTimeString(ro.locale, {timeZone: tz, timeZoneName: 'short'})
 	  };
+	  return formatedDate;
         }
       });
 })(window.angular);

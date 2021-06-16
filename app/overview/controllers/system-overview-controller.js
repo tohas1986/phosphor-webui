@@ -27,6 +27,9 @@ window.angular && (function(angular) {
       $scope.edit_hostname = false;
       $scope.newHostname = '';
       $scope.curTime = '';
+      $scope.curTime_ru = '';
+      $scope.curTime2 = '';
+      $scope.curTime2_ru = '';
       $scope.bmc_info = {};
 
       loadOverviewData();
@@ -87,11 +90,11 @@ window.angular && (function(angular) {
         var getBMCTimePromise = APIUtils.getBMCTime().then(
             function(data) {
               $scope.curTime = new Date(data.DateTime);
-              $scope.curTime2 = $filter('date')($scope.curTime,'mediumTime').en;
-              $scope.curTime = $filter('date')($scope.curTime,'mediumDate').en;
+	      o=$filter('date')($scope.curTime,'mediumTime'); $scope.curTime2 = o.en;
+	      o=$filter('date')($scope.curTime,'mediumDate'); $scope.curTime = o.en;
               $scope.curTime_ru = new Date(data.DateTime);
-              $scope.curTime2_ru = $filter('date')($scope.curTime_ru,'mediumTime').ru;
-              $scope.curTime_ru  = $filter('date')($scope.curTime_ru,'mediumDate').ru;
+	      o=$filter('date')($scope.curTime_ru,'mediumTime'); $scope.curTime2_ru = o.ru;
+	      o=$filter('date')($scope.curTime_ru,'mediumDate'); $scope.curTime_ru = o.ru;
             },
             function(error) {
               console.log(JSON.stringify(error));
