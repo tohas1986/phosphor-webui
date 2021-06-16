@@ -326,3 +326,27 @@
 @media only screen and (max-width: $breakpoint-xsmall) {
   @include collapsed-nav;
 }
+
+.language_ru {
+    display: inline-block;
+    width: 164px;
+    height: 34px;
+    padding: 0px 0px 0px 32px;
+    background-repeat:no-repeat;
+    background-position: left 0px top 2px;
+    background-size: 32px 34px;
+    background-image:url('/app/assets/icons/RU-ru-32.png');
+}
+
+.language_en {
+    display: inline-block;
+    width: 164px;
+    height: 34px;
+    padding: 0px 0px 0px 32px;
+    background-repeat:no-repeat;
+    background-position: left 0px top 2px;
+    background-size: 32px 34px;
+    background-image:url('/app/assets/icons/EN-us-32.png');
+}
+
+select#language { width:128px; display:inline-block; border: 0px; }

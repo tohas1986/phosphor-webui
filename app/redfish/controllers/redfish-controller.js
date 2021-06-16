@@ -12,14 +12,15 @@ window.angular && (function(angular) {
 
   angular.module('app.redfish').controller('redfishController', [
     '$scope', '$http', 'dataService', '$routeParams',
-    function($scope, $http, DataService, $routeParams) {
+    function($scope, $http, dataService, $routeParams) {
+	$scope.dataService = dataService;
       $scope.redfishData = {};
       $scope.isObject = angular.isObject;
       $scope.isArray = angular.isArray;
       $scope.loading = true;
       $http({
         method: 'GET',
-        url: DataService.getHost() + '/redfish/' + $routeParams.path,
+        url: dataService.getHost() + '/redfish/' + $routeParams.path,
         withCredentials: true
       })
           .then(

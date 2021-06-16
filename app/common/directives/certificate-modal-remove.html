@@ -1,21 +1,23 @@
 <div class="uib-modal__content modal__local-certificates-remove">
   <div class="modal-header">
     <h2 class="modal-title" id="dialog_label">
-      Remove certificate
+      {{ dataService.language == 'ru' ? 'Удалить сертификат':'Remove certificate' }}
     </h2>
     <button type="button" class="btn  btn--close  float-right" ng-click="$dismiss()" aria-label="Close">
       <icon file="icon-close.svg" aria-hidden="true"></icon>
     </button>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to remove certificate issued by '{{modalCtrl.certificate.Issuer.CommonName}}' certificate? This action cannot be undone.</p>
+    <p>{{ dataService.language == 'ru' ? 'Вы уверены, что хотите удалить сертификат, выданный ' + modalCtrl.certificate.Issuer.CommonName + '? Это действие не может быть отменено.'
+	    :'Are you sure you want to remove certificate issued by ' + modalCtrl.certificate.Issuer.CommonName + '? This action cannot be undone.' }}
+    </p>
   </div>
   <div class="modal-footer">
     <button class="btn btn-secondary" ng-click="$dismiss()" type="button">
-      Cancel
+      {{ dataService.language == 'ru' ? 'Отменить':'Cancel' }}
     </button>
     <button class="btn btn-primary" ng-click="$close()" type="button">
-      Remove
+      {{ dataService.language == 'ru' ? 'Удалить':'Remove' }}
     </button>
   </div>
 </div>

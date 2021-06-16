@@ -7,8 +7,8 @@ window.angular && (function(angular) {
       return {
         'restrict': 'E', 'template': require('./remote-logging-server.html'),
             'controller': [
-              '$scope', '$uibModal', 'toastService',
-              function($scope, $uibModal, toastService) {
+              '$scope', '$uibModal', 'toastService', 'dataService',
+              function($scope, $uibModal, toastService, dataService) {
                 const modalActions = {
                   ADD: 0,
                   EDIT: 1,
@@ -18,19 +18,32 @@ window.angular && (function(angular) {
                       title: 'Add remote logging server',
                       actionLabel: 'Add',
                       successMessage: 'Connected to remote logging server.',
-                      errorMessage: 'Unable to connect to server.'
+                      errorMessage: 'Unable to connect to server.',
+                      title_ru: 'Добавьте сервер удаленной регистрации',
+                      actionLabel_ru: 'Добавить',
+                      successMessage_ru: 'Подключен к серверу удаленной регистрации.',
+                      errorMessage_ru: 'Невозможно подключиться к серверу.'
+
                     },
                     1: {
                       title: 'Edit remote logging server',
                       actionLabel: 'Save',
-                      successMessage: 'Connected to remote logging server.',
-                      errorMessage: 'Unable to save remote logging server.'
+                      successMessage: 'Connected to edited remote logging server.',
+                      errorMessage: 'Unable to save remote logging server.',
+                      title_ru: 'Отредактируйте сервер удаленной регистрации',
+                      actionLabel_ru: 'Сохранить',
+                      successMessage_ru: 'Подключен к отредактированному серверу удаленной регистрации.',
+                      errorMessage_ru: 'Невозможно сохранить изменения сервера удаленной регистрации.'
                     },
                     2: {
                       title: 'Remove remote logging server',
                       actionLabel: 'Remove',
                       successMessage: 'Remote logging server removed.',
-                      errorMessage: 'Unable to remove remote logging server.'
+                      errorMessage: 'Unable to remove remote logging server.',
+                      title_ru: 'Удалите сервер удаленной регистрации',
+                      actionLabel_ru: 'Удалить',
+                      successMessage_ru: 'Сервер удаленной регистрации удален.',
+                      errorMessage_ru: 'Невозможно удалить сервер удаленной регистрации.'
                     }
                   }
                 };
@@ -38,6 +51,7 @@ window.angular && (function(angular) {
                 const modalTemplate =
                     require('./remote-logging-server-modal.html');
 
+		$scope.dataService = dataService;
                 $scope.activeModal;
                 $scope.activeModalProps;
 
@@ -89,14 +103,14 @@ window.angular && (function(angular) {
                         $scope.loading = false;
                         $scope.remoteServer = {...$scope.remoteServerForm};
                         toastService.success(
-                            $scope.activeModalProps.successMessage);
+                            ($scope.dataService.language == 'ru') ? $scope.activeModalProps.successMessage_ru:$scope.activeModalProps.successMessage);
                       })
                       .catch(() => {
                         $scope.loading = false;
                         $scope.remoteServer = undefined;
                         setFormValues();
                         toastService.error(
-                            $scope.activeModalProps.errorMessage);
+                            ($scope.dataService.language == 'ru') ? $scope.activeModalProps.errorMessage_ru:$scope.activeModalProps.errorMessage);
                       })
                 };
 
@@ -107,13 +121,13 @@ window.angular && (function(angular) {
                         $scope.loading = false;
                         $scope.remoteServer = {...$scope.remoteServerForm};
                         toastService.success(
-                            $scope.activeModalProps.successMessage);
+                            ($scope.dataService.language == 'ru') ? $scope.activeModalProps.successMessage_ru:$scope.activeModalProps.successMessage);
                       })
                       .catch(() => {
                         $scope.loading = false;
                         setFormValues();
                         toastService.error(
-                            $scope.activeModalProps.errorMessage);
+                            ($scope.dataService.language == 'ru') ? $scope.activeModalProps.errorMessage_ru:$scope.activeModalProps.errorMessage);
                       })
                 };
 
@@ -125,12 +139,12 @@ window.angular && (function(angular) {
                         $scope.remoteServer = undefined;
                         setFormValues();
                         toastService.success(
-                            $scope.activeModalProps.successMessage);
+                            ($scope.dataService.language == 'ru') ? $scope.activeModalProps.successMessage_ru:$scope.activeModalProps.successMessage);
                       })
                       .catch(() => {
                         $scope.loading = false;
                         toastService.error(
-                            $scope.activeModalProps.errorMessage);
+                            ($scope.dataService.language == 'ru') ? $scope.activeModalProps.errorMessage_ru:$scope.activeModalProps.errorMessage);
                       })
                 };
 

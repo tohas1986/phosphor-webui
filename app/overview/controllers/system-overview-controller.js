@@ -372,6 +372,7 @@ window.angular && (function(angular) {
       // SENSOR BARS & PIE CHART
       $scope.sensorsOutofRange = false;
       $scope.sensorHeading = 'Sensors';
+      $scope.sensorHeading_ru = 'Датчики';
       $scope.countOK = 0;
       $scope.countWarning = 0;
       $scope.countCritical = 0;
@@ -625,9 +626,12 @@ window.angular && (function(angular) {
         if ($scope.countWarning > 0 || $scope.countCritical > 0) {
           $scope.sensorsOutofRange = true;
           $scope.sensorHeading = 'Out of Range';
+          $scope.sensorHeading_ru = 'Вне нормального диапазона';
+	  
         } else {
           $scope.filterSeverity = 'all';
           $scope.sensorHeading = 'Sensors Detail';
+          $scope.sensorHeading_ru = 'Подробности по датчикам';
         };
 
         deferred.resolve();

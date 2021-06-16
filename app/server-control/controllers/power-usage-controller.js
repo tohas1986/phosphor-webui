@@ -10,8 +10,9 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.serverControl').controller('powerUsageController', [
-    '$scope', '$window', 'APIUtils', '$route', '$q', 'toastService',
-    function($scope, $window, APIUtils, $route, $q, toastService) {
+    '$scope', '$window', 'APIUtils', '$route', '$q', 'toastService', 'dataService',
+    function($scope, $window, APIUtils, $route, $q, toastService, dataService) {
+	$scope.dataService = dataService;
       $scope.power_consumption = '';
       $scope.power = {};
       $scope.power_cap = {};
@@ -68,8 +69,7 @@ window.angular && (function(angular) {
       $scope.setPowerCap = function() {
         // The power cap value will be undefined if outside range
         if (!$scope.powerCap) {
-          toastService.error(
-              'Power cap value between 100 and 10,000 is required');
+          toastService.error(( dataService.language == 'ru' ) ? 'Требуется значение ограничения мощности от 100 до 10000' : 'Power cap value between 100 and 10,000 is required');
           return;
         }
         $scope.loading = true;
@@ -79,12 +79,12 @@ window.angular && (function(angular) {
             .then(
                 function() {
                   $scope.editPowerCap = true;
-                  toastService.success('Power cap settings saved');
+                  toastService.success(( dataService.language == 'ru' ) ? 'Настройки ограничения мощности сохранены' : 'Power cap settings saved');
                 },
                 function(errors) {
                   $scope.unsetPowerCap();
                   $scope.power_cap.PowerCapEnable = false;
-                  toastService.error('Power cap settings could not be saved');
+                  toastService.error(( dataService.language == 'ru' ) ? 'Настройки ограничения мощности не могут быть сохранены' : 'Power cap settings could not be saved');
                 })
             .finally(function() {
               $scope.loading = false;

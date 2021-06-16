@@ -10,8 +10,9 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.configuration').controller('dateTimeController', [
-    '$scope', 'APIUtils', '$filter', '$route', '$q', 'toastService', '$timeout',
-    function($scope, APIUtils, $filter, $route, $q, toastService, $timeout) {
+    '$scope', 'APIUtils', '$filter', '$route', '$q', 'toastService', '$timeout', 'dataService',
+    function($scope, APIUtils, $filter, $route, $q, toastService, $timeout, dataService) {
+      $scope.dataService = dataService;
       $scope.editNTPSettings = [];
       $scope.ntp = {servers: []};
       $scope.editNTPSettings = {};
@@ -54,12 +55,11 @@ window.angular && (function(angular) {
               .then(setTimeOwner)
               .then(
                   function() {
-                    toastService.success('Date and time settings saved');
+                    toastService.success(( dataService.language == 'ru' ) ? 'Настройки даты и времени сохранены' : 'Date and time settings saved');
                   },
                   function(errors) {
                     console.log(JSON.stringify(errors));
-                    toastService.error(
-                        'Date and time settings could not be saved');
+                    toastService.error(( dataService.language == 'ru' ) ? 'Настройки даты и времени не могут быть сохранены' : 'Date and time settings could not be saved');
                   })
               .finally(function() {
                 $scope.loading = false;

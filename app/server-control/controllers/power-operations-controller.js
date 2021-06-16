@@ -78,6 +78,7 @@ window.angular && (function(angular) {
                   function(result) {
                     if (result) {
                       $scope.status = result.PowerState;
+		      var PowerState_ru = (result.PowerState == 'on' || result.PowerState == 'On') ? 'включено':'выключено';
                       console.log(
                           'PowerState :', result.PowerState,
                           '& status :', statusType);
@@ -87,8 +88,7 @@ window.angular && (function(angular) {
                         deferred.resolve();
                         $interval.cancel(checkHostStatusInterval);
                         if ($scope.flag) {
-                          toastService.success(
-                              'Power ' + result.PowerState + ' successful');
+                          toastService.success(( dataService.language == 'ru' ) ? 'Питание успешно ' + PowerState_ru + '(' + result.PowerState + ')' : 'Power ' + result.PowerState + ' successful');
                           $scope.flag = false;
                         }
                       } else if (result.PowerState === statusType) {
@@ -96,8 +96,7 @@ window.angular && (function(angular) {
                         deferred.resolve();
                         $interval.cancel(checkHostStatusInterval);
                         if ($scope.flag) {
-                          toastService.success(
-                              'Power ' + result.PowerState + ' successful');
+                          toastService.success(( dataService.language == 'ru' ) ? 'Питание успешно ' + PowerState_ru + '(' + result.PowerState + ')' : 'Power ' + result.PowerState + ' successful');
                         }
                       };
                     };
@@ -406,9 +405,8 @@ window.angular && (function(angular) {
             })
             .catch(function(error) {
               $scope.bootOverrideError = true;
-              toastService.error('Unable to get boot override values.');
-              console.log(
-                  'Error loading boot settings:', JSON.stringify(error));
+              toastService.error(( dataService.language == 'ru' ) ? 'Невозможно получить значения переопределения загрузки.' : 'Unable to get boot override values.');
+              console.log('Error loading boot settings:', JSON.stringify(error));
             })
             .finally(function() {
               $scope.loading = false;
@@ -478,11 +476,11 @@ window.angular && (function(angular) {
           APIUtils.saveBootSettings(data).then(
               function(response) {
                 $scope.originalBoot = angular.copy($scope.boot);
-                toastService.success('Successfully updated boot settings.');
+                toastService.success(( dataService.language == 'ru' ) ? 'Настройки загрузки успешно обновлены.' : 'Successfully updated boot settings.');
                 $scope.loading = false;
               },
               function(error) {
-                toastService.error('Unable to save boot settings.');
+                toastService.error(( dataService.language == 'ru' ) ? 'Невозможно сохранить настройки загрузки.' : 'Unable to save boot settings.');
                 console.log(JSON.stringify(error));
                 $scope.loading = false;
               })
@@ -508,11 +506,10 @@ window.angular && (function(angular) {
                   function(response) {
                     $scope.originalTPMToggle = angular.copy($scope.TPMToggle);
                     $scope.originalTPMVersion = angular.copy($scope.TPMVersion);
-                    toastService.success(
-                        'Sucessfully updated TPM required policy.');
+                    toastService.success(( dataService.language == 'ru' ) ? 'Требуемые политики TPM успешно обновлены.' : 'Sucessfully updated TPM required policy.');
                   },
                   function(error) {
-                    toastService.error('Unable to update TPM required policy.');
+                    toastService.error(( dataService.language == 'ru' ) ? 'Невозможно обновить требуемые политики TPM.' : 'Unable to update TPM required policy.');
                     console.log(JSON.stringify(error));
                   })
               .finally(() => {

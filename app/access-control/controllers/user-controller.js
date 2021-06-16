@@ -10,8 +10,9 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.accessControl').controller('userController', [
-    '$scope', 'APIUtils', 'toastService', 'Constants', '$uibModal', '$q',
-    function($scope, APIUtils, toastService, Constants, $uibModal, $q) {
+    '$scope', 'APIUtils', 'toastService', 'Constants', '$uibModal', '$q', 'dataService',
+    function($scope, APIUtils, toastService, Constants, $uibModal, $q, dataService) {
+      $scope.dataService = dataService;
       $scope.loading;
       $scope.accountSettings;
       $scope.userRoles;
@@ -19,14 +20,12 @@ window.angular && (function(angular) {
       $scope.removeUserAccessRole = Constants.RESTRICTED_USER_ACCESS_ROLE;
 
       $scope.tableData = [];
-      $scope.tableHeader = [
-        {label: 'Username'}, {label: 'Privilege'}, {label: 'Account status'}
-      ];
-      $scope.tableBatchActions = [
-        {type: 'delete', label: 'Remove'},
-        {type: 'enable', label: 'Enable'},
-        {type: 'disable', label: 'Disable'},
-      ];
+      $scope.tableHeader = ( dataService.language == 'ru' )
+	? [{label: 'Имя пользователя'}, {label: 'Привилегии'}, {label: 'Статус учетной записи'}]
+	: [{label: 'Username'}, {label: 'Privilege'}, {label: 'Account status'}];
+      $scope.tableBatchActions =  ( dataService.language == 'ru' )
+? [{type: 'delete', label: 'Удалить'},{type: 'enable', label: 'Увключить'},{type: 'disable', label: 'Отключить'},]
+: [{type: 'delete', label: 'Remove'}, {type: 'enable', label: 'Enable'},   {type: 'disable', label: 'Disable'},];
 
       /**
        * Returns true if username is 'root'
@@ -80,7 +79,7 @@ window.angular && (function(angular) {
             })
             .catch((error) => {
               console.log(JSON.stringify(error));
-              toastService.error('Failed to load users.');
+              toastService.error(( dataService.language == 'ru' ) ? 'Не удалось загрузить пользователей':'Failed to load users.');
             })
             .finally(() => {
               $scope.loading = false;
@@ -127,14 +126,14 @@ window.angular && (function(angular) {
         APIUtils.createUser(username, password, role, enabled)
             .then(() => {
               getLocalUsers();
-              toastService.success(`User '${username}' has been created.`);
+              toastService.success(( dataService.language == 'ru' ) ? `Пользователь '${username}' создан.`:`User '${username}' has been created.`);
             })
             .catch((error) => {
               if (error.data && error.data['Password@Message.ExtendedInfo']) {
                 const msg = error.data['Password@Message.ExtendedInfo'][0];
                 toastService.error(msg.Message);
               } else {
-                toastService.error(`Failed to create new user '${username}'.`)
+                toastService.error(( dataService.language == 'ru' ) ? `Не удалось создать нового пользователя '${username}'.`:`Failed to create new user '${username}'.`);
               }
             })
             .finally(() => {
@@ -153,15 +152,14 @@ window.angular && (function(angular) {
                 originalUsername, username, password, role, enabled, locked)
             .then(() => {
               getLocalUsers();
-              toastService.success('User has been updated successfully.')
+              toastService.success(( dataService.language == 'ru' ) ? 'Пользователь успешно обновлен':'User has been updated successfully.')
             })
             .catch((error) => {
               if (error.data && error.data['Password@Message.ExtendedInfo']) {
                 const msg = error.data['Password@Message.ExtendedInfo'][0];
                 toastService.error(msg.Message);
               } else {
-                toastService.error(
-                    `Unable to update user '${originalUsername}'.`);
+                toastService.error(( dataService.language == 'ru' ) ? `Невозможно обновить пользователя '${originalUsername}'.`:`Unable to update user '${originalUsername}'.`);
               }
             })
             .finally(() => {
@@ -181,9 +179,9 @@ window.angular && (function(angular) {
             .then(() => {
               let message;
               if (users.length > 1) {
-                message = 'Users have been removed.'
+                message = ( dataService.language == 'ru' ) ? 'Пользователи удалены':'Users have been removed.'
               } else {
-                message = `User '${users[0].UserName}' has been removed.`
+                message = ( dataService.language == 'ru' ) ? `Пользователь '${users[0].UserName}' удален.`:`User '${users[0].UserName}' has been removed.`
               }
               toastService.success(message);
             })
@@ -191,9 +189,9 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
               let message;
               if (users.length > 1) {
-                message = 'Failed to remove users.'
+                message = ( dataService.language == 'ru' ) ? 'Не удалось удалить пользователей':'Failed to remove users.'
               } else {
-                message = `Failed to remove user '${users[0].UserName}'.`
+                message = ( dataService.language == 'ru' ) ? `Не удалось удалить пользователя '${users[0].UserName}'.`:`Failed to remove user '${users[0].UserName}'.`
               }
               toastService.error(message);
             })
@@ -216,11 +214,12 @@ window.angular && (function(angular) {
         $q.all(promises)
             .then(() => {
               let message;
-              let statusLabel = enabled ? 'enabled' : 'disabled';
+              let statusLabel    = enabled ? 'enabled' : 'disabled';
+              let statusLabel_ru = enabled ? 'включен' : 'отключен';
               if (users.length > 1) {
-                message = `Users ${statusLabel}.`
+                message = ( dataService.language == 'ru' ) ? `Пользователи ${statusLabel_ru}ы.`:`Users ${statusLabel}.`;
               } else {
-                message = `User '${users[0].UserName}' ${statusLabel}.`;
+                message = ( dataService.language == 'ru' ) ? `Пользователь '${users[0].UserName}' ${statusLabel_ru}.`:`User '${users[0].UserName}' ${statusLabel}.`;
               }
               toastService.success(message);
             })
@@ -228,11 +227,11 @@ window.angular && (function(angular) {
               console.log(JSON.stringify(error));
               let message;
               let statusLabel = enabled ? 'enable' : 'disable';
+              let statusLabel_ru = enabled ? 'включить' : 'отключить';
               if (users.length > 1) {
-                message = `Failed to ${statusLabel} users.`
+                message = ( dataService.language == 'ru' ) ? `Не удалось ${statusLabel_ru} пользователей.`:`Failed to ${statusLabel} users.`;
               } else {
-                message =
-                    `Failed to ${statusLabel} user '${users[0].UserName}'.`
+                message = ( dataService.language == 'ru' ) ? `не удалось ${statusLabel_ru} пользователя '${users[0].UserName}'.`:`Failed to ${statusLabel} user '${users[0].UserName}'.`;
               }
               toastService.error(message);
             })
@@ -255,12 +254,11 @@ window.angular && (function(angular) {
                   lockoutDuration;
               $scope.accountSettings['AccountLockoutThreshold'] =
                   lockoutThreshold;
-              toastService.success(
-                  'Account policy settings have been updated.');
+              toastService.success(( dataService.language == 'ru' ) ? 'Настройки политики учетной записи обновлены':'Account policy settings have been updated.');
             })
             .catch((error) => {
               console.log(JSON.stringify(error));
-              toastService.error('Failed to update account policy settings.');
+              toastService.error(( dataService.language == 'ru' ) ? 'Не удалось обновить настройки политики учетной записи':'Failed to update account policy settings.');
             })
             .finally(() => {
               $scope.loading = false;

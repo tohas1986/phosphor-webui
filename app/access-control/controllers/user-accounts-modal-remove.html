@@ -1,21 +1,24 @@
 <div class="uib-modal__content  modal__local-users-remove">
   <div class="modal-header">
     <h2 class="modal-title" id="dialog_label">
-      Remove user
+      {{ dataService.language == 'ru' ? 'Удалить пользователя':'Remove user'}}
     </h2>
     <button aria-label="Close" type="button" class="btn btn--close float-right" ng-click="$dismiss()">
       <icon aria-hidden="true" file="icon-close.svg"></icon>
     </button>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to remove user '{{modalCtrl.users[0].Id}}'? This action cannot be undone.</p>
+    <p>{{ dataService.language == 'ru' ?
+	'Вы уверены что хотите удалить пользователя ' + modalCtrl.users[0].Id + '? это действие не может быть отменено.'
+	:'Are you sure you want to remove user ' + modalCtrl.users[0].Id + '? This action cannot be undone.'
+    }}</p>
   </div>
   <div class="modal-footer">
     <button class="btn btn-secondary" ng-click="$dismiss()" type="button">
-      Cancel
+      {{ dataService.language == 'ru' ? 'Отменить':'Cancel' }}
     </button>
     <button class="btn btn-primary" ng-click="$close()" type="button">
-      Remove
+      {{ dataService.language == 'ru' ? 'Удалить':'Remove' }}
     </button>
   </div>
 </div>

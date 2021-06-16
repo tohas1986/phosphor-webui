@@ -17,6 +17,7 @@ window.angular && (function(angular) {
           $routeProvider
               .when('/overview/server', {
                 title: 'Overview',
+                title_ru: 'Обзор',
                 'template':
                     require('./controllers/system-overview-controller.html'),
                 'controller': 'systemOverviewController',
@@ -24,6 +25,7 @@ window.angular && (function(angular) {
               })
               .when('/overview', {
                 title: 'Overview',
+                title_ru: 'Обзор',
                 'template':
                     require('./controllers/system-overview-controller.html'),
                 'controller': 'systemOverviewController',

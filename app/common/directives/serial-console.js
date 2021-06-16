@@ -120,7 +120,7 @@ window.angular && (function(angular) {
             $scope.openTerminalWindow = function() {
               $window.open(
                   '#/server-control/remote-console-window',
-                  'Remote Console Window',
+                  (dataService.language == 'ru') ? 'Окно удаленной консоли' : 'Remote Console Window',
                   'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=600,height=550');
             };
           }

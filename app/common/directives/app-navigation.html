@@ -4,44 +4,58 @@
 
     <ul id="nav__top-level" ng-class="toggleNav ? 'collapsed':''" ng-style="navStyle">
       <li class="above-nav">
-        <a href="#/overview/server"><img src="../../assets/images/logo-rikor.svg"></a>
+        <a href="#/overview/server">
+	    <img src="../../assets/images/logo-rikor.svg">
+	<br>
+	<span class="nav-link">{{ dataService.language == 'ru' ? 'Сделано в России':'Designed in Russia' }}</span>
+	</a>
       </li>
-      <li>
+      <li class="nav-item">
         <button class="btn-overview" ng-click="change('overview'); RedirectToURL('/overview/server')">
           <icon class="nav-icon" file="icon-overview.svg" aria-hidden="true"></icon>
           <a href="#/overview/server">
-            <span class="nav-link">Overview</span>
+            <span class="nav-link">{{ dataService.language == 'ru' ? 'Обзор':'Overview' }}</span>
           </a>
         </button>
       </li>
       <li class="nav-item" ng-class="{opened: firstLevel == 'server-health'}">
         <button class="btn-health" ng-click="change('server-health'); RedirectToURL('/server-health/sys-log')">
           <icon class="nav-icon" file="icon-health.svg" aria-hidden="true"></icon>
-          <span class="nav-link">Health</span>
+          <span class="nav-link">{{ dataService.language == 'ru' ? 'Состояние':'Health' }}</span>
         </button>
         <ul class="nav__second-level btn-health" ng-style="navStyle"
           ng-class="{opened: (showSubMenu && firstLevel == 'server-health')}">
           <li ng-class="{'active': (path == '/server-health/sys-log')}">
             <a href="#/server-health/sys-log" tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">
-              <span>Event log</span>
+              <span>{{ dataService.language == 'ru' ? 'Журнал событий' : 'Event log' }}</span>
             </a>
           </li>
+<<<<<<< HEAD
           <!-- <li ng-class="{'active': (path == '/server-health/inventory-overview' || path == '/server-health/inventory')}">
+=======
+<!--
+          <li ng-class="{'active': (path == '/server-health/inventory-overview' || path == '/server-health/inventory')}">
+>>>>>>> origin/rikorv3_nicktroshkov
             <a href="#/server-health/inventory-overview"
               tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">
-              <span>Hardware status</span>
+              <span>{{ dataService.language == 'ru' ? 'Состояние оборудования':'Hardware status' }}</span>
             </a>
+<<<<<<< HEAD
           </li> -->
+=======
+          </li>
+-->
+>>>>>>> origin/rikorv3_nicktroshkov
           <li ng-class="{'active': (path == '/server-health/sensors-overview' || path == '/server-health/sensors')}">
             <a href="#/server-health/sensors-overview"
               tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">
-              <span>Sensors</span>
+              <span>{{ dataService.language == 'ru' ? 'Датчики':'Sensors' }}</span>
             </a>
           </li>
           <li ng-class="{'active': (path == '/server-health/fans-overview' || path == '/server-health/fans')}">
             <a href="#/server-health/fans-overview"
               tabindex="{{(showSubMenu && firstLevel == 'server-health') ? 0 : -1}}">
-              <span>Fans</span>
+              <span>{{ dataService.language == 'ru' ? 'Вентиляторы':'Fans' }}</span>
             </a>
           </li>
         </ul>
@@ -50,37 +64,40 @@
         <button class="btn-control"
           ng-click="change('server-control'); RedirectToURL('/server-control/power-operations')">
           <icon class="nav-icon" file="icon-control.svg" aria-hidden="true"></icon>
-          <span class="nav-link">Control</span>
+          <span class="nav-link">{{ dataService.language == 'ru' ? 'Управление':'Control' }}</span>
         </button>
+
         <ul class="nav__second-level btn-control" ng-class="{opened: (showSubMenu && firstLevel == 'server-control')}">
           <li ng-if="checkPrivilege('Operator')" ng-class="{'active': (path == '/server-control' || path == '/server-control/power-operations')}">
             <a href="#/server-control/power-operations"
               tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">
-              <span>Server power operations</span>
+              <span>{{ dataService.language == 'ru' ? 'Управление питанием сервера':'Server power operations' }}</span>
             </a>
           </li>
-          <!-- <li ng-class="{'active': (path == '/server-control/power-usage')}">
+<!--
+	  <li ng-class="{'active': (path == '/server-control/power-usage')}">
             <a href="#/server-control/power-usage"
               tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">
               <span>Manage power usage</span>
             </a>
-          </li> -->
+          </li>
+-->
           <li ng-class="{'active': (path == '/server-control/server-led')}">
             <a href="#/server-control/server-led"
               tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">
-              <span>Server LED</span>
+              <span>{{ dataService.language == 'ru' ? 'Управление LED-индикаторами':'Server LED' }}</span>
             </a>
           </li>
           <li ng-if="checkPrivilege('Administrator')" ng-class="{'active': (path == '/server-control/bmc-reboot')}">
             <a href="#/server-control/bmc-reboot"
               tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">
-              <span>Reboot BMC</span>
+              <span>{{ dataService.language == 'ru' ? 'Перезагрузка BMC':'Reboot BMC' }}</span>
             </a>
           </li>
           <li ng-if="checkPrivilege('Administrator')" ng-class="{'active': (path == '/server-control/remote-console')}">
             <a href="#/server-control/remote-console"
               tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">
-              <span>Serial over LAN console</span>
+              <span>{{ dataService.language == 'ru' ? 'Удаленная консоль':'Serial over LAN console' }}</span>
             </a>
           </li>
           <li ng-if="checkPrivilege('Administrator')" ng-class="{'active': (path == '/server-control/kvm')}">
@@ -90,7 +107,7 @@
           </li>
           <li ng-if="VMEnabled && checkPrivilege('Administrator')" ng-class="{'active': (path == '/server-control/virtual-media')}">
             <a href="#/server-control/virtual-media" tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">
-               <span>Virtual Media</span>
+               <span>{{ dataService.language == 'ru' ? 'Виртуальные носители':'Virtual Media' }}</span>
             </a>
           </li>
         </ul>
@@ -98,57 +115,60 @@
       <li class="nav-item" ng-class="{opened: firstLevel == 'configuration'}">
         <button class="btn-config" ng-click="change('configuration'); RedirectToURL('/configuration/network')">
           <icon class="nav-icon" file="icon-config.svg" aria-hidden="true"></icon>
-          <span class="nav-link trim-text-xsmall">Config<span class='trim-text-small inline'>uration</span></span>
+          <span class="nav-link trim-text-xsmall">{{ dataService.language == 'ru' ? 'Конфигурация':'Configuration' }}</span>
         </button>
         <ul class="nav__second-level btn-firmware" ng-class="{opened: (showSubMenu && firstLevel == 'configuration')}">
           <li ng-class="{'active': (path == '/configuration' || path == '/configuration/network')}">
-            <a href="#/configuration/network"
-              tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}"><span>Network
-                settings</span></a>
+            <a href="#/configuration/network" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">
+               <span>{{ dataService.language == 'ru' ? 'Параметры сети':'Network settings' }}</span>
+            </a>
           </li>
-          <!-- <li ng-class="{'active': (path == '/configuration' || path == '/configuration/snmp')}">
-            <a href="#/configuration/snmp"
-              tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}"><span>SNMP
-                settings</span></a>
-          </li> -->
+<!--
+	  <li ng-class="{'active': (path == '/configuration' || path == '/configuration/snmp')}">
+            <a href="#/configuration/snmp" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">
+             <span>SNMP settings</span>
+            </a>
+          </li>
+-->
           <li ng-class="{'active': (path == '/configuration' || path == '/configuration/firmware')}">
-            <a href="#/configuration/firmware"
-              tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}"><span>Firmware update</span></a>
+            <a href="#/configuration/firmware" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">
+		<span>{{ dataService.language == 'ru' ? 'Обновление прошивки':'Firmware update' }}</span>
+            </a>
           </li>
           <li ng-class="{'active': (path == '/configuration' || path == '/configuration/date-time')}">
-            <a href="#/configuration/date-time"
-              tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}"><span>Date and
-                time
-                settings</span></a>
+            <a href="#/configuration/date-time" tabindex="{{(showSubMenu && firstLevel == 'configuration') ? 0 : -1}}">
+               <span>{{ dataService.language == 'ru' ? 'Дата и время':'Date and time settings' }}</span>
+            </a>
           </li>
         </ul>
       </li>
       <li class="nav-item" ng-class="{opened: firstLevel == 'access-control'}">
         <button class="btn-users" ng-click="change('access-control'); RedirectToURL('/access-control/local-users')">
           <icon class="nav-icon" file="icon-user.svg" aria-hidden="true"></icon>
-          <span class="nav-link">Access</span>
+          <span class="nav-link">{{ dataService.language == 'ru' ? 'Доступ':'Access' }}</span>
         </button>
         <ul class="nav__second-level btn-users" ng-style="navStyle"
           ng-class="{opened: (showSubMenu && firstLevel == 'access-control')}">
           <li ng-class="{'active': (path == '/access-control' || path == '/access-control/local-users')}">
-            <a href="#/access-control/local-users"
-              tabindex="{{(showSubMenu && firstLevel == 'access-control') ? 0 : -1}}"><span>Local
-                users</span></a>
+            <a href="#/access-control/local-users" tabindex="{{(showSubMenu && firstLevel == 'access-control') ? 0 : -1}}">
+              <span>{{ dataService.language == 'ru' ? 'Локальные пользователи':'Local users' }}</span>
+            </a>
           </li>
-          <!-- <li ng-class="{'active': (path == '/access-control' || path == '/access-control/ldap')}">
+<!--
+	  <li ng-class="{'active': (path == '/access-control' || path == '/access-control/ldap')}">
             <a href="#/access-control/ldap"
               tabindex="{{(showSubMenu && firstLevel == 'access-control') ? 0 : -1}}"><span>LDAP</span></a>
-          </li> -->
+          </li>
+-->
           <li ng-class="{'active': (path == '/access-control' || path == '/access-control/ssl-certificates')}">
-            <a href="#/access-control/ssl-certificates"
-              tabindex="{{(showSubMenu && firstLevel == 'access-control') ? 0 : -1}}"><span>SSL
-                certificates</span></a>
+            <a href="#/access-control/ssl-certificates" tabindex="{{(showSubMenu && firstLevel == 'access-control') ? 0 : -1}}">
+              <span>{{ dataService.language == 'ru' ? 'SSL-сертификаты':'SSL certificates' }}</span>
+            </a>
           </li>
         </ul>
       </li>
 
-      <div id='toggle-collapse' aria-label="Collapse navigation" aria-role="button" ng-click="toggleNav= !toggleNav"
-        tabindex="0" role="button">
+      <div id='toggle-collapse' aria-label="Collapse navigation" aria-role="button" ng-click="toggleNav= !toggleNav" tabindex="0" role="button">
         <icon class="nav-icon" file="icon-collapse.svg"></icon>
       </div>
 

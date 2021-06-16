@@ -16,6 +16,7 @@ window.angular && (function(angular) {
     function(
         $scope, $cookies, APIUtils, $q, toastService, dataService,
         nbdServerService, virtualMediaModel, $uibModal, $timeout, $location) {
+      $scope.dataService = dataService;
       var vms = [];
       var refreshRateMs = 5000;
       var refreshPromise;
@@ -44,8 +45,7 @@ window.angular && (function(angular) {
                             var found = false;
                             for (let oldDev of $scope.proxyDevices) {
                               if (tempDev.id == oldDev.id) {
-                                console.log(
-                                    tempDev.id + ' proxy device already here');
+                                console.log( tempDev.id + ' proxy device already here');
                                 // device is already here, do not add.
                                 found = true;
                                 if (compareVms(tempDev, oldDev)) {
@@ -66,8 +66,7 @@ window.angular && (function(angular) {
                             for (let oldDev of $scope.legacyDevices) {
                               if (tempDev.id == oldDev.id) {
                                 // device is already here, do not add.
-                                console.log(
-                                    tempDev.id + ' legacy device already here');
+                                console.log( tempDev.id + ' legacy device already here');
                                 found = true;
                                 if (compareVms(tempDev, oldDev)) {
                                   // there were no changes since last update.
@@ -82,16 +81,18 @@ window.angular && (function(angular) {
                               $scope.legacyDevices.push(tempDev);
                             }
                           }
-                          console.log(
-                              'Virtual Media ' + dev['@odata.id'] +
-                              ' device created.');
+                          console.log( 'Virtual Media ' + dev['@odata.id'] + ' device created.');
                         },
                         function(error) {
                           console.log(JSON.stringify(error));
                           if (error.status != 401) {
-                            toastService.error('Retrieving VM device failed.');
-                            toastService.error('Error: Unauthorized');
+			    if (dataService.language == 'ru'){ toastService.error('Не удалось получить устройство виртуального носителя.', 'Ошибка');}
+			    else { toastService.error('Retrieving VM device failed.'); }
                           }
+			   else {
+			    if (dataService.language == 'ru'){ toastService.error('Ошибка: Неавторизованный', 'Ошибка');}
+			    else { toastService.error('Error: Unauthorized'); }
+			  }
                         });
               }
               refreshVM();
@@ -99,10 +100,13 @@ window.angular && (function(angular) {
             function(error) {
               console.log(JSON.stringify(error));
               if (error.status != 401) {
-                toastService.error('Retrieving VM collection failed.');
-              } else {
-                toastService.error('Error: Unauthorized');
+		if (dataService.language == 'ru'){ toastService.error('Не удалось получить перечень виртуальных носителей.', 'Ошибка');}
+		else { toastService.error('Retrieving VM collection failed.'); }
               }
+	      else {
+		if (dataService.language == 'ru'){ toastService.error('Ошибка: Неавторизованный', 'Ошибка');}
+		else { toastService.error('Error: Unauthorized'); }
+	      }
             });
       }
 
@@ -163,11 +167,14 @@ window.angular && (function(angular) {
                 server.start();
                 $scope.proxyDevices[index].isActive = true;
               } else {
-                toastService.error('Another session is already running');
+		if (dataService.language == 'ru'){ toastService.error('Другой сеанс уже запущен','Ошибка'); }
+		else { toastService.error('Another session is already running');}
               }
             },
             function(error) {
-              toastService.error('Retrieving VM device failed.');
+		if (dataService.language == 'ru'){ toastService.error('Не удалось получить устройство виртуального носителя','Ошибка'); }
+		else { toastService.error('Retrieving VM device failed.'); }
+              
             });
       };
 
@@ -191,11 +198,14 @@ window.angular && (function(angular) {
             .then(
                 function(res) {
                   $scope.legacyDevices[index].isActive = true;
-                  toastService.success('Server running');
+		  if (dataService.language == 'ru'){ toastService.success('Сервер работает','Успешно!'); }
+		  else { toastService.success('Server running'); }
+                  
                 },
                 function(error) {
                   console.log(JSON.stringify(error));
-                  toastService.error('Error mounting.');
+		  if (dataService.language == 'ru'){ toastService.error('Ошибка монтирования.','Ошибка'); }
+		  else { toastService.error('Error mounting.'); }
                 });
       };
 
@@ -204,11 +214,13 @@ window.angular && (function(angular) {
             .then(
                 function(res) {
                   $scope.legacyDevices[index].isActive = false;
-                  toastService.success('Server closed successfully');
+		  if (dataService.language == 'ru'){ toastService.success('Сервер успешно отмонтирован','Успешно!'); }
+		  else { toastService.success('Server closed successfully'); }
                 },
                 function(error) {
                   console.log(JSON.stringify(error));
-                  toastService.error('Error unmounting.');
+		  if (dataService.language == 'ru'){ toastService.error('Ошибка отмонтирования.','Ошибка'); }
+		  else { toastService.error('Error unmounting.'); }
                 });
       };
 
@@ -230,13 +242,11 @@ window.angular && (function(angular) {
           if (rw != undefined) {
             $scope.legacyDevices[index].WriteProtected = !rw;
           }
-          virtualMediaModel.saveConfig(
-              $scope.legacyDevices[index].id, $scope.legacyDevices[index]);
-          console.log(
-              'Legacy endpoint configured' +
-              JSON.stringify($scope.legacyDevices[index]));
+          virtualMediaModel.saveConfig($scope.legacyDevices[index].id, $scope.legacyDevices[index]);
+          console.log('Legacy endpoint configured' + JSON.stringify($scope.legacyDevices[index]));
         } else {
-          toastService.error('Wrong configuration.');
+	  if (dataService.language == 'ru'){ toastService.error('Неправильная конфигурация.','Ошибка'); }
+	  else { toastService.error('Wrong configuration.'); }
         }
         console.log('Configured ' + uri);
       };
@@ -279,8 +289,7 @@ window.angular && (function(angular) {
               nbdServerService.getExistingConnections();
           if (existingConnectionsMap.hasOwnProperty(vmDevice.id)) {
             // Open ws will have a ready state of 1
-            if (existingConnectionsMap[vmDevice.id].server.ws.readyState ===
-                1) {
+            if (existingConnectionsMap[vmDevice.id].server.ws.readyState === 1) {
               vmDevice.isActive = true;
             }
             vmDevice.file = existingConnectionsMap[vmDevice.id].file;
@@ -350,7 +359,8 @@ window.angular && (function(angular) {
             this.ws.onclose = this._on_ws_close.bind(this);
             this.ws.onerror = this._on_ws_error.bind(this);
             $scope.proxyDevices[index].isActive = true;
-            toastService.success(`${this.id} is running`);
+	    if (dataService.language == 'ru'){ toastService.success(`${this.id} работает`,'Успешно!'); }
+	    else { toastService.success(`${this.id} is running`); }
           };
           this.stop = function() {
             if (this.ws.readyState == 1) {
@@ -363,13 +373,14 @@ window.angular && (function(angular) {
             console.log(JSON.stringify(ev));
           };
           this._on_ws_close = function(ev) {
-            console.log(`${endpoint} closed with code: ${ev.code} + reason: ${
-                ev.reason}`);
+            console.log(`${endpoint} closed with code: ${ev.code} + reason: ${ev.reason}`);
             console.log(JSON.stringify(ev));
             if (!ev.reason && ev.code == 1000) {
-              toastService.success(`${this.id} closed successfully`);
+		if (dataService.language == 'ru'){ toastService.success(`${this.id} успешно отмонтирован`,'Успешно!'); }
+		else { toastService.success(`${this.id} closed successfully`); }
             } else {
-              toastService.error(`${this.id} closed with error: ${ev.reason}`);
+		  if (dataService.language == 'ru'){ toastService.error(`${this.id} отмонтирован с ошибкой: ${ev.reason}`,'Ошибка!'); }
+		  else { toastService.error(`${this.id} closed with error: ${ev.reason}`); }
             }
             $scope.proxyDevices[index].isActive = false;
           };
@@ -401,9 +412,7 @@ window.angular && (function(angular) {
               }
               var consumed = handler(this.msgbuf);
               if (consumed < 0) {
-                console.log(
-                    'handler[state=' + this.state + '] returned error ' +
-                    consumed);
+                console.log('handler[state=' + this.state + '] returned error ' + consumed);
                 this.stop();
                 break;
               }
@@ -551,7 +560,8 @@ window.angular && (function(angular) {
               var resp = this._create_cmd_response(req, err);
               this.ws.send(resp);
               if (err == ENOSPC) {
-                toastService.error('Error reading file. Closing server.');
+		if (dataService.language == 'ru'){ toastService.error('Ошибка чтения файла. Отмонтирование сервера.','Ошибка!'); }
+		else { toastService.error('Error reading file. Closing server.'); }
                 this.stop();
                 $scope.proxyDevices[index].file = null;
               }

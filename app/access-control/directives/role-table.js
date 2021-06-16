@@ -6,21 +6,26 @@ window.angular && (function(angular) {
    * Table of privilege role descriptions
    */
   angular.module('app.accessControl').directive('roleTable', [
-    '$sce',
-    function($sce) {
+    '$sce','dataService',
+    function($sce, dataService) {
       return {
         restrict: 'E',
         template: require('./role-table.html'),
         controllerAs: 'roleTableCtrl',
         controller: function() {
+	  this.dataService = dataService;
           // TODO: This is a workaround to render the checkmark svg icon
           // Would eventually like to enhance <bmc-table> component to
           // compile custom directives as table items
           const svg = require('../../assets/icons/icon-check.svg');
-          const check =
-              $sce.trustAsHtml(`<span class="icon__check-mark"><span>`);
+          const check = $sce.trustAsHtml(`<span class="icon__check-mark"><span>`);
 
-          this.tableHeader = [
+          this.tableHeader = ( dataService.language == 'ru' )
+	? [
+            {label: ''}, {label: 'Админ'}, {label: 'Оператор'},
+            {label: 'ТолькоЧтение'}
+          ]
+	: [
             {label: ''}, {label: 'Admin'}, {label: 'Operator'},
             {label: 'ReadOnly'}
           ];
@@ -33,23 +38,24 @@ window.angular && (function(angular) {
           // current user account' privilege checked
           // TODO: Update Callback privileges when backend removes privileges
           // for Callback role.
-          this.tableData = [
-            {
-              uiData: [
-                'Configure components managed by this service', check, '', ''
-              ]
-            },
+          this.tableData = ( dataService.language == 'ru' )
+	? [
+            {uiData: ['Настроить компоненты, управляемые этой службой', check, '', '']},
+            {uiData: ['Настроить ресурсы менеджера', check, '', '']},
+            {uiData: ['Обновить пароль учетной записи текущего пользователя', check, '', '']},
+            {uiData: ['Настроить пользователей и их учетные записи', check, '', '']},
+            {uiData: ['Авторизуйтесь в сервисе и читайте ресурсы', check, check, check]},
+            {uiData: ['Точка доступа IPMI', check, check, check]},
+            {uiData: ['Точка доступа Redfish', check, check, check]},
+            {uiData: ['Точка доступа SSH', check, check, check]},
+            {uiData: ['Точка доступа WebUI', check, check, check]},
+          ]
+	: [
+            {uiData: ['Configure components managed by this service', check, '', '']},
             {uiData: ['Configure manager resources', check, '', '']},
-            {
-              uiData:
-                  ['Update password for current user account', check, '', '']
-            },
+            {uiData: ['Update password for current user account', check, '', '']},
             {uiData: ['Configure users and their accounts', check, '', '']},
-            {
-              uiData: [
-                'Log in to the service and read resources', check, check, check
-              ]
-            },
+            {uiData: ['Log in to the service and read resources', check, check, check]},
             {uiData: ['IPMI access point', check, check, check]},
             {uiData: ['Redfish access point', check, check, check]},
             {uiData: ['SSH access point', check, check, check]},

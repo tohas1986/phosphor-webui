@@ -42,9 +42,10 @@ window.angular && (function(angular) {
             .then(
                 function(response) {},
                 function(errors) {
-                  toastService.error(
-                      'Failed to turn LED light ' +
-                      (toggleState ? 'on' : 'off'));
+                  toastService.error( (dataService.language == 'ru')
+? 'Не удалось переключить светодионый индикатор в состояние ' + (toggleState ? '<включен>' : '<выключен>')
+: 'Failed to turn LED light ' + (toggleState ? 'on' : 'off')
+		  );
                   console.log(JSON.stringify(errors));
                   // Reload to get correct current LED state
                   $route.reload();

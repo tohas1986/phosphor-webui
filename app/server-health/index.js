@@ -15,34 +15,37 @@ window.angular && (function(angular) {
         '$routeProvider',
         function($routeProvider) {
           $routeProvider
-              //.when('/server-health/inventory-overview', {
-              //  title: 'Hardware',
-              //  'template':
-              //      require('./controllers/inventory-overview-controller.html'),
-              //  'controller': 'inventoryOverviewController',
-              //  authenticated: true
-              //})
+              // .when('/server-health/inventory-overview', {
+              //   title: 'Hardware',
+              //   title_ru: 'Оборудование',
+              //   'template': require('./controllers/inventory-overview-controller.html'),
+              //   'controller': 'inventoryOverviewController',
+              //   authenticated: true
+              // })
               .when('/server-health/sensors-overview', {
                 title: 'Sensors',
-                'template':
-                    require('./controllers/sensors-overview-controller.html'),
+                title_ru: 'Датчики',
+                'template': require('./controllers/sensors-overview-controller.html'),
                 'controller': 'sensorsOverviewController',
                 authenticated: true
               })
               .when('/server-health/fans-overview', {
                 title: 'Fans',
+                title_ru: 'Вентиляторы',
                 'template': require('./controllers/fans-overview-controller.html'),
                 'controller': 'fansOverviewController',
                 authenticated: true
               })
               .when('/server-health/sys-log', {
                 title: 'Event Log',
+                title_ru: 'Журнал событий',
                 'template': require('./controllers/syslog-controller.html'),
                 'controller': 'sysLogController',
                 authenticated: true
               })
               .when('/server-health', {
                 title: 'Event Log',
+                title_ru: 'Журнал событий',
                 'template': require('./controllers/syslog-controller.html'),
                 'controller': 'logController',
                 authenticated: true

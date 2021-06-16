@@ -13,6 +13,7 @@ window.angular && (function(angular) {
   angular.module('app.common.services').service('dataService', [
     'Constants',
     function(Constants) {
+      this.language = 'en';
       this.server_health = Constants.SERVER_HEALTH.unknown;
       this.server_state = 'Unreachable';
       this.LED_state = Constants.LED_STATE_TEXT.off;

@@ -1,8 +1,8 @@
-<p class="content-label">Remote Logging Server</p>
+<p class="content-label">{{ dataService.language == 'ru' ? 'Сервер удаленной регистрации':'Remote Logging Server' }}</p>
 <div ng-if="!loadError && !remoteServer">
   <button ng-click="initModal(0)" class="btn btn-tertiary modal__trigger">
     <icon file="icon-plus.svg" aria-hidden="true"></icon>
-    Add server
+    {{ dataService.language == 'ru' ? 'Добавить сервер':'Add server' }}
   </button>
 </div>
 <div ng-if="!loadError && remoteServer">

@@ -13,11 +13,11 @@
     {{cert.ValidNotBefore | date:medium}}
 
     <div class="certificate__status-cell">
-      <icon file="icon-critical.svg" aria-label="certificate has expired" class="certificate__status-icon"
-        ng-if="cert.isExpired">
+      <icon file="icon-critical.svg" aria-label="{{ dataService.language == 'ru' ? 'Срок действия сертификата истек':'certificate has expired' }}" class="certificate__status-icon"
+	 ng-if="cert.isExpired">
       </icon>
-      <icon file="warning--filled.svg" aria-label="certificate will expire soon" class="certificate__status-icon"
-        ng-if="cert.isExpiring">
+      <icon file="warning--filled.svg" aria-label="{{ dataService.language == 'ru' ? 'Срок действия сертификата скоро истечет':'certificate will expire soon' }}" class="certificate__status-icon"
+	 ng-if="cert.isExpiring">
       </icon>
     </div>
 
@@ -26,13 +26,13 @@
     {{cert.ValidNotAfter | date:medium}}
   </div>
   <div class="table__cell certificate__buttons-cell action-wrapper">
-    <button type="button" ng-click="addCertModal('Replace')" aria-label="Replace certificate"
+    <button type="button" ng-click="addCertModal('Replace')" aria-label="{{ dataService.language == 'ru' ? 'Заменить сертификат':'Replace certificate' }}"
       class="btn btn-primary btn-small certificate__button">
-      <icon file="movement.svg" aria-hidden="true" title="Replace"></icon>
+      <icon file="movement.svg" aria-hidden="true" title="{{ dataService.language == 'ru' ? 'Заменить':'Replace' }}"></icon>
     </button>
-    <button type="button" ng-click="confirmDeleteCert(cert)" aria-label="Delete certificate"
+    <button type="button" ng-click="confirmDeleteCert(cert)" aria-label="{{ dataService.language == 'ru' ? 'Удалить сертификат':'Delete certificate' }}"
       class="btn btn-primary btn-small certificate__button" ng-disabled="!isDeletable(cert)">
-      <icon file="icon-trashcan.svg" aria-hidden="true" title="Delete"></icon>
+      <icon file="icon-trashcan.svg" aria-hidden="true" title="{{ dataService.language == 'ru' ? 'Удалить':'Delete' }}"></icon>
     </button>
   </div>
 

@@ -29,6 +29,7 @@ window.angular && (function(angular) {
       $scope.messages = Constants.MESSAGES.SENSOR;
       $scope.selectedSeverity = 'all';
       $scope.severityList = ['All', 'Critical', 'Warning', 'Ok'];
+      $scope.severityList_ru = ['Все', 'Критические', 'Опасные', 'Нормальные'];
       $scope.severes = 0;
       $scope.warnings = 0;
       $scope.suppressAlerts = false;
@@ -53,6 +54,7 @@ window.angular && (function(angular) {
 
       $scope.showAlert = function() {
         var alertText = '';
+	var alertTitle = '';
         $scope.severes =
             $filter('filter')($scope.mergedSensors, 'critical').length;
         $scope.warnings =
@@ -62,18 +64,36 @@ window.angular && (function(angular) {
             !$scope.suppressAlerts) {
           if ($scope.severes) {
             alertText = $scope.severes;
-            $scope.severes > 1 ? alertText = alertText + ' sensors' :
-                                 alertText = alertText + ' sensor';
-            alertText = alertText + ' at <b>critical</b> status level.<BR>';
+	    if (dataService.language == 'ru') {
+        	$scope.severes > 1 ? alertText = alertText + ' датчиков' :
+                                    alertText = alertText + ' датчик';
+        	alertText = alertText + ' на <b>критическом</b> уровене состояния.<BR>';
+		alertTitle = 'Внимание';
+	    } else {
+        	$scope.severes > 1 ? alertText = alertText + ' sensors' :
+                                    alertText = alertText + ' sensor';
+        	alertText = alertText + ' at <b>critical</b> status level.<BR>';
+		alertTitle = 'Alert';
+	    }
           };
           if ($scope.warnings) {
             alertText = alertText + $scope.warnings;
-            $scope.warnings > 1 ? alertText = alertText + ' sensors' :
-                                  alertText = alertText + ' sensor';
-            alertText = alertText + ' at <b>warning</b> status level.';
+	    if (dataService.language == 'ru') {
+        	$scope.warnings > 1 ? alertText = alertText + ' датчиков' :
+                                    alertText = alertText + ' датчик';
+        	alertText = alertText + ' на <b>опасном</b> уровене состояния.';
+		alertTitle = "Предупреждение";
+	    } else {
+        	$scope.warnings > 1 ? alertText = alertText + ' sensors' :
+                                    alertText = alertText + ' sensor';
+        	alertText = alertText + ' at <b>warning</b> status level.';
+		alertTitle = "Warning";
+	    }
+
           };
-          $scope.severes ? toastService.alert(alertText) :
-                           toastService.warning(alertText);
+
+          $scope.severes ? toastService.alert(alertText,alertTitle) :
+                           toastService.warning(alertText,alertTitle);
 
           $scope.suppressAlerts = true;
         };
@@ -153,12 +173,10 @@ window.angular && (function(angular) {
                                         })
                                         .finally(function() {
                                           if (curChassis == totalChassis) {
-                                            if (res.Members.length <=
-                                                index + 1) {
+                                            if (res.Members.length <= index + 1) {
                                               $scope.loadMergedSensors().then(
                                                   function() {
-                                                    $scope.sensorLoading =
-                                                        false;
+                                                    $scope.sensorLoading = false;
                                                     $scope.showAlert();
                                                   });
                                             }

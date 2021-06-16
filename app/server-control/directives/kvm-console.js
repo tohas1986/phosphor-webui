@@ -18,6 +18,7 @@ window.angular && (function(angular) {
         restrict: 'E', template: require('./kvm-console.html'),
             scope: {newWindowBtn: '=?'}, link: function(scope, element) {
               var rfb;
+		scope.dataService = dataService;
               scope.autoscale = true;
 
               element.on('$destroy', function() {
@@ -53,16 +54,13 @@ window.angular && (function(angular) {
                 rfb.addEventListener('disconnect', disconnected);
               } catch (exc) {
                 $log.error(exc);
-                updateState(
-                    null, 'fatal', null,
-                    'Unable to create RFB client -- ' + exc);
+                updateState(null, 'fatal', null, (dataService.language == 'ru' ) ? 'Невозможно создать RFB-клиента -- ' + exc : 'Unable to create RFB client -- ' + exc);
                 return;  // don't continue trying to connect
               };
 
               scope.windowreload = function(autoscale) {
                 if (autoscale) {
-                  var myEl = angular.element(
-                      document.querySelector('#noVNC_container'));
+                  var myEl = angular.element(document.querySelector('#noVNC_container'));
                   myEl.addClass('enforceAdjustment');
                   // reload to force autoscale when toggled twice; TODO: could
                   // check height and only reload if window is less than height
@@ -90,7 +88,7 @@ window.angular && (function(angular) {
 
               scope.openWindow = function() {
                 window.open(
-                    '#/server-control/kvm-window', 'Kvm Window',
+                    '#/server-control/kvm-window', (dataService.language == 'ru' ) ? 'Окно KVM' : 'Kvm Window',
                     'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1125,height=900');
               };
             }

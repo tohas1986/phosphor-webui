@@ -5,35 +5,34 @@
   </button>
   <div class="modal-header" id="modal-operation">
     <h3>
-      <div class="icon__warning inline" aria-label="Warning"></div>
-      {{
-        activeModal === 2 || activeModal === 3
-          ? "Server shutdown will cause outage"
-          : "Server reboot will cause outage"
-      }}
+      <div class="icon__warning inline" aria-label="{{ dataService.language == 'ru' ? 'Предупреждение':'Warning' }}"></div>
+    {{ dataService.language == 'ru'
+ ? (activeModal === 2 || activeModal === 3 ? "Выключение сервера вызовет сбой в работе интерфейса" : "Перезагрузка сервера вызовет сбой в работе интерфейса")
+ : (activeModal === 2 || activeModal === 3 ? "Server shutdown will cause outage" : "Server reboot will cause outage")
+    }}
     </h3>
   </div>
   <div class="modal-body">
     <p ng-if="activeModal === 2 || activeModal === 3">
-      Are you sure you want to
-      {{ activeModal === 2 ? "orderly" : "immediate" }}
-      shutdown?
+      {{ dataService.language == 'ru'
+ ? 'Вы уверены, что хотите '+( activeModal === 2 ? "аккуратно" : "немедленно" )+' выключить систему'
+ : 'Are you sure you want to '+( activeModal === 2 ? "orderly" : "immediate" )+' shutdown' }}?
     </p>
     <p ng-if="activeModal === 0 || activeModal === 1">
-      Are you sure you want to
-      {{ activeModal === 0 ? "orderly" : "immediate" }}
-      reboot?
+      {{ dataService.language == 'ru'
+ ? 'Вы уверены что хотите '+( activeModal === 0 ? "аккуратно" : "немедленно" )+' перезагрузить систему'
+ : 'Are you sure you want to '+( activeModal === 0 ? "orderly" : "immediate" )+' reboot' }}?
     </p>
   </div>
   <div class="modal-footer">
     <!-- Cancel modal power confirmation -->
     <button type="button" class="btn btn-secondary" ng-click="$dismiss()">
-      Cancel
+      {{ dataService.language == 'ru' ? 'Отменить':'Cancel' }}
     </button>
     <!-- Power operation confirm buttons -->
     <button type="submit" class="btn btn-primary" ng-click="$close(activeModal)">
-      <span ng-if="activeModal === 0 || activeModal === 1">Reboot</span>
-      <span ng-if="activeModal === 2 || activeModal === 3">Shutdown</span>
+      <span ng-if="activeModal === 0 || activeModal === 1">{{ dataService.language == 'ru' ? 'Перезагрузить':'Reboot' }}</span>
+      <span ng-if="activeModal === 2 || activeModal === 3">{{ dataService.language == 'ru' ? 'Выключить':'Shutdown' }}</span>
     </button>
   </div>
 </div>

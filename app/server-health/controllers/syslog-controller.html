@@ -2,13 +2,13 @@
 <div id="sys-log">
 
   <section id='filters-severity' class="page-content-box toggle-filter row">
-    <div class="columns col-lg-3 col-md-3 col-sm-12"><label class="trim-text-medium">Filter by Severity</label>
+    <div class="columns col-lg-3 col-md-3 col-sm-12"><label class="trim-text-medium">{{ dataService.language == 'ru' ? 'Фильтровать по серьезности' : 'Filter by Severity' }}</label>
     </div>
     <div class="columns col-lg-2 col-md-2 col-sm-6 col-6" ng-repeat="severity in severityList">
       <div class='filter-box'>
         <button class="active filter-btn" ng-click="toggleSeverity(severity)"
           ng-class="(selectedSeverity == (severity | lowercase)) ? 'btn-filter-primary' : 'btn-filter-secondary'">
-          <span class="alert-text-{{severity | lowercase}}">&#9679;</span>&nbsp;{{severity}}
+          <span class="alert-text-{{severity | lowercase}}">&#9679;</span>&nbsp;{{ dataService.language == 'ru' ? severityList_ru[$index] : severity }}
         </button>
       </div>
     </div>
@@ -20,27 +20,24 @@
       <div class="columns col-lg-6 col-md-7 col-12">
         <div class="row sys-log__date-filter">
           <div class="columns col-6">
-            <label for="sys-log-filter-start-date" class="small-label">Start Date</label>
-            <input id="sys-log-filter-start-date" type="date" max="{{end_date | date:'yyyy-MM-dd'}}"
-              placeholder="MM/DD/YYYY" ng-model="start_date.value" />
+            <label for="sys-log-filter-start-date" class="small-label">{{ dataService.language == 'ru' ? 'Начальная дата' : 'Start Date' }}</label>
+            <input id="sys-log-filter-start-date" type="date" max="{{end_date | date:'yyyy-MM-dd'}}" placeholder="{{ dataService.language == 'ru' ? 'дд . мм . гггг' : 'MM/DD/YYYY' }}" ng-model="start_date.value" />
           </div>
           <div class="columns col-6 padding-left">
-            <label for="sys-log-filter-end-date" class="small-label">End Date</label>
-            <input id="sys-log-filter-end-date" type="date" min="{{start_date | date:'yyyy-MM-dd'}}"
-              placeholder="MM/DD/YYYY" ng-model="end_date.value" />
+            <label for="sys-log-filter-end-date" class="small-label">{{ dataService.language == 'ru' ? 'Конечная дата' : 'End Date' }}</label>
+            <input id="sys-log-filter-end-date" type="date" min="{{start_date | date:'yyyy-MM-dd'}}" placeholder="{{ dataService.language == 'ru' ? 'дд . мм . гггг' : 'MM/DD/YYYY' }}" ng-model="end_date.value" />
           </div>
         </div>
       </div>
       <div class="columns col-lg-6 col-md-5 col-12">
         <div class="row">
-          <label class="small-label trim-text-medium" for="content__search-input">Search event log</label>
+          <label class="small-label trim-text-medium" for="content__search-input">{{ dataService.language == 'ru' ? 'Поиск в журнале событий' : 'Search event log' }}</label>
           <div class="content__search search-box">
-            <input id="content__search-input" placeholder="Keyword" type="text" ng-model="customSearch"
+            <input id="content__search-input" placeholder="{{ dataService.language == 'ru' ? 'Ключевое слово' : 'Keyword' }}" type="text" ng-model="customSearch"
               ng-keydown="doSearchOnEnter($event)" />
             <div class="search-submit__wrapper">
               <button class="clear-input" ng-click="clear()">&#10005;</button>
-              <input id="content__search-submit" type="submit" class="btn content__search-submit" value="Search"
-                ng-click="doSearchOnClick()" />
+              <input id="content__search-submit" type="submit" class="btn content__search-submit" value="{{ dataService.language == 'ru' ? 'Искать' : 'Search' }}" ng-click="doSearchOnClick()" />
             </div>
           </div>
         </div>
@@ -56,40 +53,36 @@
     <div class="text-intro">
       <div class="trim-text-medium inline">
         <input type='checkbox' id="toggleDetailVisibility" class="btn-primary" ng-click="toggle = !toggle;">
-        Show Event IDs |
+        {{ dataService.language == 'ru' ? 'Показывать идентификаторы событий' : 'Show Event IDs' }} |
       </div>
       <div class="inline">
-        <a ng-click="confirm = !confirm" ng-show="sysLogs.length">Clear {{selectedRecordType}} Logs</a>
+        <a ng-click="confirm = !confirm" ng-show="sysLogs.length">{{ dataService.language == 'ru' ? 'Очистить ' + selectedRecordType + ' журналы' : 'Clear ' + selectedRecordType + ' Logs' }}</a>
       </div>
-      <div ng-class="confirm ? 'show alert-box alert-info' : 'alert-box alert-info'" class="alert-box alert-info"
-        ng-show="confirm">Are
-        you sure you
-        want to clear
-        {{selectedRecordType}}
-        logs?<br>
-        <button class="btn-primary" ng-click="clearSystemLogEntries()">Yes</button>
-        <button class="btn-primary" ng-click="confirm = false">No</button>
+      <div ng-class="confirm ? 'show alert-box alert-info' : 'alert-box alert-info'" class="alert-box alert-info" ng-show="confirm">
+{{ dataService.language == 'ru'
+ ? 'Вы уверены, что хотите очистить ' + selectedRecordType + ' журналы'
+ : 'Are you sure you want to clear ' + selectedRecordType + ' logs' }}?<br>
+        <button class="btn-primary" ng-click="clearSystemLogEntries()">{{ dataService.language == 'ru' ? 'Да' : 'Yes' }}</button>
+        <button class="btn-primary" ng-click="confirm = false">{{ dataService.language == 'ru' ? 'Нет' : 'No' }}</button>
       </div>
     </div>
     <div class="table row column sys-log__table">
       <div class="table__head fixed-table-header">
         <div class="table__row">
 
-          <div class="table__cell status-icon_wrapper sys-log__col-date sort_button_wrapper"
-            ng-click='sortBy("Created")' ng-class="{reverse: reverse}">
+          <div class="table__cell status-icon_wrapper sys-log__col-date sort_button_wrapper" ng-click='sortBy("Created")' ng-class="{reverse: reverse}">
             <div class="inline">
-              Timestamp
+              {{ dataService.language == 'ru' ? 'Отметка времени' : 'Timestamp' }}
             </div>
           </div>
           <div class="table__cell status-icon trim-text-medium"></div>
 
           <div class="table__cell sys-log__col-sev sort_button_wrapper" ng-click="sortBySeverity()"
-            ng-class="{reverse: reverseSeverity}">Status</div>
+            ng-class="{reverse: reverseSeverity}">{{ dataService.language == 'ru' ? 'Состояние' : 'Status' }}</div>
 
-          <div class="table__cell sys-log__col-desc align-left">Description</div>
-          <div class="table__cell sys-log__col-id align-left trim-text-medium sort_button_wrapper" ng-show="showDetails"
-            ng-click="sortBy('Id')">
-            ID
+          <div class="table__cell sys-log__col-desc align-left">{{ dataService.language == 'ru' ? 'Описание' : 'Description' }}</div>
+          <div class="table__cell sys-log__col-id align-left trim-text-medium sort_button_wrapper" ng-show="showDetails" ng-click="sortBy('Id')">
+            {{ dataService.language == 'ru' ? 'Идентификатор' : 'ID' }}
           </div>
         </div>
       </div>
@@ -102,14 +95,11 @@
             <div class="line2">{{log.Created | date : 'fullDate' }}</div>
           </div>
           <div class="table__cell sys-log__col-wrapper sys-log__col-sev">{{log.Severity}}</div>
-          <div class="table__cell sys-log__col-wrapper sys-log__col-desc align-left" title="{{log.Message}}"
-            ng-click="expandit = !expandit"
+          <div class="table__cell sys-log__col-wrapper sys-log__col-desc align-left" title="{{log.Message}}" ng-click="expandit = !expandit"
             ng-class="[(expandit) ? 'expand' : '', (log.Message.length > 100) ? 'ellipsis-active' : '']">
             {{log.Message}}
           </div>
-          <div class="table__cell sys-log__col-wrapper sys-log__col-id trim-text-medium align-left"
-            ng-show="showDetails">
-            {{log.Id}}</div>
+          <div class="table__cell sys-log__col-wrapper sys-log__col-id trim-text-medium align-left" ng-show="showDetails">{{log.Id}}</div>
         </div>
       </div>
     </div>
@@ -117,7 +107,9 @@
   </section>
 
   <section id="sys-log__logs" class="row column page-content-rnd" ng-show="(filtersysLogs.length)==0">
-    <span>There are no {{selectedRecordType | lowercase}} logs to display at this time.</span>
+    <span>{{ dataService.language == 'ru'
+ ? 'В настоящее время нет записей ' + (selectedRecordType | lowercase) + ' для отображения'
+ : 'There are no ' + (selectedRecordType | lowercase) + ' logs to display at this time' }}.</span>
   </section>
 
 </div>

@@ -19,10 +19,11 @@ window.angular && (function(angular) {
 
       .controller('sysLogController', [
         '$scope', '$filter', '$location', '$timeout', 'APIUtils',
-        'toastService', 'Constants',
+        'toastService', 'Constants', 'dataService',
         function(
             $scope, $filter, $location, $timeout, APIUtils, toastService,
-            Constants) {
+            Constants, dataService) {
+	  $scope.dataService = dataService;
           $scope.itemsPerPage = Constants.PAGINATION.LOG_ITEMS_PER_PAGE;
           $scope.loading = true;
           $scope.sysLogs = [];
@@ -33,8 +34,10 @@ window.angular && (function(angular) {
           $scope.recordTypeList =
               ['SEL', 'Event', 'Oem'];          // From Redfish specification.
           $scope.selectedRecordType = 'Event';  // Default Select to Event log
+          $scope.selectedRecordType_ru = 'Событие';  // Default Select to Event log
           $scope.typeFilter = false;
           $scope.severityList = ['All', 'Critical', 'Warning', 'Ok'];
+          $scope.severityList_ru = ['Все', 'Критические', 'Опасные', 'Нормальные'];
           $scope.selectedSeverity = 'all';
 
           $scope.severeLogCount = 0;
@@ -267,8 +270,7 @@ window.angular && (function(angular) {
               // TODO: Form it while getting data
               var search_text = log.Id + ' ' + log.Name.toLowerCase() + ' ' +
                   log.Message.toLowerCase();
-              if (search_text.indexOf($scope.searchTerms[i].toLowerCase()) ==
-                  -1)
+              if (search_text.indexOf($scope.searchTerms[i].toLowerCase()) == -1)
                 return false;
             }
             return true;
@@ -297,37 +299,52 @@ window.angular && (function(angular) {
           };
 
           $scope.showAlert = function() {
+	    var alertTitle='';
             // only shows logs in warning state if none in critical
-            $scope.severeLogCount =
-                $filter('filter')($scope.filtersysLogs, 'critical').length;
-            $scope.warningLogCount =
-                $filter('filter')($scope.filtersysLogs, 'warning').length;
-            $scope.alertloadMessage =
-                'In the last ' + $scope.defaultDaysShown + ' days:<br>';
-            if (($scope.severeLogCount > 0 || $scope.warningLogCount > 0) &&
-                !$scope.suppressAlerts) {
-              if ($scope.severeLogCount) {
-                $scope.alertloadMessage =
-                    $scope.alertloadMessage + $scope.severeLogCount;
-                $scope.severeLogCount > 1 ?
-                    $scope.alertloadMessage = $scope.alertloadMessage +
-                        ' critical events have been logged' :
-                    $scope.alertloadMessage = $scope.alertloadMessage +
-                        ' critical event has been logged';
-              } else if ($scope.warningLogCount) {
-                $scope.alertloadMessage =
-                    $scope.alertloadMessage + $scope.warningLogCount;
-                $scope.warningLogCount > 1 ?
-                    $scope.alertloadMessage = $scope.alertloadMessage +
-                        ' warning events have been logged' :
-                    $scope.alertloadMessage = $scope.alertloadMessage +
-                        ' warning event has been logged';
-              };
-              $scope.severeLogCount ?
-                  toastService.alert($scope.alertloadMessage) :
-                  toastService.warning($scope.alertloadMessage);
-              $scope.suppressAlerts = true;
-            };
+            $scope.severeLogCount = $filter('filter')($scope.filtersysLogs, 'critical').length;
+            $scope.warningLogCount = $filter('filter')($scope.filtersysLogs, 'warning').length;
+            $scope.alertloadMessage = '';
+	    if(dataService.language == 'ru'){
+        	$scope.alertloadMessage = 'За последние ' + $scope.defaultDaysShown + ' дней:<br> было зарегистрировано ';
+        	if (($scope.severeLogCount > 0 || $scope.warningLogCount > 0) && !$scope.suppressAlerts) {
+            	    if ($scope.severeLogCount) {
+            		$scope.alertloadMessage = $scope.alertloadMessage + $scope.severeLogCount;
+            		$scope.severeLogCount > 1 ?
+                	    $scope.alertloadMessage = $scope.alertloadMessage + ' критических событий' :
+                	    $scope.alertloadMessage = $scope.alertloadMessage + ' критическое событие';
+			alertTitle = "Внимание";
+            	    } else if ($scope.warningLogCount) {
+            		$scope.alertloadMessage = $scope.alertloadMessage + $scope.warningLogCount;
+            		$scope.warningLogCount > 1 ?
+                	    $scope.alertloadMessage = $scope.alertloadMessage + ' опасных событий(предупреждений)' :
+                	    $scope.alertloadMessage = $scope.alertloadMessage + ' опасное событие(предупреждение)';
+			alertTitle = "Предупреждение";
+            	    };
+            	    $scope.severeLogCount ?
+                	toastService.alert($scope.alertloadMessage, alertTitle) :
+                	toastService.warning($scope.alertloadMessage, alertTitle);
+            	    $scope.suppressAlerts = true;
+        	};
+	    } else {
+        	$scope.alertloadMessage = 'In the last ' + $scope.defaultDaysShown + ' days:<br>';
+        	if (($scope.severeLogCount > 0 || $scope.warningLogCount > 0) && !$scope.suppressAlerts) {
+            	    if ($scope.severeLogCount) {
+            		$scope.alertloadMessage = $scope.alertloadMessage + $scope.severeLogCount;
+            		$scope.severeLogCount > 1 ?
+                	    $scope.alertloadMessage = $scope.alertloadMessage + ' critical events have been logged' :
+                	    $scope.alertloadMessage = $scope.alertloadMessage + ' critical event has been logged';
+            	    } else if ($scope.warningLogCount) {
+            		$scope.alertloadMessage = $scope.alertloadMessage + $scope.warningLogCount;
+            		$scope.warningLogCount > 1 ?
+                	    $scope.alertloadMessage = $scope.alertloadMessage + ' warning events have been logged' :
+                	    $scope.alertloadMessage = $scope.alertloadMessage + ' warning event has been logged';
+            	    };
+            	    $scope.severeLogCount ?
+                	toastService.alert($scope.alertloadMessage) :
+                	toastService.warning($scope.alertloadMessage);
+            	    $scope.suppressAlerts = true;
+        	};
+	    };
           };
         }
       ]);

@@ -1,6 +1,6 @@
 <div class="display-option">
   <div class="float-left">
-    <div class="toggle-text float-left">Autoscale</div>
+    <div class="toggle-text float-left">{{ dataService.language == 'ru' ? 'Автомасштабирование' : 'Autoscale' }}</div>
     <label class="switch float-left"><input id="toggle__switch-round" class="toggle-switch toggle-switch__round-flat"
         ng-checked="true" type="checkbox" tabindex="0"
         ng-click="autoscale = !autoscale; set_rfbScale(autoscale); windowreload(autoscale)">
@@ -9,13 +9,13 @@
   </div>
   <div class="kvm__actions float-right">
     <button ng-click="sendCtrlAltDel()" class="btn btn-primary btn-xsmall float-right">
-      Send Ctrl+Alt+Del
+      {{ dataService.language == 'ru' ? 'Отправить Ctrl+Alt+Del' : 'Send Ctrl+Alt+Del' }}
     </button>
     <button class="btn btn btn-primary btn-xsmall float-right" ng-click="openWindow()" ng-show="newWindowBtn === true">
-      Open in new window
+      {{ dataService.language == 'ru' ? 'Открыть в новом окне' : 'Open in new window' }}
     </button>
     <button class="btn btn btn-primary btn-xsmall float-right" ng-click="close()" ng-show="!newWindowBtn">
-      Return to OpenBmc
+      {{ dataService.language == 'ru' ? 'Вернуться в OpenBmc' : 'Return to OpenBmc' }}
     </button>
   </div>
 </div>

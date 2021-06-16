@@ -9,8 +9,9 @@ window.angular && (function(angular) {
         'template': require('./certificate.html'),
         'scope': {'cert': '=', 'reload': '&'},
         'controller': [
-          '$scope', 'APIUtils', 'toastService', 'Constants', '$uibModal',
-          function($scope, APIUtils, toastService, Constants, $uibModal) {
+          '$scope', 'APIUtils', 'toastService', 'Constants', '$uibModal', 'dataService',
+          function($scope, APIUtils, toastService, Constants, $uibModal, dataService) {
+	    $scope.dataService = dataService;
             var certificateType = 'PEM';
             var availableCertificateTypes = Constants.CERTIFICATE_TYPES;
 
@@ -79,17 +80,13 @@ window.angular && (function(angular) {
                   .then(
                       function(data) {
                         $scope.loading = false;
-                        toastService.success(
-                            $scope.getCertificateName(certificate.Description) +
-                            ' was deleted.');
+                        toastService.success($scope.getCertificateName(certificate.Description) + (( dataService.language == 'ru' ) ? ' был удален.' : ' was deleted.'));
                         $scope.reload();
                       },
                       function(error) {
                         console.log(error);
                         $scope.loading = false;
-                        toastService.error(
-                            'Unable to delete ' +
-                            $scope.getCertificateName(certificate.Description));
+                        toastService.error((( dataService.language == 'ru' ) ? 'Невозможно удалить ' : 'Unable to delete ') + $scope.getCertificateName(certificate.Description));
                       });
               return;
             };
@@ -116,10 +113,8 @@ window.angular && (function(angular) {
 
             $scope.replaceCertificate = function(certificate) {
               $scope.loading = true;
-              if (certificate.file.name.split('.').pop() !==
-                  certificateType.toLowerCase()) {
-                toastService.error(
-                    'Certificate must be replaced with a .pem file.');
+              if (certificate.file.name.split('.').pop() !== certificateType.toLowerCase()) {
+                toastService.error(( dataService.language == 'ru' ) ? 'Сертификат необходимо заменить на файл .pem' : 'Certificate must be replaced with a .pem file.');
                 return;
               }
               var file = certificate.file;
@@ -132,17 +127,13 @@ window.angular && (function(angular) {
                 APIUtils.replaceCertificate(data).then(
                     function(data) {
                       $scope.loading = false;
-                      toastService.success(
-                          $scope.getCertificateName(certificate.Description) +
-                          ' was replaced.');
+                      toastService.success( $scope.getCertificateName(certificate.Description) + (( dataService.language == 'ru' ) ? ' был заменен.':' was replaced.'));
                       $scope.reload();
                     },
                     function(error) {
                       console.log(error);
                       $scope.loading = false;
-                      toastService.error(
-                          'Unable to replace ' +
-                          $scope.getCertificateName(certificate.Description));
+                      toastService.error( (( dataService.language == 'ru' ) ? 'Невозможно заменить ':'Unable to replace ') + $scope.getCertificateName(certificate.Description));
                     });
               };
               reader.readAsBinaryString(file);

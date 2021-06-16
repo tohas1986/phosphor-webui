@@ -2,13 +2,13 @@
 <div id="sensors">
 
   <section class="page-content-box toggle-filter row">
-    <div class="columns col-lg-3 col-md-3 col-sm-12"><label class="trim-text-medium">Filter by Severity</label>
+    <div class="columns col-lg-3 col-md-3 col-sm-12"><label class="trim-text-medium">{{ dataService.language == 'ru' ? 'Фильтровать по серьезности' : 'Filter by Severity' }}</label>
     </div>
     <div class="columns col-lg-2 col-md-2 col-sm-6 col-6" ng-repeat="severity in severityList">
       <div class='filter-box'>
         <button class="filter-btn" ng-click="toggleSeverity(severity)"
           ng-class="(selectedSeverity == (severity | lowercase)) ? 'btn-filter-primary' : 'btn-filter-secondary'">
-          <span class="alert-text-{{severity | lowercase}}">&#9679;</span>&nbsp;{{severity}}
+          <span class="alert-text-{{severity | lowercase}}">&#9679;</span>&nbsp;{{ dataService.language == 'ru' ? severityList_ru[$index] : severity }}
         </button>
       </div>
     </div>
@@ -18,9 +18,8 @@
   <div class="page-content-box">
     <div class="columns col-md-6 col-12">
       <div class="select-box">
-        <select id="component" ng-model="selectedChoice" name="dropdown" class="minimal"
-          ng-change="selectComponent(selectedChoice);">
-          <option value="All" name="All">All Components</option>
+        <select id="component" ng-model="selectedChoice" name="dropdown" class="minimal"  ng-change="selectComponent(selectedChoice);">
+          <option value="All" name="All">{{ dataService.language == 'ru' ? 'Все компоненты' : 'All Components' }}</option>
           <option ng-selected="{{$index}}" ng-repeat="component in fullSensorsInfo track by $index"
             value="{{component.Name}}">{{component.Name}}</option>
         </select>
@@ -28,55 +27,49 @@
     </div>
     <div class="columns col-md-6 col-12">
       <div class="content__search search-box">
-        <input id="content__search-input" placeholder="Keyword" type="text" ng-model="customSearch"
-          ng-keydown="doSearchOnEnter($event)" />
+        <input id="content__search-input" placeholder="{{ dataService.language == 'ru' ? 'Ключевое слово' : 'Keyword' }}" type="text" ng-model="customSearch" ng-keydown="doSearchOnEnter($event)" />
         <div class="search-submit__wrapper">
           <button class="clear-input" ng-click="clear()">&#10005;</button>
-          <input id="content__search-submit" type="submit" class="btn content__search-submit" value="Search"
-            ng-click="doSearchOnClick()" />
+          <input id="content__search-submit" type="submit" class="btn content__search-submit" value="{{ dataService.language == 'ru' ? 'Искать' : 'Search' }}" ng-click="doSearchOnClick()" />
         </div>
       </div>
     </div>
   </div>
 
   <section class="page-content-rnd relative table row column" ng-hide="(filteredMergedSensors).length == 0">
+<!--
     <div class="loader-holder text-center" ng-hide="!sensorLoading">
       <div ng-show="sensorLoading" class="spinner-border m-5 individual-component-loader" role="status">
-        <span class="sr-only">Loading...</span>
+        <span class="sr-only">{{ dataService.language == 'ru' ? 'Загружается' : 'Loading' }}...</span>
       </div>
     </div>
+-->
     <div class="text-intro">
       <div class="trim-text-medium">
-        <input type='checkbox' id="toggleThresholdVisibility" ng-click="showThresholds = !showThresholds;"> Show
-        Thresholds
+        <input type='checkbox' id="toggleThresholdVisibility" ng-click="showThresholds = !showThresholds;"> {{ dataService.language == 'ru' ? 'Показать пороговые значения' : 'Show Thresholds' }}
       </div>
     </div>
     <div class="table row column sensor__table">
       <div class="table__head fixed-table-header">
         <div class="table__row">
-          <div class="table__cell status-icon_wrapper sensor__title sort_button_wrapper" ng-click='sortBy("Name")'
-            ng-class="{reverse: reverse}">
-            <div class="inline">
-              Sensor Name
-            </div>
+          <div class="table__cell status-icon_wrapper sensor__title sort_button_wrapper" ng-click='sortBy("Name")' ng-class="{reverse: reverse}">
+            <div class="inline">{{ dataService.language == 'ru' ? 'Название Датчика' : 'Sensor Name' }}</div>
           </div>
           <div class="table__cell status-icon trim-text-medium"></div>
-          <div class="table__cell sensor__status sort_button_wrapper" ng-click="sortBySeverity()"
-            ng-class="{reverse: reverseSeverity}">
-            Status
+          <div class="table__cell sensor__status sort_button_wrapper" ng-click="sortBySeverity()" ng-class="{reverse: reverseSeverity}">
+            {{ dataService.language == 'ru' ? 'Состояние' : 'Status' }}
           </div>
-          <div class="table__cell sensor__reading">Reading</div>
-          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">Low Critical</div>
-          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">Low Warning</div>
-          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">High Warning</div>
-          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">High Critical</div>
+          <div class="table__cell sensor__reading">{{ dataService.language == 'ru' ? 'Текущее значение' : 'Reading' }}</div>
+          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Нижнее критическое' : 'Low Critical' }}</div>
+          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Нижнее опасное' : 'Low Warning' }}</div>
+          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Верхнее опасное' : 'High Warning' }}</div>
+          <div class="table__cell sensor__threshold trim-text-medium" ng-show="showThresholds">{{ dataService.language == 'ru' ? 'Верхнее критическое' : 'High Critical' }}</div>
         </div>
       </div>
       <div class="table__body">
         <div class="table__row status-row__{{sensor.Status.Health}}"
           ng-repeat="sensor in (filteredSensors = (filteredMergedSensors = (mergedSensors | filter:filterByComponent | filter:filterBySearchTerms | filter:filterBySeverity | orderBy: orderDatabySeverity | orderBy:sortKey:reverse)))">
-          <div class="table__cell status-icon status__{{sensor.Status.Health}} trim-text-medium">&nbsp;
-          </div>
+          <div class="table__cell status-icon status__{{sensor.Status.Health}} trim-text-medium">&nbsp;</div>
           <div class="table__cell sensor__title">{{sensor.Name}}</div>
           <div class="table__cell sensor__status">{{sensor.Status.Health}}</div>
           <div class="table__cell sensor__reading">

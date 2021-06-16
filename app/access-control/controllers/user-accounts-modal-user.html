@@ -1,7 +1,7 @@
 <div class="uib-modal__content  modal__local-users">
   <div class="modal-header">
     <h2 class="modal-title" id="dialog_label">
-      {{ modalCtrl.user.new ? 'Add user' : 'Modify user' }}
+      {{ dataService.language == 'ru' ? (modalCtrl.user.new ? 'Добавить пользователя':'Изменить пользователя') : (modalCtrl.user.new ? 'Add user':'Modify user') }}
     </h2>
     <button aria-label="Close" type="button" class="btn btn--close float-right" ng-click="$dismiss()">
       <icon file="icon-close.svg"></icon>
@@ -12,16 +12,15 @@
       <!-- Manual unlock -->
       <div class="row" ng-if="modalCtrl.user.locked && !modalCtrl.automaticLockout">
         <div class="column medium-6">
-          <div class="notification-banner" aria-live="polite" ng-class="{'notification-banner--warning': !form.lock.$dirty,
-                          'notification-banner--information': form.lock.$dirty}">
-            <p class="notification-banner__text" ng-if="!form.lock.$dirty">Account locked</p>
-            <p class="notification-banner__text" ng-if="form.lock.$dirty">Click "Save" to unlock account</p>
+          <div class="notification-banner" aria-live="polite" ng-class="{'notification-banner--warning': !form.lock.$dirty, 'notification-banner--information': form.lock.$dirty}">
+            <p class="notification-banner__text" ng-if="!form.lock.$dirty">{{ dataService.language == 'ru' ? 'Учетная запись заблокирована':'Account locked' }}</p>
+            <p class="notification-banner__text" ng-if="form.lock.$dirty">{{ dataService.language == 'ru' ? 'Нажмите "Разблокировать" для разблокировки учетной записи':'Click "Unlock" to unlock account' }}</p>
           </div>
         </div>
         <div class="column medium-6">
           <input type="hidden" name="lock" ng-model="modalCtrl.manualUnlockProperty" value="false">
           <button class="btn btn-primary" type="button" ng-click="form.lock.$setDirty()"
-            ng-disabled="form.lock.$dirty">Unlock</button>
+            ng-disabled="form.lock.$dirty">{{ dataService.language == 'ru' ? 'Разблокировать':'Unlock' }}</button>
         </div>
       </div>
 
@@ -29,28 +28,24 @@
       <div class="row">
         <div class="column medium-6">
           <div class="field-group-container">
-            <legend>Username</legend>
+            <legend>{{ dataService.language == 'ru' ? 'Имя пользователя':'Username' }}</legend>
 
             <input id="username" name="username" type="text" required minlength="1" maxlength="16"
               ng-pattern="'^([a-zA-Z_][a-zA-Z0-9_]*)'" ng-readonly="modalCtrl.user.isRoot"
               ng-model="modalCtrl.user.username" username-validator existing-usernames="modalCtrl.existingUsernames" />
             <div ng-if="form.username.$invalid && form.username.$touched" class="form__validation-message">
-              <span ng-show="form.username.$error.required">
-                Field is required</span>
-              <span ng-show="form.username.$error.minlength || form.username.$error.maxlength">
-                Length must be between <span class="nowrap">1 – 16</span> characters</span>
-              <span ng-show="form.username.$error.pattern">
-                Invalid format</span>
-              <span ng-show="form.username.$error.duplicateUsername">
-                Username already exists</span>
+              <span ng-show="form.username.$error.required">{{ dataService.language == 'ru' ? 'Обязательное поле':'Field is required' }}</span>
+              <span ng-show="form.username.$error.minlength || form.username.$error.maxlength">{{ dataService.language == 'ru' ? 'Длина должна быть между':'Length must be between' }} <span class="nowrap">1 – 16</span> {{ dataService.language == 'ru' ? 'символов':'characters' }}</span>
+              <span ng-show="form.username.$error.pattern">{{ dataService.language == 'ru' ? 'Неверный формат':'Invalid format' }}</span>
+              <span ng-show="form.username.$error.duplicateUsername">{{ dataService.language == 'ru' ? 'Имя пользователя уже существует':'Username already exists' }}</span>
             </div>
           </div>
 
         </div>
 
         <div class="column medium-6">
-          <p class="label__helper-text">Cannot start with a number</p>
-          <p class="label__helper-text">No special characters except underscore</p>
+          <p class="label__helper-text">{{ dataService.language == 'ru' ? 'Не может начинаться с числа':'Cannot start with a number' }}</p>
+          <p class="label__helper-text">{{ dataService.language == 'ru' ? 'Никаких специальных символов, кроме подчеркивания':'No special characters except underscore' }}</p>
         </div>
       </div>
 
@@ -58,7 +53,7 @@
       <div class="row">
         <div class="column medium-6">
           <div class="field-group-container">
-            <legend>Password</legend>
+            <legend>{{ dataService.language == 'ru' ? 'Пароль':'Password' }}</legend>
 
             <!-- Password -->
             <div class="field-group-container">
@@ -71,15 +66,15 @@
                                 form.passwordConfirm.$touched) ? '' : '******'}}" />
               <div ng-if="form.password.$invalid && form.password.$dirty" class="form__validation-message">
                 <span ng-show="form.password.$error.required">
-                  Field is required</span>
+                  {{ dataService.language == 'ru' ? 'Обязательное поле':'Field is required' }}</span>
                 <span ng-show="form.password.$error.minlength || form.password.$error.maxlength">
-                  Length must be between <span class="nowrap">{{modalCtrl.minPasswordLength}} –
-                    {{modalCtrl.maxPasswordLength}}</span> characters</span>
+                  {{ dataService.language == 'ru' ? 'Длина должна быть между':'Length must be between' }} <span class="nowrap">{{modalCtrl.minPasswordLength}} –
+                    {{modalCtrl.maxPasswordLength}}</span> {{ dataService.language == 'ru' ? 'символов':'characters' }}</span>
               </div>
             </div>
             <!-- Password confirm -->
             <div class="field-group-container">
-              <label for="passwordConfirm" class="inline">Confirm user password</label>
+              <label for="passwordConfirm" class="inline">{{ dataService.language == 'ru' ? 'Подтвердить пароль пользователя':'Confirm user password' }}</label>
               <input id="passwordConfirm" name="passwordConfirm" type="password" autocomplete="new-password"
                 ng-required="modalCtrl.user.new || form.password.$touched || form.passwordConfirm.$touched"
                 ng-model="modalCtrl.user.passwordConfirm" password-confirm first-password="form.password.$modelValue"
@@ -90,12 +85,12 @@
               <div ng-if="form.passwordConfirm.$invalid && form.passwordConfirm.$dirty"
                 class="form__validation-message">
                 <span ng-show="form.passwordConfirm.$error.required">
-                  Field is required</span>
+                  {{ dataService.language == 'ru' ? 'Обязательное поле':'Field is required' }}</span>
                 <span ng-show="form.passwordConfirm.$error.passwordConfirm"
                   ng-hide="form.passwordConfirm.$error.required">
-                  Passwords do not match</span>
+                  {{ dataService.language == 'ru' ? 'Пароли не совпадают':'Passwords do not match' }}</span>
                 <span ng-show="form.passwordConfirm.$error.minlength || form.passwordConfirm.$error.maxlength">
-                  Length must be between <span class="nowrap">1 – 16</span> characters</span>
+                  {{ dataService.language == 'ru' ? 'Длина должна быть между':'Length must be between' }} <span class="nowrap">1 – 16</span> {{ dataService.language == 'ru' ? 'символов':'characters' }}</span>
               </div>
             </div>
           </div>
@@ -103,8 +98,8 @@
         </div>
 
         <div class="column medium-6">
-          <p class="label__helper-text">Password must between <span class="nowrap">{{modalCtrl.minPasswordLength}} –
-              {{modalCtrl.maxPasswordLength}}</span> characters</p>
+          <p class="label__helper-text">{{ dataService.language == 'ru' ? 'Пароль должен быть между':'Password must between' }} <span class="nowrap">{{modalCtrl.minPasswordLength}} –
+              {{modalCtrl.maxPasswordLength}}</span> {{ dataService.language == 'ru' ? 'символов':'characters' }}</p>
         </div>
       </div>
 
@@ -113,11 +108,11 @@
         <div class="column medium-6">
           <!-- Privilege -->
           <div class="field-group-container">
-            <legend>Role</legend>
+            <legend>{{ dataService.language == 'ru' ? 'Роль':'Role' }}</legend>
             <select id="privilege" name="privilege" required ng-disabled="modalCtrl.user.isRoot"
               ng-model="modalCtrl.user.privilege">
               <option ng-if="modalCtrl.user.new" ng-selected="modalCtrl.user.new" value="" disabled>
-                Select an option
+                {{ dataService.language == 'ru' ? 'Выберите вариант':'Select an option' }}
               </option>
               <option ng-value="role" ng-repeat="role in modalCtrl.privilegeRoles">
                 {{role}}
@@ -128,16 +123,16 @@
         <div class="column medium-6">
           <!-- Account Status -->
           <fieldset class="field-group-container">
-            <legend>Account Status</legend>
+            <legend>{{ dataService.language == 'ru' ? 'Состояние учетной записи':'Account Status' }}</legend>
             <label class="radio-label inline">
               <input type="radio" name="accountStatus" ng-value="true" ng-model="modalCtrl.user.accountStatus"
                 ng-disabled="modalCtrl.user.isRoot">
-              Enabled
+              {{ dataService.language == 'ru' ? 'Включена':'Enabled' }}
             </label>
             <label class="radio-label inline">
               <input type="radio" name="accountStatus1" ng-value="false" ng-model="modalCtrl.user.accountStatus"
                 ng-disabled="modalCtrl.user.isRoot">
-              Disabled
+              {{ dataService.language == 'ru' ? 'Отключена':'Disabled' }}
             </label>
           </fieldset>
 
@@ -148,11 +143,11 @@
 
     <div class="modal-footer">
       <button class="btn btn-secondary" ng-click="$dismiss()" type="button">
-        Cancel
+        {{ dataService.language == 'ru' ? 'Отменить':'Cancel' }}
       </button>
       <button class="btn btn-primary" type="submit" ng-click="$close(form)"
         ng-disabled="form.$invalid || form.$pristine" ng-class="{'disabled': form.$invalid}">
-        {{ modalCtrl.user.new ? 'Add user' : 'Save' }}
+        {{ dataService.language == 'ru' ? (modalCtrl.user.new ? 'Добавить пользователя' : 'Сохранить'):(modalCtrl.user.new ? 'Add user' : 'Save') }}
       </button>
     </div>
   </form>

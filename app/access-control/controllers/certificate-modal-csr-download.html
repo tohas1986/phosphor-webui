@@ -1,7 +1,7 @@
 <div class="uib-modal__content">
   <div class="modal-header">
     <h2 class="modal-title" id="modal_label">
-      Certificate Signing Request (CSR)
+      {{ dataService.language == 'ru' ? 'Запрос на подпись сертификата (CSR)':'Certificate Signing Request (CSR)' }}
     </h2>
     <button type="button" class="btn  btn--close" ng-click="$dismiss()" aria-label="close">
       <icon file="icon-close.svg" aria-hidden="true"></icon>
@@ -13,15 +13,15 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" clipboard text="csrCode" on-copied="copySuccess(event)"
       on-error="copyfailed(err)">
-      <span ng-if="!copied">Copy</span>
+      <span ng-if="!copied">{{ dataService.language == 'ru' ? 'Копировать':'Copy' }}</span>
       <span ng-if="copied">
         <icon aria-hidden="true" file="icon-check.svg"></icon>
-        <span>Copied</span>
+        <span>{{ dataService.language == 'ru' ? 'Скопировано':'Copied' }}</span>
       </span>
     </button>
     <button type="button" class="btn btn-primary">
       <a ng-href="data:text/json;charset=utf-8,{{ csrCode }}" download="csrCode.txt" class="add-csr__text-download">
-        Download
+        {{ dataService.language == 'ru' ? 'Скачать':'Download' }}
       </a>
     </button>
   </div>

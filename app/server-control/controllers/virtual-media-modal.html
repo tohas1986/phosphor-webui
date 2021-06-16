@@ -1,7 +1,7 @@
 <!-- Legacy mode configuration modal -->
 <div class="uib-modal__content">
     <button
-      aria-label="Close"
+      aria-label="{{ dataService.language == 'ru' ? 'Закрыть' : 'Close' }}"
       type="button"
       class="btn  btn--close  float-right"
       ng-click="$dismiss()"
@@ -9,27 +9,27 @@
     <img src="../../assets/icons/icon-close.svg">
     </button>
     <div class="modal-header" id="modal-vm">
-        <h2 class="modal-title">Legacy mode configuration</h2>
+        <h2 class="modal-title">{{ dataService.language == 'ru' ? 'Настройка режима Legacy' : 'Legacy mode configuration' }}</h2>
     </div>
     <div class="modal-body" >
         <form name="configModal">
             <p>
-              <label for="uri">External server URI</label>
+              <label for="uri">{{ dataService.language == 'ru' ? 'URI-адрес внешнего сервера' : 'External server URI' }}</label>
               <input type="text" id="uri" name="uri" ng-model="config.uri" required/>
               <p ng-if="configModal.uri.$error.required" class="alert">
-                Server URI is required.
+                {{ dataService.language == 'ru' ? 'Требуется URI сервера' : 'Server URI is required' }}.
               </p>
             </p>
             <p>
-              <label for="username">Username</label>
+              <label for="username">{{ dataService.language == 'ru' ? 'Имя пользователя' : 'Username' }}</label>
               <input type="text" id="username" name="username" ng-model="config.username"/>
             </p>
             <p>
-              <label for="password">Password</label>
+              <label for="password">{{ dataService.language == 'ru' ? 'Пароль' : 'Password' }}</label>
               <input type="password" id="password" name="password" ng-model="config.password"/>
             </p>
             <p>
-              <label for="readwrite">RW</label>
+              <label for="readwrite">{{ dataService.language == 'ru' ? 'Чтение и Запись (RW)' : 'RW' }}</label>
               <input type="checkbox" id="readwrite" name="readwrite" ng-model="config.rw"/>
             </p>
         </form>
@@ -42,11 +42,11 @@
         ng-click="$close(config)"
         ng-disabled="configModal.uri.$error.required"
       >
-        Save
+        {{ dataService.language == 'ru' ? 'Сохранить' : 'Save' }}
       </button>
       <!-- Cancel button-->
       <button type="button" class="btn btn-secondary" ng-click="$dismiss()">
-        Cancel
+        {{ dataService.language == 'ru' ? 'Отменить' : 'Cancel' }}
       </button>
     </div>
 </div>

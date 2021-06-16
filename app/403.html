@@ -1,8 +1,10 @@
 <div class="column row">
   <div class="column small-12">
-    <h1>Unauthorized</h1>
+    <h1>{{ dataService.language == 'ru' ? 'Неавторизованный':'Unauthorized' }}</h1>
     <div class="message-container">
-      <p>The attempted action is not accessible from the logged in account. Contact your system administrator to check your privilege role.</p>
+      <p>{{ dataService.language == 'ru'
+ ? 'Попытка выполнить действие недоступное для данной учетной записи. Обратитесь к вашему системному администратору, чтобы проверить свою привелегированную роль.'
+ : 'The attempted action is not accessible from the logged in account. Contact your system administrator to check your privilege role.' }}</p>
     </div>
   </div>
 </div>

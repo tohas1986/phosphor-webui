@@ -9,8 +9,9 @@ window.angular && (function(angular) {
         template: require('./ldap-user-roles.html'),
         scope: {roleGroups: '=', enabled: '=', roleGroupType: '='},
         controller: [
-          '$scope', 'APIUtils', 'toastService', '$q',
-          function($scope, APIUtils, toastService, $q) {
+          '$scope', 'APIUtils', 'toastService', '$q', 'dataService',
+          function($scope, APIUtils, toastService, $q, dataService) {
+	    $scope.dataService = dataService;
             $scope.privileges = [];
             $scope.loading = true;
             $scope.newGroup = {};
@@ -58,11 +59,10 @@ window.angular && (function(angular) {
               APIUtils.saveLdapProperties(data)
                   .then(
                       (response) => {
-                        toastService.success(
-                            'Group has been created successfully.');
+                        toastService.success(( dataService.language == 'ru' ) ? 'Группа успешно создана.' : 'Group has been created successfully.');
                       },
                       (error) => {
-                        toastService.error('Failed to create new group.');
+                        toastService.error(( dataService.language == 'ru' ) ? 'Не удалось создать новую группу.' : 'Failed to create new group.');
                       })
                   .finally(() => {
                     $scope.loading = false;
@@ -91,11 +91,10 @@ window.angular && (function(angular) {
               APIUtils.saveLdapProperties(data)
                   .then(
                       (response) => {
-                        toastService.success(
-                            'Group has been edited successfully.');
+                        toastService.success(( dataService.language == 'ru' ) ? 'Группа успешно отредактирована.' :  'Group has been edited successfully.');
                       },
                       (error) => {
-                        toastService.error('Failed to edit group.');
+                        toastService.error(( dataService.language == 'ru' ) ? 'Не удалось отредактировать группу.' : 'Failed to edit group.');
                       })
                   .finally(() => {
                     $scope.loading = false;
@@ -122,11 +121,10 @@ window.angular && (function(angular) {
               APIUtils.saveLdapProperties(data)
                   .then(
                       (response) => {
-                        toastService.success(
-                            'Group has been removed successfully.');
+                        toastService.success(( dataService.language == 'ru' ) ? 'Группа успешно удалена.' : 'Group has been removed successfully.');
                       },
                       (error) => {
-                        toastService.error('Failed to remove group.');
+                        toastService.error(( dataService.language == 'ru' ) ? 'Не удалось удалить группу.' : 'Failed to remove group.');
                       })
                   .finally(() => {
                     $scope.loading = false;
@@ -167,11 +165,10 @@ window.angular && (function(angular) {
               APIUtils.saveLdapProperties(data)
                   .then(
                       (response) => {
-                        toastService.success(
-                            'Groups have been removed successfully.');
+                        toastService.success(( dataService.language == 'ru' ) ? 'Группы успешно удалены.' : 'Groups have been removed successfully.');
                       },
                       (error) => {
-                        toastService.error('Failed to remove groups.');
+                        toastService.error(( dataService.language == 'ru' ) ? 'Не удалось удалить группы.' : 'Failed to remove groups.');
                       })
                   .finally(() => {
                     $scope.loading = false;
