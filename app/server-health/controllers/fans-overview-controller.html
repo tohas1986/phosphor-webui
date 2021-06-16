@@ -1,23 +1,23 @@
 <loader loading="loading"></loader>
 <div class="inventory__container">
-  <div class="row column">
-    <h1>{{ dataService.language == 'ru' ? 'Вентиляторы' : 'Fans'}}</h1>
-  </div>
-  <div class="row column">
-	<p>
-	    <label for="fanmode">{{ dataService.language == 'ru' ? 'Выберите режим управления вентиляторами' : 'Select the Fan control mode'}}:</label>
-	    <select id="fanmode" name="fanmode">
-		<option value="0">{{ dataService.language == 'ru' ? 'Автоматический (зависит от температуры)' : 'Automatic (temperature dependent)'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-		<option value="1">{{ dataService.language == 'ru' ? 'Минимальный (10% мощности)' : 'Minimal (10% power)'}}</option>
-		<option value="2">{{ dataService.language == 'ru' ? 'Оптимальный (50% мощности)' : 'Optimal (50% power)'}}</option>
-		<option value="3">{{ dataService.language == 'ru' ? 'Максимальный (100% мощности)':'Maximal (100% power)'}}</option>
-	    </select>
-	</p>
-   </div>
-   <div class="row column">
-     <p>
-	  <input id="content_fans-submit" type="submit" value="{{ dataService.language == 'ru' ? 'Сохранить' : 'Save'}}" class="btn btn-primary" ng-click="setFanMode()" />
-     </p>
-  </div>
-  
+	<div class="row column">
+		<h1>{{ dataService.language == 'ru' ? 'Вентиляторы' : 'Fans'}}</h1>
+	</div>
+	<div class="row column">
+		<p>
+			<label for="fanmode">{{ dataService.language == 'ru' ? 'Выберите режим управления вентиляторами' : 'Select the Fan control mode'}}:</label>
+			<select id="fanmode" name="fanmode">
+<!-- 				<option value="0">{{ dataService.language == 'ru' ? 'Автоматический (зависит от температуры)' : 'Automatic (temperature dependent)'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option> -->
+				<option value="1">{{ dataService.language == 'ru' ? 'Минимальный (10% мощности)' : 'Minimal (10% power)'}}</option>
+				<option value="2">{{ dataService.language == 'ru' ? 'Оптимальный (50% мощности)' : 'Optimal (50% power)'}}</option>
+				<option value="3">{{ dataService.language == 'ru' ? 'Максимальный (100% мощности)':'Maximal (100% power)'}}</option>
+			</select>
+		</p>
+	</div>
+	<div class="row column">
+		<p>
+			<input id="content_fans-submit" type="submit" value="{{ dataService.language == 'ru' ? 'Сохранить' : 'Save'}}" class="btn btn-primary" ng-click="setFanMode()" />
+		</p>
+	</div>
+	
 </div>

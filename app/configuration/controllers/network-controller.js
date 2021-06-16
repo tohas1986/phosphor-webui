@@ -50,6 +50,7 @@ window.angular && (function(angular) {
             !newRow) {
           $scope.interface.StaticNameServers.push('');
         }
+        // $scope.updatedRow(); //!!!skou
       };
 
       $scope.removeDNSField = function(index) {
