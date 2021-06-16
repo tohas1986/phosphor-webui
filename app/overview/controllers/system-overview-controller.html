@@ -13,8 +13,8 @@
                     <td>
                       {{ dataService.language == 'ru' ? 'Время BMC':'BMC Time' }}<icon file="double-caret.svg"></icon>
                     </td>
-                    <td>{{ curTime }}
-                      <div class="grey-small">{{ curTime2 }}</div>
+                    <td>{{ dataService.language == 'ru' ? curTime_ru:curTime }}
+                      <div class="grey-small">{{ dataService.language == 'ru' ? curTime2_ru:curTime2 }}</div>
                     </td>
                   </tr>
                   <tr class="more-info" ng-click="RedirectToURL('/configuration/firmware')">

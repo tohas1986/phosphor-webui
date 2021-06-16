@@ -20,7 +20,7 @@ window.angular && (function(angular) {
             }
           })
       .filter('localeDate', function() {
-        return function(timestamp, language, utc = false) {
+        return function(timestamp, utc = false, language = 'en-US') {
           var dt = new Date(timestamp);
           if (isNaN(dt)) {
             return 'not available';
