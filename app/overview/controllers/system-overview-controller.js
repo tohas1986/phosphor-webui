@@ -86,9 +86,10 @@ window.angular && (function(angular) {
 
         var getBMCTimePromise = APIUtils.getBMCTime().then(
             function(data) {
+	      language=(dataService.language == 'ru') ? 'ru_RU':'en_US';
               $scope.curTime = new Date(data.DateTime);
-              $scope.curTime2 = $filter('date')($scope.curTime, 'mediumTime');
-              $scope.curTime = $filter('date')($scope.curTime, 'mediumDate');
+              $scope.curTime2 = $filter('date')($scope.curTime,'ru_RU', 'mediumTime');
+              $scope.curTime = $filter('date')($scope.curTime,'ru_RU', 'mediumDate');
             },
             function(error) {
               console.log(JSON.stringify(error));
