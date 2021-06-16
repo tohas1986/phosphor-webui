@@ -99,7 +99,7 @@
   <section class="columns col-12">
 
     <div class="page-content-box">
-      <h5>{{ dataService.language == 'ru' ? 'IPV4-параметры ' + selectedInterface' : selectedInterface + ' IPV4 settings' }}</h5>
+      <h5>{{ dataService.language == 'ru' ? 'IPV4-параметры ' + selectedInterface : selectedInterface + ' IPV4 settings' }}</h5>
 
       <label class="control-radio" for="dhcp-address">{{ dataService.language == 'ru' ? 'Получать IP-адрес автоматически, используя DHCP' : 'Obtain an IP address automatically using DHCP' }}
         <input type="radio" name="ip-address" id="dhcp-address" ng-checked="true" ng-model="interface.DHCPv4.DHCPEnabled" ng-value="true" ng-change="updatedRow(); editIPV4Settings=false">
