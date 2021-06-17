@@ -51,8 +51,10 @@
             </div>
 
             <div class="form-row built-on center">
-              <img class="padding" src="../../assets/images/logo-OpenBmc-builton.svg"    style="display:{{ dataService.language == 'ru' ? 'none':'yes' }}">
-              <img class="padding" src="../../assets/images/logo-OpenBmc-builton-ru.svg" style="display:{{ dataService.language == 'ru' ? 'yes':'none' }}">
+	      <div class="img-logo-OpenBmc" ng-class="{{ dataService.language == 'ru' ? 'img-logo-OpenBmc-ru':'img-logo-OpenBmc-en' }}">
+		<br/>
+	      </div>
+              <!-- <img class="padding" src="../../assets/images/logo-OpenBmc-builton.svg"> -->
             </div>
 
           </fieldset>

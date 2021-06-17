@@ -134,3 +134,15 @@ $loginfield-max-width: 310px;
     color: $status-error;
   }
 }
+
+.img-logo-OpenBmc {
+    display: block;
+    width:100%;
+    height: 34px;
+}
+.img-logo-OpenBmc-en {
+    backgound: url("../../images/logo-OpenBmc-builton.svg") right no-repeat;
+}
+.img-logo-OpenBmc-ru {
+    backgound: url("../../images/logo-OpenBmc-builton-ru.svg") right no-repeat;
+}

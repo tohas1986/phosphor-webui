@@ -1684,6 +1684,56 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
+        setLanguage: function(language) {
+          return $http({
+                   method: 'PATCH',
+                   url: DataService.getHost() + '/redfish/v1/Managers/bmc/Locales/setLanguage',
+                   withCredentials: true,
+                   data: JSON.stringify({'language':language})
+                 })
+              .then(
+		function(response) {
+		    var d = response.data.language;
+		    if ( d == 'ru' || d == 'en' ){
+			if ( DataService.language != d ) {
+			    console.log('Error response.data.language=' + d + '  !=  DataService.language=' + DataService.language);
+			}
+		    }
+		    else {
+			console.log('Error response.data.language='+d);
+		    }
+		    console.log('Language='+DataService.language);
+		    return DataService.language;
+                },
+		function(error){
+                    console.log(error);
+		    return DataService.language;
+	        });
+        },
+        getLanguage: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/redfish/v1/Managers/bmc/Locales/getLanguage',
+                   withCredentials: true,
+                   data: JSON.stringify({})
+                 })
+              .then(
+		function(response) {
+		    var d = response.data.language;
+		    if ( d == 'ru' || d == 'en' ){
+			DataService.language = d;
+		    }
+		    else {
+			console.log('Error response.data.language='+d);
+		    }
+		    console.log('Current Language='+DataService.language);
+		    return DataService.language;
+                },
+		function(error){
+                    console.log(error);
+		    return DataService.language;
+	        });
+        },
         getVMCollection: function() {
           return $http({
                    method: 'GET',
@@ -1751,6 +1801,7 @@ window.angular && (function(angular) {
         pId = r2.data['Id'];
         return addinFunctions;
       };
+      SERVICE.getLanguage();
       return SERVICE;
     }
   ]);

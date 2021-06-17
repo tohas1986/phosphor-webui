@@ -25,6 +25,9 @@ window.angular && (function(angular) {
               $scope.page_title_ru = data.title_ru;
             });
 
+	    $scope.setLanguage = function() {
+		APIUtils.setLanguage(dataService.language);
+	    };
 /*
             $scope.page_title = $rootScope.page_title;
 
