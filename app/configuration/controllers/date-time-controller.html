@@ -103,8 +103,8 @@
             <table class="overview-config-table">
               <tr>
                 <td>{{ dataService.language == 'ru' ? 'Время сервера':'Server time' }}</td>
-                <td>{{ UTCTime | localeDate }}
-                  <div class="grey-small">{{ UTCTime | localeDate : true }}</div>
+                <td>{{ UTCTime | localeDateTime }}
+                  <div class="grey-small">{{ UTCTime | localeDateTime : true }}</div>
                 </td>
               </tr>
             </table>

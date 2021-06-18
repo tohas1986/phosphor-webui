@@ -87,8 +87,10 @@ window.angular && (function(angular) {
         var getBMCTimePromise = APIUtils.getBMCTime().then(
             function(data) {
               $scope.curTime = new Date(data.DateTime);
-	      $scope.curTime2= $filter('date')($scope.curTime,'mediumTime');
-	      $scope.curTime = $filter('date')($scope.curTime,'mediumDate');
+	      $scope.curTime2= $filter('localeTime')($scope.curTime);
+	      $scope.curTime = $filter('localeDate')($scope.curTime);
+//	      $scope.curTime2= $filter('date')($scope.curTime,'mediumTime');
+//	      $scope.curTime = $filter('date')($scope.curTime,'mediumDate');
             },
             function(error) {
               console.log(JSON.stringify(error));

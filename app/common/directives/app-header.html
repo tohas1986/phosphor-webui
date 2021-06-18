@@ -42,7 +42,7 @@
         <div class="refresh-hover header__hover-box" ng-show="refreshHover"
           ng-class="refreshHover ? 'refresh-hover header__hover-box show' : 'refresh-hover header__hover-box'">
           <span class="small-text">{{ dataService.language == 'ru' ? 'Последнее обновление':'Last Refreshed' }}</span><br>
-          <span class="small-text black"><span>{{dataService.last_updated | localeDate}}</span>
+          <span class="small-text black"><span>{{dataService.last_updated | localeDateTime}}</span>
         </div>
 
         <a href="#" class="header-icon-wrapper header__page-login" ng-click="logout()"

@@ -143,11 +143,11 @@
       </label>
       <dl class="ldap__certificate-info" ng-if="caCertificate && ldapCertificate">
         <dt>{{ dataService.language == 'ru' ? 'CA-сертификат действителен до':'CA certificate valid until' }}</dt>
-        <dd>{{caCertificate.ValidNotAfter | localeDate }}</dd>
+        <dd>{{caCertificate.ValidNotAfter | localeDateTime }}</dd>
       </dl>
       <dl class="ldap__certificate-info" ng-if="caCertificate && ldapCertificate">
         <dt>{{ dataService.language == 'ru' ? 'LDAP-сертификат действителен до':'LDAP certificate valid until' }}</dt>
-        <dd>{{ldapCertificate.ValidNotAfter | localeDate }}</dd>
+        <dd>{{ldapCertificate.ValidNotAfter | localeDateTime }}</dd>
       </dl>
       <div class="message-box" ng-if="!ldapCertificate || !caCertificate">
 	{{ dataService.language == 'ru' ? 'CA- и LDAP-сертификаты обязательны для безопасного LDAP с использованием SSL.'

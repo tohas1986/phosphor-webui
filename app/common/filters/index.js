@@ -19,7 +19,7 @@ window.angular && (function(angular) {
               }
             }
           })
-      .filter('localeDate', function() {
+      .filter('localeDateTime', function() {
         return function(timestamp, utc = false) {
           var dt = new Date(timestamp);
           if (isNaN(dt)) {
@@ -43,6 +43,54 @@ window.angular && (function(angular) {
 	     month: 'short',
 	     year: 'numeric',
 	     day: 'numeric' }) + ' ' + dt.toLocaleTimeString(ro.locale, {timeZone: tz, timeZoneName: 'short'});
+        }
+      })
+      .filter('localeDate', function() {
+        return function(timestamp, utc = false) {
+          var dt = new Date(timestamp);
+          if (isNaN(dt)) {
+            return 'not available';
+          }
+
+          const ro = Intl.DateTimeFormat().resolvedOptions();
+          var tz = 'UTC';
+          if (!utc) {
+            tz = ro.timeZone;
+          }
+
+          // Examples:
+          //   "Dec 3, 2018 11:35:01 AM CST" for en-US at 'America/Chicago'
+          //   "Dec 3, 2018 5:35:01 PM UTC" for en-US at 'UTC'
+          //   "Dec 3, 2018 17:35:01 GMT" for en-GB at 'Europe/London'
+          //   "Dec 3, 2018 20:35:01 GMT+3" for ru-RU at 'Europe/Moscow'
+          //   "Dec 3, 2018 17:35:01 UTC" for ru-RU at 'UTC'
+	  return dt.toLocaleDateString(ro.locale, {
+	     timeZone: tz,
+	     month: 'short',
+	     year: 'numeric',
+	     day: 'numeric' });
+        }
+      })
+      .filter('localeTime', function() {
+        return function(timestamp, utc = false) {
+          var dt = new Date(timestamp);
+          if (isNaN(dt)) {
+            return 'not available';
+          }
+
+          const ro = Intl.DateTimeFormat().resolvedOptions();
+          var tz = 'UTC';
+          if (!utc) {
+            tz = ro.timeZone;
+          }
+
+          // Examples:
+          //   "Dec 3, 2018 11:35:01 AM CST" for en-US at 'America/Chicago'
+          //   "Dec 3, 2018 5:35:01 PM UTC" for en-US at 'UTC'
+          //   "Dec 3, 2018 17:35:01 GMT" for en-GB at 'Europe/London'
+          //   "Dec 3, 2018 20:35:01 GMT+3" for ru-RU at 'Europe/Moscow'
+          //   "Dec 3, 2018 17:35:01 UTC" for ru-RU at 'UTC'
+	  return dt.toLocaleTimeString(ro.locale, {timeZone: tz, timeZoneName: 'short'});
         }
       });
 })(window.angular);
