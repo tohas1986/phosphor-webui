@@ -26,10 +26,8 @@ window.angular && (function(angular) {
       $scope.loading = false;
       $scope.edit_hostname = false;
       $scope.newHostname = '';
-      $scope.curTime = '';
-      $scope.curTime_ru = '';
-      $scope.curTime2 = '';
-      $scope.curTime2_ru = '';
+      $scope.curTime = '[time_en]';
+      $scope.curTime_ru = '[time_ru]';
       $scope.bmc_info = {};
 
       loadOverviewData();
@@ -90,8 +88,10 @@ window.angular && (function(angular) {
         var getBMCTimePromise = APIUtils.getBMCTime().then(
             function(data) {
               $scope.curTime = new Date(data.DateTime);
-	      var o = $filter('date')($scope.curTime,'mediumTime'); $scope.curTime2 = o.en; $scope.curTime2_ru = o.ru;
-	      o = $filter('date')($scope.curTime,'mediumDate'); $scope.curTime = o.en; $scope.curTime_ru = o.ru;
+	      let o  = $filter('date')($scope.curTime,'mediumTime'); $scope.curTime2 = o['en']; $scope.curTime2_ru = o['ru'];
+		 console.log('curTime2='+$scope.curTime2+"; o.en="+o.en+'; curTime2_ru='+$scope.curTime2_ru+"; o[ru]="+o['ru']);
+	      let oo = $filter('date')($scope.curTime,'mediumDate'); $scope.curTime = oo.en; $scope.curTime_ru = oo.ru;
+		 console.log('curTime='+$scope.curTime+"; o.en="+oo.en+'; curTime_ru='+$scope.curTime2_ru+"; o[ru]="+oo['ru']);
             },
             function(error) {
               console.log(JSON.stringify(error));
