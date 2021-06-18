@@ -28,6 +28,8 @@ window.angular && (function(angular) {
       $scope.newHostname = '';
       $scope.curTime = '[time_en]';
       $scope.curTime_ru = '[time_ru]';
+      $scope.curTime2 = '[time2_en]';
+      $scope.curTime2_ru = '[time2_ru]';
       $scope.bmc_info = {};
 
       loadOverviewData();
@@ -89,9 +91,12 @@ window.angular && (function(angular) {
             function(data) {
               $scope.curTime = new Date(data.DateTime);
 	      let o  = $filter('date')($scope.curTime,'mediumTime'); $scope.curTime2 = o['en']; $scope.curTime2_ru = o['ru'];
-		 console.log('curTime2='+$scope.curTime2+"; o.en="+o.en+'; curTime2_ru='+$scope.curTime2_ru+"; o[ru]="+o['ru']);
+		 console.log("$filter mediumTime ... return="+o);
+		 console.log('curTime2='+$scope.curTime2+"; o.en="+o.en+'; curTime2_ru='+$scope.curTime2_ru+"; o[ru]="+o['ru']+"; o="+JSON.stringify(o));
+
 	      let oo = $filter('date')($scope.curTime,'mediumDate'); $scope.curTime = oo.en; $scope.curTime_ru = oo.ru;
-		 console.log('curTime='+$scope.curTime+"; o.en="+oo.en+'; curTime_ru='+$scope.curTime2_ru+"; o[ru]="+oo['ru']);
+		 console.log("$filter mediumDate ... return="+oo);
+		 console.log('curTime='+$scope.curTime+"; o.en="+oo.en+'; curTime_ru='+$scope.curTime2_ru+"; o[ru]="+oo['ru']+"; o="+JSON.stringify(o));
             },
             function(error) {
               console.log(JSON.stringify(error));
