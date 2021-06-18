@@ -35,13 +35,11 @@
     "node"
   ],
   "dependencies": {
-    "@angular/localize": "^12.0.5",
     "@novnc/novnc": "git+https://github.com/novnc/noVNC.git#25b3d49d322b0a7c9ee1e071d93042d70f5176b7",
     "angular": "1.7.8",
     "angular-animate": "1.7.8",
     "angular-clipboard": "1.7.0",
     "angular-cookies": "1.7.8",
-    "angular-localize": "^2.4.0",
     "angular-messages": "1.7.8",
     "angular-route": "1.7.8",
     "angular-sanitize": "1.7.8",
@@ -53,8 +51,8 @@
     "ng-toast": "2.0.0",
     "pkg-dir": "4.2.0",
     "regenerator-runtime": "0.13.3",
-    "text-encoding": "0.7.0",
-    "xterm": "3.14.5"
+    "xterm": "3.14.5",
+    "text-encoding": "0.7.0"
   },
   "peerDependencies": {},
   "devDependencies": {

@@ -38,9 +38,11 @@ window.angular && (function(angular) {
           //   "Dec 3, 2018 17:35:01 GMT" for en-GB at 'Europe/London'
           //   "Dec 3, 2018 20:35:01 GMT+3" for ru-RU at 'Europe/Moscow'
           //   "Dec 3, 2018 17:35:01 UTC" for ru-RU at 'UTC'
-	  const language = 'en-US';
-	  console.log("ro.locale="+ro.locale);
-	  return dt.toLocaleDateString(language, { timeZone: tz, month: 'short', year: 'numeric', day: 'numeric' }) + ' ' + dt.toLocaleTimeString(ro.locale, {timeZone: tz, timeZoneName: 'short'});
+	  return dt.toLocaleDateString(ro.locale, {
+	     timeZone: tz,
+	     month: 'short',
+	     year: 'numeric',
+	     day: 'numeric' }) + ' ' + dt.toLocaleTimeString(ro.locale, {timeZone: tz, timeZoneName: 'short'});
         }
       });
 })(window.angular);
