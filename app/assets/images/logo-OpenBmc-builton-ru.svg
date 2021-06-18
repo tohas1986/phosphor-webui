@@ -35,7 +35,7 @@
    id="namedview66"
    showgrid="false"
    inkscape:zoom="3.3960896"
-   inkscape:cx="56.621973"
+   inkscape:cx="65.810984"
    inkscape:cy="26.6"
    inkscape:window-x="0"
    inkscape:window-y="0"
@@ -177,15 +177,16 @@
 
 <text
    xml:space="preserve"
-   style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:condensed;font-size:8.00818443px;line-height:1.25;font-family:'Liberation Sans Narrow';-inkscape-font-specification:'Liberation Sans Narrow Italic Condensed';letter-spacing:0px;word-spacing:0px;fill:#009dff;fill-opacity:1;stroke:none;stroke-width:0.66734874"
-   x="58.221939"
-   y="18.415371"
+   style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:condensed;font-size:10.45736694px;line-height:1.25;font-family:'Liberation Sans Narrow';-inkscape-font-specification:'Liberation Sans Narrow Italic Condensed';letter-spacing:0px;word-spacing:0px;fill:#009dff;fill-opacity:1;stroke:none;stroke-width:0.87144727"
+   x="65.424538"
+   y="15.686933"
    id="text886"
-   transform="scale(1.0366037,0.96468881)"><tspan
+   transform="scale(0.9219737,1.0846296)"><tspan
      sodipodi:role="line"
      id="tspan884"
-     x="58.221939"
-     y="18.415371"
-     style="stroke-width:0.66734874">Построено на</tspan></text>
+     x="65.424538"
+     y="15.686933"
+     style="stroke-width:0.87144727">Построено на</tspan></text>
+
 
 </svg>
