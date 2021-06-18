@@ -26,10 +26,7 @@ window.angular && (function(angular) {
       $scope.loading = false;
       $scope.edit_hostname = false;
       $scope.newHostname = '';
-      $scope.curTime = '[time_en]';
-      $scope.curTime_ru = '[time_ru]';
-      $scope.curTime2 = '[time2_en]';
-      $scope.curTime2_ru = '[time2_ru]';
+      $scope.curTime = '';
       $scope.bmc_info = {};
 
       loadOverviewData();
@@ -90,13 +87,8 @@ window.angular && (function(angular) {
         var getBMCTimePromise = APIUtils.getBMCTime().then(
             function(data) {
               $scope.curTime = new Date(data.DateTime);
-	      let o  = $filter('date')($scope.curTime,'mediumTime'); $scope.curTime2 = o['en']; $scope.curTime2_ru = o['ru'];
-		 console.log("$filter mediumTime ... return="+o);
-		 console.log('curTime2='+$scope.curTime2+"; o.en="+o.en+'; curTime2_ru='+$scope.curTime2_ru+"; o[ru]="+o['ru']+"; o="+JSON.stringify(o));
-
-	      let oo = $filter('date')($scope.curTime,'mediumDate'); $scope.curTime = oo.en; $scope.curTime_ru = oo.ru;
-		 console.log("$filter mediumDate ... return="+oo);
-		 console.log('curTime='+$scope.curTime+"; o.en="+oo.en+'; curTime_ru='+$scope.curTime2_ru+"; o[ru]="+oo['ru']+"; o="+JSON.stringify(o));
+	      $scope.curTime2= $filter('date')($scope.curTime,'mediumTime');
+	      $scope.curTime = $filter('date')($scope.curTime,'mediumDate');
             },
             function(error) {
               console.log(JSON.stringify(error));
@@ -286,8 +278,8 @@ window.angular && (function(angular) {
           if (log.Created.length > 0) {
             if (index == 0) {
               d1 = new Date(log.Created);
-	      var o = $filter('date')(d1, 'yyyy-MM-dd'); d1Formatted = o.en; d1Formatted_ru = o.ru;
-	      o = $filter('date')(d1, 'MMM d'); d1 = o.en; d1_ru = o.ru;
+	      d1Formatted = $filter('date')(d1, 'yyyy-MM-dd');
+	      d1 = $filter('date')(d1, 'MMM d');
 
               var presentDate = new Date();
               $scope.firstDate = new Date(log.Created);
@@ -304,18 +296,18 @@ window.angular && (function(angular) {
                 var barChartStartDate =
                     new Date(new Date().getTime() + (i * 24 * 60 * 60 * 1000));
 
-                var o = $filter('date')(barChartStartDate, 'yyyy-MM-dd'); d1Formatted = o.en;
+                d1Formatted = $filter('date')(barChartStartDate, 'yyyy-MM-dd');
                 if (i == (-$scope.daysToShow + 1)) {
-		  o = $filter('date')(barChartStartDate, 'MMM d'); $scope.firstDate = o.en;
-                  o = $filter('date')($scope.firstDate, 'MMM d'); d1 = o.en;
+		  $scope.firstDate = $filter('date')(barChartStartDate, 'MMM d');
+                  d1 = $filter('date')($scope.firstDate, 'MMM d');
                 };
-                o = $filter('date')(barChartStartDate, 'MMM d'); barChartStartDate = o.en;
+                barChartStartDate = $filter('date')(barChartStartDate, 'MMM d');
                 $scope.addEventArray(barChartStartDate, d1Formatted, 0, 0, 0);
               }
             }
 
             var d2 = new Date(log.Created);
-            var o  = $filter('date')(d2, 'MMM d'); d2 = o.en;
+            d2  = $filter('date')(d2, 'MMM d');
 
             if (Date.parse(d2) >= Date.parse($scope.firstDate)) {
               if (Date.parse(d2) != Date.parse(d1)) {
@@ -325,8 +317,8 @@ window.angular && (function(angular) {
                 countWarning = 0;
                 countCritical = 0;
                 d1 = new Date(log.Created);
-                o = $filter('date')(d1, 'yyyy-MM-dd'); d1Formatted = o.en;
-                o = $filter('date')(d1, 'MMM d'); d1 = o.en;
+                d1Formatted = $filter('date')(d1, 'yyyy-MM-dd');
+                d1 = $filter('date')(d1, 'MMM d');
               }
               if (log.Severity == 'OK') {
                 countOK = countOK + 1;
