@@ -1686,8 +1686,8 @@ window.angular && (function(angular) {
         },
         setLanguage: function(language) {
           return $http({
-                   method: 'PATCH',
-                   url: DataService.getHost() + '/redfish/v1/Managers/bmc/Locales/setLanguage',
+                   method: 'POST',
+                   url: DataService.getHost() + '/redfish/v1/Managers/bmc/Locales',
                    withCredentials: true,
                    data: JSON.stringify({'language':language})
                  })
@@ -1713,7 +1713,7 @@ window.angular && (function(angular) {
         getLanguage: function() {
           return $http({
                    method: 'GET',
-                   url: DataService.getHost() + '/redfish/v1/Managers/bmc/Locales/getLanguage',
+                   url: DataService.getHost() + '/redfish/v1/Managers/bmc/Locales',
                    withCredentials: true,
                    data: JSON.stringify({})
                  })
