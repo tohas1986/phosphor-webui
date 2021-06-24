@@ -12,13 +12,14 @@ window.angular && (function(angular) {
   angular.module('app.configuration').controller('dateTimeController', [
     '$scope', 'APIUtils', '$filter', '$route', '$q', 'toastService', '$timeout',
     function($scope, APIUtils, $filter, $route, $q, toastService, $timeout) {
-      $scope.editNTPSettings = [];
+      $scope.editNTPSettings = false;
       $scope.ntp = {servers: []};
-      $scope.editNTPSettings = {};
+      //!!!$scope.editNTPSettings = {};
       $scope.use = 'Server';
 
       var getNTPServerStatus = APIUtils.getNTPValues().then(
           function(data) {
+            toastService.success('getNTPServerStatus' + data.NTP.ProtocolEnabled);
             $scope.useNTP = data.NTP.ProtocolEnabled;
             $scope.ntp.servers = data.NTP.NTPServers;
             if ($scope.useNTP) {
@@ -51,7 +52,8 @@ window.angular && (function(angular) {
             (!$scope.useNTP)) {
           $scope.loading = true;
           setNTPServers()
-              .then(setTimeOwner)
+              //.then(setTimeOwner)
+              .then($timeout(setTimeOwner, 20000))
               .then(
                   function() {
                     toastService.success('Date and time settings saved');
@@ -76,10 +78,11 @@ window.angular && (function(angular) {
       };
 
       $scope.addNTPField = function(newRow) {
-        $scope.editNTPSettings[$scope.ntp.servers.length] = true;
-        if ((newRow && $scope.ntp.servers == false) || !newRow) {
-          $scope.ntp.servers.push('');
-        }
+        $scope.editNTPSettings = true;
+        //!!!if ((newRow && $scope.ntp.servers == false) || !newRow) {
+          $scope.ntp.servers.push({address: '', port: ''});
+        //!!!}
+        $scope.updatedRow(); //!!!skou
       };
 
       $scope.removeNTPField = function(index) {
@@ -96,6 +99,7 @@ window.angular && (function(angular) {
       }
 
       function setTimeOwner() {
+        toastService.success('setTimeOwner' + $scope.useNTP);
         return APIUtils.setNTPEnabled($scope.useNTP);
       }
 
