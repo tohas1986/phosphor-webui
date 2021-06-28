@@ -13,7 +13,7 @@ window.angular && (function(angular) {
     '$scope', 'APIUtils', '$filter', '$route', '$q', 'toastService', '$timeout', 'dataService',
     function($scope, APIUtils, $filter, $route, $q, toastService, $timeout, dataService) {
       $scope.dataService = dataService;
-      $scope.editNTPSettings = false;//!!![];
+      $scope.editNTPSettings = [];
       $scope.ntp = {servers: []};
       //!!!$scope.editNTPSettings = {};
       $scope.use = 'Server';
@@ -24,7 +24,7 @@ window.angular && (function(angular) {
             $scope.ntp.servers = data.NTP.NTPServers;
             if ($scope.useNTP) {
               $scope.use = 'NTP';
-            } else {
+            } else {	
               $scope.use = 'Server';
             };
           },
@@ -76,7 +76,7 @@ window.angular && (function(angular) {
       };
 
       $scope.addNTPField = function(newRow) {
-        $scope.editNTPSettings = true; //!!![$scope.ntp.servers.length] = true;
+        $scope.editNTPSettings[$scope.ntp.servers.length] = true;
         if ((newRow && $scope.ntp.servers == false) || !newRow) {
           $scope.ntp.servers.push('');
         }
