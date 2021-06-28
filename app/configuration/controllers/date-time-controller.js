@@ -13,9 +13,9 @@ window.angular && (function(angular) {
     '$scope', 'APIUtils', '$filter', '$route', '$q', 'toastService', '$timeout', 'dataService',
     function($scope, APIUtils, $filter, $route, $q, toastService, $timeout, dataService) {
       $scope.dataService = dataService;
-      $scope.editNTPSettings = [];
+      $scope.editNTPSettings = false;//!!![];
       $scope.ntp = {servers: []};
-      $scope.editNTPSettings = {};
+      //!!!$scope.editNTPSettings = {};
       $scope.use = 'Server';
 
       var getNTPServerStatus = APIUtils.getNTPValues().then(
@@ -76,10 +76,11 @@ window.angular && (function(angular) {
       };
 
       $scope.addNTPField = function(newRow) {
-        $scope.editNTPSettings[$scope.ntp.servers.length] = true;
+        $scope.editNTPSettings = true; //!!![$scope.ntp.servers.length] = true;
         if ((newRow && $scope.ntp.servers == false) || !newRow) {
           $scope.ntp.servers.push('');
         }
+        $scope.updatedRow(); //!!!skou
       };
 
       $scope.removeNTPField = function(index) {
