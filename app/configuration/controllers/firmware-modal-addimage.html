@@ -42,7 +42,7 @@
       <button type="reset" class="btn btn-secondary" ng-click="$dismiss();">
         {{ dataService.language == 'ru' ? 'Отменить':'Cancel' }}
       </button>
-      <input type="button" ng-disabled="!file" value="Upload firmware" class="btn btn-primary float-right" ng-click="$close(form)" />
+      <input type="button" ng-disabled="!file" value="{{ dataService.language == 'ru' ? 'Загрузить прошивку':'Upload firmware' }}" class="btn btn-primary float-right" ng-click="$close(form)" />
     </div>
   </div>
 
