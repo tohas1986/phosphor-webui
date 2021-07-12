@@ -154,7 +154,7 @@
 <section class="modal" role="dialog" aria-labelledby="remove-role-group" ng-class="{'active': removeGroup}">
   <h3 id="remove-role-group" class="subhead">{{ dataService.language == 'ru' ? 'Удалить группу ролей':'Remove role group' }}</h3>
   <div class="modal__content-ldap">
-    <p>{{ dataService.language == 'ru' ? 'Вы уверены что хотите удалить':'Are you sure you want to remove' }} "{{ newGroup.RemoteGroup }}"?</p>
+    <p>{{ dataService.language == 'ru' ? 'Вы уверены, что хотите удалить':'Are you sure you want to remove' }} "{{ newGroup.RemoteGroup }}"?</p>
   </div>
   <div class="form-actions">
     <button type="button" class="btn btn-primary" ng-click="removeRoleGroup(); $parent.removeGroup=false; newGroup={}">
@@ -173,7 +173,7 @@
   </div>
   <div class="modal__content-ldap">
     <p>
-      {{ dataService.language == 'ru' ? 'Вы уверены что хотите удалить ':'Are you sure you want to remove ' }}
+      {{ dataService.language == 'ru' ? 'Вы уверены, что хотите удалить ':'Are you sure you want to remove ' }}
       <span ng-repeat="groups in roleGroups | filter:{isSelected:true}">{{ $last && !$first ? " and " : $first ? "" : ", "
       }}{{ "'" + groups.RemoteGroup + "'" }}?</span>
     </p>
